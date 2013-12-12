@@ -1,0 +1,143 @@
+"Cancel" = "Avbryt";
+
+/* History column */
+"Date" = "Datum";
+
+/* History column */
+"Device" = "Enhet";
+
+/* Sync dialog button */
+"Enter code" = "Ange koden";
+
+/* Sync alert title */
+"Enter sync code:" = "Kodingång:";
+
+/* Sync success alert msg */
+"History synchronisation was successful." = "Förlopp har varit synkroniserat framgångsrik.";
+
+/* History result section title */
+"Measurement" = "Mätning";
+
+/* History result section title */
+"Network" = "Nät";
+
+/* Sync success button */
+"Reload" = "Ladda nytt";
+
+/* Sync dialog button */
+"Request code" = "Beställ kod";
+
+/* Sync success alert title */
+"Success" = "Synkronisering framgångsrik";
+
+/* Sync alert button */
+"Sync" = "Synk";
+
+/* Sync intro text */
+"To merge history from two different devices, request the sync code on one device and enter it on another device" = "För att slå samman resultater från en annan enhet, beställ synk kod på den andra enheten, och ange den här.";
+
+/* Abort test alert title */
+"Abort Test" = "Avbryt";
+
+/* Abort test alert title */
+"Continue" = "Gå på";
+
+/* Display code alert button */
+"Copy code" = "Kopera kod";
+
+/* Abort test alert title */
+"Do you really want to abort the running test?" = "Vill du verkligen avbryta aktuella testen?";
+
+/* Display code alert button */
+"OK" = "OK";
+
+/* Display code alert title */
+"Sync Code" = "Synk-kod";
+
+/* Filter section title */
+"Network Type" = "Tillgång";
+
+/* Sync error alert button */
+"Dismiss" = "OK";
+
+/* Map overlay description */
+"Auto" = "Automatiskt";
+
+/* Map overlay description */
+"Heatmap" = "Heatmap";
+
+/* Google Maps Legal Notice nevigation title */
+"Legal Notice" = "Google Maps";
+
+/* Table section header title */
+"Overlay" = "Karta överlägg";
+
+/* Map overlay description */
+"Points" = "Punkter";
+
+/* Footer status label */
+"Aborted" = "Avbrytat";
+
+/* Alert view button */
+"Close" = "Avbryta";
+
+/* Alert view title */
+"Connection Error" = "Anslutningsfel";
+
+/* Alert view message */
+"Couldn't connect to test server." = "Anslutning på testservern kunde inte upprättas.";
+
+/* Alert view title */
+"Error" = "Fel";
+
+/* Alert view button */
+"Repeat Test" = "Repetera testet";
+
+/* Alert view title */
+"Test aborted" = "Test avbrytat";
+
+/* Alert view message */
+"Test was aborted because the app went into background. Tests can only be performed while the app is running in foreground." = "Testen avbröts eftersom appen gick i bakgrunden. För att utföra tester fullständiga, appen måste köras i förgrunden.";
+
+/* Alert view message */
+"Test was completed, but the results couldn't be submitted to the test server." = "Testen utfördes, men resultater kunde inte skickas till servern.";
+
+/* Alert view message */
+"The connection to the test server was lost. Test aborted." = "Anslutningen till testservern avbröts. Testen avbrytat.";
+
+/* Alert view button */
+"Try Again" = "Försök igen";
+
+/* Phase status label */
+"Fetching test parameters" = "Test-Parametrarna laddar...";
+
+/* Phase status label */
+"Finalizing" = "Finalisering";
+
+/* Phase status label */
+"Initializing Upload" = "Uppladd initialisering";
+
+/* Phase status label */
+"Initializing" = "Initialisering";
+
+/* Phase status label */
+"Pinging" = "Ping";
+
+/* Phase status label */
+"Upload" = "Uppladd";
+
+/* Phase status label */
+"Waiting for test server" = "Vänta på testservern...";
+
+/* Test view label */
+"Connection" = "Anslutning";
+
+/* Speed suffix */
+"Mbps" = "Mbit/s";
+
+/* Phase status label */
+"Download" = "Download";
+
+/* Test intro screen title when thre's no connectivity */
+"No network connection available" = "Ingen Internetuppkoppling";
+

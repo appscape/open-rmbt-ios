@@ -1,0 +1,43 @@
+PODS:
+  - AFNetworking (1.3.1)
+  - BCGenieEffect (1.0)
+  - BlocksKit (1.8.3):
+    - libffi
+  - CocoaAsyncSocket (7.3.1)
+  - libextobjc/EXTKeyPathCoding (0.2.5):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/RuntimeExtensions (0.2.5)
+  - libffi (3.0.13)
+  - SVWebViewController (0.2)
+  - TUSafariActivity (1.0.0)
+
+DEPENDENCIES:
+  - AFNetworking (~> 1.2)
+  - BCGenieEffect
+  - BlocksKit (from `https://github.com/pandamonia/BlocksKit.git`, branch `master`)
+  - CocoaAsyncSocket (from `https://github.com/appscape/CocoaAsyncSocket.git`, commit `350ac5f09002ac92a333175cb87ab8b59ebd0571`)
+  - libextobjc/EXTKeyPathCoding
+  - SVWebViewController (from `https://github.com/samvermette/SVWebViewController.git`)
+  - TUSafariActivity
+
+EXTERNAL SOURCES:
+  BlocksKit:
+    :branch: master
+    :git: https://github.com/pandamonia/BlocksKit.git
+  CocoaAsyncSocket:
+    :commit: 350ac5f09002ac92a333175cb87ab8b59ebd0571
+    :git: https://github.com/appscape/CocoaAsyncSocket.git
+  SVWebViewController:
+    :git: https://github.com/samvermette/SVWebViewController.git
+
+SPEC CHECKSUMS:
+  AFNetworking: 9ec8aafb9269236a7630bd8d9838ce2ba30fa2a0
+  BCGenieEffect: bc00729f71206c7fbcaed5c90215f957dbd786b1
+  BlocksKit: 27257f9cbbec0ea98c80ba83cc2ea7111ae62eb2
+  CocoaAsyncSocket: 4f37d721606ef34ba30ba6e76f84db420bfc8fc5
+  libextobjc: 2cbc74caf8bdc74a86fdf24673f773c83424ea98
+  libffi: 64ef39353e747bb2b25e1026afd96a157bf9231c
+  SVWebViewController: 8b32a4b7017bca79799e0fdb0ffc4d47d0769db2
+  TUSafariActivity: bd9da588f5f9136ba445d89f8f86b6dccf4d46ba
+
+COCOAPODS: 0.20.0

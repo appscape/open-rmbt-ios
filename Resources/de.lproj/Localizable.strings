@@ -1,0 +1,143 @@
+"Cancel" = "Abbrechen";
+
+/* History column */
+"Date" = "Datum";
+
+/* History column */
+"Device" = "Gerät";
+
+/* Sync dialog button */
+"Enter code" = "Code eingeben";
+
+/* Sync alert title */
+"Enter sync code:" = "Codeeingabe:";
+
+/* Sync success alert msg */
+"History synchronisation was successful." = "Verlauf wurde erfolgreich synchronisiert.";
+
+/* History result section title */
+"Measurement" = "Messung";
+
+/* History result section title */
+"Network" = "Netz";
+
+/* Sync success button */
+"Reload" = "Neu laden";
+
+/* Sync dialog button */
+"Request code" = "Code anfordern";
+
+/* Sync success alert title */
+"Success" = "Synchronisation erfolgreich";
+
+/* Sync alert button */
+"Sync" = "Sync";
+
+/* Sync intro text */
+"To merge history from two different devices, request the sync code on one device and enter it on another device" = "Um die Messergebnisse von einem anderen Gerät zusammenzuführen, fordern Sie bitte das Sync-Code an dem anderen Gerät an und geben Sie es hier ein.";
+
+/* Abort test alert title */
+"Abort Test" = "Abbrechen";
+
+/* Abort test alert title */
+"Continue" = "Fortfahren";
+
+/* Display code alert button */
+"Copy code" = "Code kopieren";
+
+/* Abort test alert title */
+"Do you really want to abort the running test?" = "Wollen Sie den laufenden Test abbrechen?";
+
+/* Display code alert button */
+"OK" = "OK";
+
+/* Display code alert title */
+"Sync Code" = "Sync-Code";
+
+/* Filter section title */
+"Network Type" = "Zugang";
+
+/* Sync error alert button */
+"Dismiss" = "OK";
+
+/* Map overlay description */
+"Auto" = "Automatisch";
+
+/* Map overlay description */
+"Heatmap" = "Heatmap";
+
+/* Google Maps Legal Notice nevigation title */
+"Legal Notice" = "Google Maps";
+
+/* Table section header title */
+"Overlay" = "Kartenoverlay";
+
+/* Map overlay description */
+"Points" = "Punkte";
+
+/* Footer status label */
+"Aborted" = "Abgebrochen";
+
+/* Alert view button */
+"Close" = "Abbrechen";
+
+/* Alert view title */
+"Connection Error" = "Verbindungsfehler";
+
+/* Alert view message */
+"Couldn't connect to test server." = "Es konnte keine Verbindung zum Testserver aufgebaut werden.";
+
+/* Alert view title */
+"Error" = "Fehler";
+
+/* Alert view button */
+"Repeat Test" = "Test wiederholen";
+
+/* Alert view title */
+"Test aborted" = "Test abgebrochen";
+
+/* Alert view message */
+"Test was aborted because the app went into background. Tests can only be performed while the app is running in foreground." = "Test wurde abgebrochen, weil die App in den Hintergrund gegangen ist. Um Tests vollständig durchzuführen, muss die App im Vordergrund laufen.";
+
+/* Alert view message */
+"Test was completed, but the results couldn't be submitted to the test server." = "Test wurde abgeschlossen, aber die Ergebnisse konnten nicht zum Server geschickt werden.";
+
+/* Alert view message */
+"The connection to the test server was lost. Test aborted." = "Die Verbindung zum Testserver wurde abgebrochen.";
+
+/* Alert view button */
+"Try Again" = "Erneut versuchen";
+
+/* Phase status label */
+"Fetching test parameters" = "Test-Parameter werden geladen...";
+
+/* Phase status label */
+"Finalizing" = "Finalisierung";
+
+/* Phase status label */
+"Initializing Upload" = "Upload Initialisierung";
+
+/* Phase status label */
+"Initializing" = "Initialisierung";
+
+/* Phase status label */
+"Pinging" = "Ping";
+
+/* Phase status label */
+"Upload" = "Upload";
+
+/* Phase status label */
+"Waiting for test server" = "Warten auf den Testserver...";
+
+/* Test view label */
+"Connection" = "Verbindung";
+
+/* Speed suffix */
+"Mbps" = "Mbit/s";
+
+/* Phase status label */
+"Download" = "Download";
+
+/* Test intro screen title when thre's no connectivity */
+"No network connection available" = "Keine Netzwerkverbindung verfügbar";
+

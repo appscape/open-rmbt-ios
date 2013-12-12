@@ -1,0 +1,143 @@
+"Cancel" = "Prekid";
+
+/* History column */
+"Date" = "Datum";
+
+/* History column */
+"Device" = "Uređaj";
+
+/* Sync dialog button */
+"Enter code" = "Unesi kod";
+
+/* Sync alert title */
+"Enter sync code:" = "Unos koda:";
+
+/* Sync success alert msg */
+"History synchronisation was successful." = "Povijest je uspješno sinkronizirana.";
+
+/* History result section title */
+"Measurement" = "Mjerenje";
+
+/* History result section title */
+"Network" = "Mreža";
+
+/* Sync success button */
+"Reload" = "Ažuriranje";
+
+/* Sync dialog button */
+"Request code" = "Zatraži kod";
+
+/* Sync success alert title */
+"Success" = "Sinkronizacija je uspješna";
+
+/* Sync alert button */
+"Sync" = "Sync";
+
+/* Sync intro text */
+"To merge history from two different devices, request the sync code on one device and enter it on another device" = "Za združivanje rezultata dvoje različitih uređaja, zatražite sinkronizacijski kod na drugom uređaju i unesite ga ovdje.";
+
+/* Abort test alert title */
+"Abort Test" = "Prekini test";
+
+/* Abort test alert title */
+"Continue" = "Nastavi";
+
+/* Display code alert button */
+"Copy code" = "Kopiraj kod";
+
+/* Abort test alert title */
+"Do you really want to abort the running test?" = "Želite li prekinuti izvođenje testa?";
+
+/* Display code alert button */
+"OK" = "OK";
+
+/* Display code alert title */
+"Sync Code" = "Sync kod";
+
+/* Filter section title */
+"Network Type" = "Tip mreže";
+
+/* Sync error alert button */
+"Dismiss" = "OK";
+
+/* Map overlay description */
+"Auto" = "Automatski";
+
+/* Map overlay description */
+"Heatmap" = "Heatmap";
+
+/* Google Maps Legal Notice nevigation title */
+"Legal Notice" = "Google Maps";
+
+/* Table section header title */
+"Overlay" = "Overlay karte";
+
+/* Map overlay description */
+"Points" = "Točke";
+
+/* Footer status label */
+"Aborted" = "Prekid";
+
+/* Alert view button */
+"Close" = "Zatvori";
+
+/* Alert view title */
+"Connection Error" = "Greška prilikom povezivanja";
+
+/* Alert view message */
+"Couldn't connect to test server." = "Veza sa test serverom nije uspjela.";
+
+/* Alert view title */
+"Error" = "Greška";
+
+/* Alert view button */
+"Repeat Test" = "Ponovi test";
+
+/* Alert view title */
+"Test aborted" = "Test je prekinut";
+
+/* Alert view message */
+"Test was aborted because the app went into background. Tests can only be performed while the app is running in foreground." = "Test je prekinut jer je app otišla u pozadinu. App mora bit u prvom planu kako bi se test u potpunosti izveo.";
+
+/* Alert view message */
+"Test was completed, but the results couldn't be submitted to the test server." = "Test je završen, ali rezultat ne može biti poslan serveru.";
+
+/* Alert view message */
+"The connection to the test server was lost. Test aborted." = "Veza sa test serverom je izgubljena. Test je prekinut.";
+
+/* Alert view button */
+"Try Again" = "Pokušaj ponovo";
+
+/* Phase status label */
+"Fetching test parameters" = "Parametri testa se učitavaju...";
+
+/* Phase status label */
+"Finalizing" = "Finalizacija";
+
+/* Phase status label */
+"Initializing Upload" = "Inicijalizacija uploada";
+
+/* Phase status label */
+"Initializing" = "Inicijalizacija";
+
+/* Phase status label */
+"Pinging" = "Ping";
+
+/* Phase status label */
+"Upload" = "Upload";
+
+/* Phase status label */
+"Waiting for test server" = "Čekam na test server...";
+
+/* Test view label */
+"Connection" = "Veza";
+
+/* Speed suffix */
+"Mbps" = "Mbit/s";
+
+/* Phase status label */
+"Download" = "Download";
+
+/* Test intro screen title when thre's no connectivity */
+"No network connection available" = "Veza s internetom nije moguća";
+
