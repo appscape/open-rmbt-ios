@@ -66,7 +66,10 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 
     RMBTConnectivityTracker *_connectivityTracker;
 
-    RMBTConnectivityInterfaceInfo _connectivityInterfaceInfo;
+    // Snapshots of the network interface byte counts at a given phase
+    RMBTConnectivityInterfaceInfo _startInterfaceInfo;
+    RMBTConnectivityInterfaceInfo _uplinkStartInterfaceInfo, _uplinkEndInterfaceInfo;
+    RMBTConnectivityInterfaceInfo _downlinkStartInterfaceInfo, _downlinkEndInterfaceInfo;
 
     BOOL _dead;
 }
@@ -241,6 +244,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
     NSAssert(!_dead, @"Invalid state");
 
     if (_downlinkTestStartedAtNanos == 0) {
+        _downlinkStartInterfaceInfo = [[_testResult lastConnectivity] getInterfaceInfo];
         _downlinkTestStartedAtNanos = nanos;
     }
 
@@ -269,6 +273,8 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 
     if ([self markWorkerAsFinished]) {
         RMBTLog(@"Downlink test finished");
+
+        _downlinkEndInterfaceInfo = [[_testResult lastConnectivity] getInterfaceInfo];
 
         NSArray *measuredThroughputs = [_testResult flush];
 
@@ -307,6 +313,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
     if (_uplinkTestStartedAtNanos == 0) {
         _uplinkTestStartedAtNanos = nanos;
         delay = 0;
+        _uplinkStartInterfaceInfo = [[_testResult lastConnectivity] getInterfaceInfo];
     } else {
         delay = nanos - _uplinkTestStartedAtNanos;
     }
@@ -337,6 +344,8 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
     if ([self markWorkerAsFinished]) {
         // Stop observing now, test is finished
         [self finalize];
+
+        _uplinkEndInterfaceInfo = [[_testResult lastConnectivity] getInterfaceInfo];
 
         NSArray *measuredThroughputs = [_testResult flush];
         RMBTLog(@"Uplink test finished.");
@@ -415,17 +424,33 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
         @"test_ip_server": RMBTValueOrNull(firstWorker.serverIp),
     }];
 
-    RMBTConnectivityInterfaceInfo endInfo = [[_testResult lastConnectivity] getInterfaceInfo];
+    [result addEntriesFromDictionary:[self interfaceBytesResultDictionaryWithStartInfo:_downlinkStartInterfaceInfo
+                                                                               endInfo:_downlinkEndInterfaceInfo
+                                                                                prefix:@"testdl"]];
 
-    if (_connectivityInterfaceInfo.bytesReceived < endInfo.bytesReceived &&
-        _connectivityInterfaceInfo.bytesSent < endInfo.bytesSent) {
-        [result addEntriesFromDictionary:@{
-          @"test_if_bytes_download": [NSNumber numberWithUnsignedLongLong:endInfo.bytesReceived - _connectivityInterfaceInfo.bytesReceived],
-          @"test_if_bytes_upload": [NSNumber numberWithUnsignedLongLong:endInfo.bytesSent - _connectivityInterfaceInfo.bytesSent]
-        }];
-    }
+    [result addEntriesFromDictionary:[self interfaceBytesResultDictionaryWithStartInfo:_uplinkStartInterfaceInfo
+                                                                               endInfo:_uplinkEndInterfaceInfo
+                                                                                prefix:@"testul"]];
+
+    [result addEntriesFromDictionary:[self interfaceBytesResultDictionaryWithStartInfo:_startInterfaceInfo
+                                                                               endInfo:_uplinkEndInterfaceInfo
+                                                                                prefix:@"test"]];
 
     return result;
+}
+
+- (NSDictionary*)interfaceBytesResultDictionaryWithStartInfo:(RMBTConnectivityInterfaceInfo)startInfo
+                                                     endInfo:(RMBTConnectivityInterfaceInfo)endInfo
+                                                      prefix:(NSString*)prefix {
+    if (startInfo.bytesReceived <= endInfo.bytesReceived &&
+        startInfo.bytesSent < endInfo.bytesSent) {
+        return @{
+         [NSString stringWithFormat:@"%@_if_bytes_download", prefix]: [NSNumber numberWithUnsignedLongLong:endInfo.bytesReceived - startInfo.bytesReceived],
+         [NSString stringWithFormat:@"%@_if_bytes_upload", prefix]: [NSNumber numberWithUnsignedLongLong:endInfo.bytesSent - startInfo.bytesSent]
+        };
+    } else {
+        return @{};
+    }
 }
 
 #pragma mark - Utility methods
@@ -516,7 +541,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 - (void)connectivityTracker:(RMBTConnectivityTracker *)tracker didDetectConnectivity:(RMBTConnectivity *)connectivity {
     dispatch_async(_workerQueue, ^{
         if (![_testResult lastConnectivity]) {
-            _connectivityInterfaceInfo = [connectivity getInterfaceInfo];
+            _startInterfaceInfo = [connectivity getInterfaceInfo];
         }
         if (_phase != RMBTTestRunnerPhaseNone) [_testResult addConnectivity:connectivity];
     });
