@@ -145,6 +145,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 
     _testParams = testParams;
     _testResult = [[RMBTTestResult alloc] initWithResolutionNanos:RMBT_TEST_SAMPLING_RESOLUTION_MS * NSEC_PER_MSEC];
+    [_testResult markTestStart];
 
     _workers = [NSMutableArray arrayWithCapacity:_testParams.threadCount];
 
@@ -435,6 +436,14 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
     [result addEntriesFromDictionary:[self interfaceBytesResultDictionaryWithStartInfo:_startInterfaceInfo
                                                                                endInfo:_uplinkEndInterfaceInfo
                                                                                 prefix:@"test"]];
+
+    // Add relative time_(dl/ul)_ns timestamps:
+    uint64_t startNanos = _testResult.testStartNanos;
+
+    [result addEntriesFromDictionary:@{
+         @"time_dl_ns": [NSNumber numberWithUnsignedLongLong:_downlinkTestStartedAtNanos - startNanos],
+         @"time_ul_ns": [NSNumber numberWithUnsignedLongLong:_uplinkTestStartedAtNanos - startNanos]
+    }];
 
     return result;
 }

@@ -34,10 +34,16 @@
 
 @property (nonatomic, readonly) NSArray *locations;
 
+@property (nonatomic, readonly) uint64_t testStartNanos;
+
 - (instancetype)initWithResolutionNanos:(uint64_t)nanos;
 - (instancetype)init __attribute__((unavailable("use initWithResolutionNanos:")));
 
-- (void)addPingWithServerNanos:(uint64_t)serverNanos clientNanos:(uint64_t)clientNanos;
+
+-(void)markTestStart;
+
+-(void)addPingWithServerNanos:(uint64_t)serverNanos clientNanos:(uint64_t)clientNanos;
+
 
 - (NSArray*)addLength:(uint64_t)length atNanos:(uint64_t)ns forThreadIndex:(NSUInteger)threadIndex;
 - (void)addLocation:(CLLocation*)location;
@@ -50,6 +56,5 @@
 - (NSArray*)flush;
 
 - (NSDictionary*)resultDictionary;
-- (NSDictionary*)locationsResultDictionary;
 
 @end

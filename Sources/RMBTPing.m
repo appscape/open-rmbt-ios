@@ -19,10 +19,13 @@
 
 @implementation RMBTPing
 
-- (id)initWithServerNanos:(uint64_t)serverNanos clientNanos:(uint64_t)clientNanos {
+- (id)initWithServerNanos:(uint64_t)serverNanos
+              clientNanos:(uint64_t)clientNanos
+   relativeTimestampNanos:(uint64_t)timestampNanos {
     if (self = [super init]) {
         _serverNanos = serverNanos;
         _clientNanos = clientNanos;
+        _relativeTimestampNanos = timestampNanos;
     }
     return self;
 }
@@ -30,7 +33,8 @@
 - (NSDictionary*)testResultDictionary {
     return @{
       @"value_server": [NSNumber numberWithUnsignedLongLong:_serverNanos],
-      @"value":        [NSNumber numberWithUnsignedLongLong:_clientNanos]
+      @"value":        [NSNumber numberWithUnsignedLongLong:_clientNanos],
+      @"time_ns":      [NSNumber numberWithUnsignedLongLong:_relativeTimestampNanos],
     };
 }
 

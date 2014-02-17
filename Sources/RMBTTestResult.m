@@ -33,6 +33,8 @@ const int32_t RMBTTestResultSpeedMeasurementFinished = -2;
     RMBTThroughputHistory __weak *_totalCurrentHistory;
 
     NSInteger _maxFrozenPeriodIndex;
+
+    NSDate *_testStartDate;
 }
 
 @end
@@ -55,8 +57,15 @@ const int32_t RMBTTestResultSpeedMeasurementFinished = -2;
     return self;
 }
 
+-(void)markTestStart {
+    _testStartNanos = RMBTCurrentNanos();
+    _testStartDate = [NSDate date];
+}
+
 - (void)addPingWithServerNanos:(uint64_t)serverNanos clientNanos:(uint64_t)clientNanos {
-    RMBTPing *p = [[RMBTPing alloc] initWithServerNanos:serverNanos clientNanos:clientNanos];
+    NSParameterAssert(_testStartNanos > 0);
+
+    RMBTPing *p = [[RMBTPing alloc] initWithServerNanos:serverNanos clientNanos:clientNanos relativeTimestampNanos:RMBTCurrentNanos()-_testStartNanos];
     [_pings addObject:p];
 
     if (_bestPingNanos == 0 || _bestPingNanos > serverNanos) _bestPingNanos = serverNanos;
@@ -295,10 +304,16 @@ const int32_t RMBTTestResultSpeedMeasurementFinished = -2;
 - (NSDictionary*)locationsResultDictionary {
     NSMutableArray *result = [NSMutableArray array];
     for (CLLocation* l in _locations) {
+
+        NSTimeInterval t = [l.timestamp timeIntervalSinceDate:_testStartDate];
+        
+        int64_t ts_nanos = t * NSEC_PER_SEC;
+
         [result addObject:@{
            @"geo_long": [NSNumber numberWithDouble:l.coordinate.longitude],
            @"geo_lat":  [NSNumber numberWithDouble:l.coordinate.latitude],
            @"tstamp":   [NSNumber numberWithUnsignedLongLong:(unsigned long long)([l.timestamp timeIntervalSince1970] * 1000ul)],
+           @"time_ns":  [NSNumber numberWithLongLong:ts_nanos],
            @"accuracy": [NSNumber numberWithDouble:l.horizontalAccuracy],
            @"altitude": [NSNumber numberWithDouble:l.altitude],
            @"speed": [NSNumber numberWithDouble:(l.speed > 0.0 ? l.speed : 0.0)]

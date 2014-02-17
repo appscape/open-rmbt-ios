@@ -20,8 +20,12 @@
 @interface RMBTPing : NSObject
 
 @property (nonatomic, readonly) uint64_t serverNanos, clientNanos;
+@property (nonatomic, readonly) uint64_t relativeTimestampNanos; // relative to test start
 
-- (id)initWithServerNanos:(uint64_t)serverNanos clientNanos:(uint64_t)clientNanos;
+- (id)initWithServerNanos:(uint64_t)serverNanos
+              clientNanos:(uint64_t)clientNanos
+   relativeTimestampNanos:(uint64_t)timestampNanos;
+
 - (NSDictionary*)testResultDictionary;
 
 @end
