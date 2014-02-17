@@ -43,9 +43,9 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
     
     GMSMapView *_mapView;
     GMSMarker *_mapMarker;
-    GMSTileLayer *_mapLayerHeatmap, *_mapLayerPoints;
+    GMSTileLayer *_mapLayerHeatmap, *_mapLayerPoints, *_mapLayerShapes;
     
-    NSMutableDictionary *_heatmapParamsDictionary, *_pointsParamsDictionary;
+    NSMutableDictionary *_tileParamsDictionary;
 
     NSUInteger _tileSize, _pointDiameterSize;
 
@@ -161,19 +161,26 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
 }
 
 - (void)setupMapLayers {
+    _mapLayerShapes = [GMSURLTileLayer tileLayerWithURLConstructor:^NSURL *(NSUInteger x, NSUInteger y, NSUInteger zoom) {
+        return [_mapServer tileURLForMapOverlayType:RMBTMapOptionsOverlayShapes.identifier x:x y:y zoom:zoom params:_tileParamsDictionary];
+    }];
+    _mapLayerShapes.tileSize = _tileSize;
+    _mapLayerShapes.map = _mapView;
+    _mapLayerShapes.zIndex = 100;
+
     _mapLayerHeatmap = [GMSURLTileLayer tileLayerWithURLConstructor:^NSURL *(NSUInteger x, NSUInteger y, NSUInteger zoom) {
-        return [_mapServer tileURLForMapOverlayType:_mapOptions.activeSubtype.overlayType x:x y:y zoom:zoom params:_heatmapParamsDictionary];
+        return [_mapServer tileURLForMapOverlayType:RMBTMapOptionsOverlayHeatmap.identifier x:x y:y zoom:zoom params:_tileParamsDictionary];
     }];
     _mapLayerHeatmap.tileSize = _tileSize;
     _mapLayerHeatmap.map = _mapView;
-    _mapLayerHeatmap.zIndex = 100;
-    
+    _mapLayerHeatmap.zIndex = 101;
+
     _mapLayerPoints = [GMSURLTileLayer tileLayerWithURLConstructor:^NSURL *(NSUInteger x, NSUInteger y, NSUInteger zoom) {
-        return [_mapServer tileURLForMapOverlayType:RMBTMapOptionsOverlayPoints.identifier x:x y:y zoom:zoom params:_pointsParamsDictionary];
+        return [_mapServer tileURLForMapOverlayType:RMBTMapOptionsOverlayPoints.identifier x:x y:y zoom:zoom params:_tileParamsDictionary];
     }];
     _mapLayerPoints.tileSize = _tileSize;
     _mapLayerPoints.map = _mapView;
-    _mapLayerPoints.zIndex = 101;
+    _mapLayerPoints.zIndex = 102;
 }
 
 - (void)deselectCurrentMarker {
@@ -215,18 +222,15 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
 }
 
 - (void)refresh {
-    _heatmapParamsDictionary = [NSMutableDictionary dictionaryWithDictionary:_mapOptions.activeSubtype.paramsDictionary];
-    [_heatmapParamsDictionary addEntriesFromDictionary:@{
-        @"size": [NSString stringWithFormat:@"%d", _tileSize]
+    _tileParamsDictionary = [_mapOptions.activeSubtype.paramsDictionary mutableCopy];
+    [_tileParamsDictionary addEntriesFromDictionary:@{
+        @"size": [NSString stringWithFormat:@"%d", _tileSize],
+        @"point_diameter": [NSString stringWithFormat:@"%d", _pointDiameterSize]
     }];
 
-    _pointsParamsDictionary = [NSMutableDictionary dictionaryWithDictionary:_mapOptions.activeSubtype.paramsDictionary];
-    [_pointsParamsDictionary addEntriesFromDictionary:@{
-         @"point_diameter": [NSString stringWithFormat:@"%d", _pointDiameterSize],
-         @"size": [NSString stringWithFormat:@"%d", _tileSize]
-    }];
-    
     [self updateLayerVisiblity];
+
+    [_mapLayerShapes clearTileCache];
     [_mapLayerPoints clearTileCache];
     [_mapLayerHeatmap clearTileCache];
 
@@ -326,11 +330,32 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
 
 - (void)updateLayerVisiblity {
     RMBTMapOptionsOverlay* overlay = _mapOptions.activeOverlay;
-    
-    // Show points only if forcing heatmap, or zoom level < 12
-    [self setLayer:_mapLayerPoints
-            hidden:(overlay == RMBTMapOptionsOverlayHeatmap) || (overlay == RMBTMapOptionsOverlayAuto && _mapView.camera.zoom < RMBT_MAP_AUTO_TRESHOLD_ZOOM)];
-    [self setLayer:_mapLayerHeatmap hidden:(overlay == RMBTMapOptionsOverlayPoints)];
+
+    BOOL heatmapVisible = NO;
+    BOOL shapesVisible = NO;
+    BOOL pointsVisible = NO;
+
+    if (overlay == RMBTMapOptionsOverlayShapes) {
+        shapesVisible = YES;
+    } else if (overlay == RMBTMapOptionsOverlayPoints) {
+        pointsVisible = YES;
+    } else if (overlay == RMBTMapOptionsOverlayHeatmap) {
+        heatmapVisible = YES;
+    } else if (overlay == RMBTMapOptionsOverlayAuto) {
+        if ([_mapOptions.activeSubtype.type.identifier isEqualToString:@"browser"]) {
+            // Shapes
+            shapesVisible = YES;
+        } else {
+            heatmapVisible = YES;
+        }
+        pointsVisible = (_mapView.camera.zoom >= RMBT_MAP_AUTO_TRESHOLD_ZOOM);
+    } else {
+        NSParameterAssert(NO);
+    }
+
+    [self setLayer:_mapLayerHeatmap hidden:!heatmapVisible];
+    [self setLayer:_mapLayerPoints hidden:!pointsVisible];
+    [self setLayer:_mapLayerShapes hidden:!shapesVisible];
 }
 
 #pragma mark - Segues

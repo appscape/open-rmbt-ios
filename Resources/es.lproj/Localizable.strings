@@ -141,3 +141,6 @@
 /* Test intro screen title when thre's no connectivity */
 "No network connection available" = "No hay conexión de Internet";
 
+/* Map overlay description */
+"Shapes" = "Shapes";
+

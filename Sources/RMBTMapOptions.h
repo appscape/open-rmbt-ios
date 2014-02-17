@@ -39,6 +39,7 @@ typedef NS_ENUM(NSUInteger, RMBTMapOptionsMapViewType) {
 extern RMBTMapOptionsOverlay* RMBTMapOptionsOverlayAuto;
 extern RMBTMapOptionsOverlay* RMBTMapOptionsOverlayHeatmap;
 extern RMBTMapOptionsOverlay* RMBTMapOptionsOverlayPoints;
+extern RMBTMapOptionsOverlay* RMBTMapOptionsOverlayShapes;
 
 @interface RMBTMapOptionsFilterValue : NSObject
 @property (nonatomic, readonly) NSString *title;

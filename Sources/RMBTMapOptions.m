@@ -21,6 +21,7 @@
 RMBTMapOptionsOverlay* RMBTMapOptionsOverlayAuto;
 RMBTMapOptionsOverlay* RMBTMapOptionsOverlayHeatmap;
 RMBTMapOptionsOverlay* RMBTMapOptionsOverlayPoints;
+RMBTMapOptionsOverlay* RMBTMapOptionsOverlayShapes;
 
 NSString * const RMBTMapOptionsToastInfoTitle = @"title";
 NSString * const RMBTMapOptionsToastInfoKeys =  @"keys";
@@ -43,12 +44,15 @@ NSString * const RMBTMapOptionsToastInfoValues = @"values";
                                                                    localizedDescription:NSLocalizedString(@"Auto", @"Map overlay description")];
         RMBTMapOptionsOverlayHeatmap = [[RMBTMapOptionsOverlay alloc] initWithIdentifier:@"heatmap"
                                                                    localizedDescription:NSLocalizedString(@"Heatmap", @"Map overlay description")];
+        RMBTMapOptionsOverlayShapes = [[RMBTMapOptionsOverlay alloc] initWithIdentifier:@"shapes"
+                                                                    localizedDescription:NSLocalizedString(@"Shapes", @"Map overlay description")];
+
     }
 }
 
 - (instancetype)initWithResponse:(NSDictionary*)response {
     if (self = [super init]) {
-        _overlays = [NSArray arrayWithObjects:RMBTMapOptionsOverlayAuto, RMBTMapOptionsOverlayHeatmap, RMBTMapOptionsOverlayPoints, nil];
+        _overlays = [NSArray arrayWithObjects:RMBTMapOptionsOverlayAuto, RMBTMapOptionsOverlayHeatmap, RMBTMapOptionsOverlayPoints, RMBTMapOptionsOverlayShapes, nil];
         _types = [NSMutableArray array];
 
         response = response[@"mapfilter"]; // Root element, always the same

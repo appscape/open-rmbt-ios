@@ -141,3 +141,6 @@
 /* Test intro screen title when thre's no connectivity */
 "No network connection available" = "Keine Netzwerkverbindung verfügbar";
 
+/* Map overlay description */
+"Shapes" = "PLZ";
+

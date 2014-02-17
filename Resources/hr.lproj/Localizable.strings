@@ -141,3 +141,6 @@
 /* Test intro screen title when thre's no connectivity */
 "No network connection available" = "Veza s internetom nije moguća";
 
+/* Map overlay description */
+"Shapes" = "Shapes";
+
