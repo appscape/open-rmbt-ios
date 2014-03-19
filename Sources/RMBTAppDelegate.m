@@ -99,6 +99,7 @@
 
     // Tint color
     [[RMBTNavigationBar appearance] setTintColor:RMBT_TINT_COLOR];
+    [[UITabBar appearance] setTintColor:RMBT_TINT_COLOR];
 
     // Text color
     [[RMBTNavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
