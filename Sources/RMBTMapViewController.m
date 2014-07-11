@@ -117,6 +117,7 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
     _mapView.buildingsEnabled = NO;
     _mapView.myLocationEnabled = YES;
 
+    _mapView.padding = UIEdgeInsetsMake(60.0f, 10.0f, 60.0f, 10.0f);
     _mapView.settings.myLocationButton = NO;
     _mapView.settings.compassButton = NO;
     _mapView.settings.tiltGestures = NO;
