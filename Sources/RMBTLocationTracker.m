@@ -53,7 +53,9 @@ NSString * const RMBTLocationTrackerNotification = @"RMBTLocationTrackerNotifica
 }
 
 - (BOOL)startIfAuthorized {
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized ||
+        [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways ||
+        [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse ) {
         [_locationManager startUpdatingLocation];
         return YES;
     } else {
@@ -88,6 +90,9 @@ NSString * const RMBTLocationTrackerNotification = @"RMBTLocationTrackerNotifica
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [_locationManager startUpdatingLocation];
+    }
     if (_authorizationCallback) _authorizationCallback();
 }
 
