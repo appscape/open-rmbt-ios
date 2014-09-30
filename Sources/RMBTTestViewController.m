@@ -266,8 +266,7 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
     if (_loopMode) {
         [self startNextLoop];
     } else {
-        _result = result;
-        [self performSegueWithIdentifier:@"finish" sender:self];
+        [self.delegate testViewController:self didFinishWithTestResult:result];
     }
 }
 

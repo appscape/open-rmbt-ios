@@ -30,7 +30,7 @@ static const CGFloat kRadiateAnimationStartRadius = 9.0;
 static const CGFloat kRadiateAnimationStartOffsetWifi = 22.0f;
 static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
 
-@interface RMBTIntroViewController ()<RMBTConnectivityTrackerDelegate, UIViewControllerTransitioningDelegate> {
+@interface RMBTIntroViewController ()<RMBTTestViewControllerDelegate, RMBTConnectivityTrackerDelegate, UIViewControllerTransitioningDelegate> {
     RMBTConnectivityTracker *_connectivityTracker;
     RMBTHistoryResult *_result;
     id _radiateBlock;
@@ -108,13 +108,16 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
     [self presentModalBrowserWithURLString:RMBT_HELP_URL];
 }
 
-- (IBAction)unwindFromTest:(UIStoryboardSegue*)segue {
-    RMBTTestViewController* testVC = segue.sourceViewController;
-    NSParameterAssert(testVC.result);
+- (void)testViewController:(RMBTTestViewController *)controller didFinishWithTestResult:(RMBTHistoryResult *)result {
+    NSParameterAssert(result);
 
     self.tabBarController.selectedIndex = 1; // TODO: avoid hardcoding tab index
     RMBTHistoryIndexViewController *historyVC = [((UINavigationController*)[self.tabBarController selectedViewController]).viewControllers firstObject];
-    [historyVC displayTestResult:testVC.result];
+    [historyVC displayTestResult:result];
+
+
+    [controller dismissViewControllerAnimated:YES completion:^{
+    }];
 }
 
 // Before transitioning to test view controller, we want to wait for user to allow/deny location services first
@@ -124,6 +127,7 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
     [[RMBTLocationTracker sharedTracker] startAfterDeterminingAuthorizationStatus:^{
         RMBTTestViewController *testVC = [self.storyboard instantiateViewControllerWithIdentifier:@"test_vc"];
         testVC.transitioningDelegate = self;
+        testVC.delegate = self;
         [self presentViewController:testVC animated:YES completion:^{
 
         }];

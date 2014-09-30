@@ -19,7 +19,15 @@
 #import "RMBTHistoryResult.h"
 #import "RMBTSpeedGraphView.h"
 
+@class RMBTTestViewController;
+
+@protocol RMBTTestViewControllerDelegate<NSObject>
+- (void)testViewController:(RMBTTestViewController*)controller didFinishWithTestResult:(RMBTHistoryResult*)result;
+@end
+
 @interface RMBTTestViewController : UIViewController
+
+@property (nonatomic, weak) id<RMBTTestViewControllerDelegate> delegate;
 
 // Network name and type
 @property (nonatomic, strong) IBOutlet UILabel *networkTypeLabel, *networkNameLabel;
@@ -44,8 +52,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *footerLocalIpLabel;
 @property (nonatomic, strong) IBOutlet UILabel *footerLocationLabel;
 @property (nonatomic, strong) IBOutlet UILabel *footerLoopLabel;
-
-@property (nonatomic, readonly) RMBTHistoryResult* result;
 
 
 @end
