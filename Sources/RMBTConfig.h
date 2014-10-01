@@ -23,7 +23,7 @@
 #define RMBT_TEST_LOOPMODE_WAIT_BETWEEN_RETRIES_S 5
 #define RMBT_TEST_PRETEST_MIN_CHUNKS_FOR_MULTITHREADED_TEST 4
 #define RMBT_TEST_PRETEST_DURATION_S    2.0
-#define RMBT_TEST_PING_COUNT            5
+#define RMBT_TEST_PING_COUNT            10
 
 // In case of slow upload, we finalize the test even if this many seconds still haven't been received:
 #define RMBT_TEST_UPLOAD_MAX_DISCARD_S  1.0
