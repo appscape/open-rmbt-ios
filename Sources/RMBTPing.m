@@ -30,6 +30,12 @@
     return self;
 }
 
+- (NSString*)description {
+    return [NSString stringWithFormat:@"RMBTPing (server=%" PRIu64 ", client=%" PRIu64 ")",
+            _serverNanos,
+            _clientNanos];
+}
+
 - (NSDictionary*)testResultDictionary {
     return @{
       @"value_server": [NSNumber numberWithUnsignedLongLong:_serverNanos],
