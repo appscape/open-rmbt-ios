@@ -28,6 +28,7 @@
 
 @property (nonatomic, readonly) NSArray *pings;
 @property (nonatomic, readonly) uint64_t bestPingNanos;
+@property (nonatomic, readonly) uint64_t medianPingNanos;
 
 @property (nonatomic, readonly) RMBTThroughputHistory *totalDownloadHistory, *totalUploadHistory, *totalCurrentHistory;
 @property (nonatomic, readonly) NSArray *perThreadDownloadHistories, *perThreadUploadHistories;

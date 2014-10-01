@@ -202,7 +202,7 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
 
 - (void)testRunnerDidFinishPhase:(RMBTTestRunnerPhase)phase {
     if (phase == RMBTTestRunnerPhaseLatency) {
-        [self displayText:RMBTMillisecondsStringWithNanos(_testRunner.testResult.bestPingNanos) forFooter:RMBTTestViewFooterPing];
+        [self displayText:RMBTMillisecondsStringWithNanos(_testRunner.testResult.medianPingNanos) forFooter:RMBTTestViewFooterPing];
     } else if (phase == RMBTTestRunnerPhaseDown) {
         _speedGaugeView.value = 0;
         // Speed gauge set to 0, but leave the chart until we have measurements for the upload

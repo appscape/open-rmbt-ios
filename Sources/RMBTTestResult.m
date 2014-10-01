@@ -53,6 +53,7 @@ const int32_t RMBTTestResultSpeedMeasurementFinished = -2;
         _totalUploadHistory = [[RMBTThroughputHistory alloc] initWithResolutionNanos:nanos];
 
         _bestPingNanos = 0;
+        _medianPingNanos = 0;
     }
     return self;
 }
@@ -68,6 +69,9 @@ const int32_t RMBTTestResultSpeedMeasurementFinished = -2;
     RMBTPing *p = [[RMBTPing alloc] initWithServerNanos:serverNanos clientNanos:clientNanos relativeTimestampNanos:RMBTCurrentNanos()-_testStartNanos];
     [_pings addObject:p];
 
+    if (_bestPingNanos == 0 || _bestPingNanos > serverNanos) _bestPingNanos = serverNanos;
+    if (_bestPingNanos > clientNanos) _bestPingNanos = clientNanos;
+
     // Take median from server pings as "best" ping
     NSArray *sortedPings = [_pings sortedArrayUsingComparator:^NSComparisonResult(RMBTPing *p1, RMBTPing *p2) {
         if (p1.serverNanos > p2.serverNanos) {
@@ -82,13 +86,14 @@ const int32_t RMBTTestResultSpeedMeasurementFinished = -2;
     if (sortedPings.count % 2 == 1) {
         // Uneven number of pings, median is right in the middle
         NSUInteger i = (sortedPings.count - 1) / 2;
-        _bestPingNanos = ((RMBTPing*)sortedPings[i]).serverNanos;
+        _medianPingNanos = ((RMBTPing*)sortedPings[i]).serverNanos;
     } else {
         // Even number of pings, median is defined as average of two middle elements
         NSUInteger i2 = sortedPings.count / 2;
-        _bestPingNanos = (((RMBTPing*)sortedPings[i2]).serverNanos + ((RMBTPing*)sortedPings[i2-1]).serverNanos)/2;
+        _medianPingNanos = (((RMBTPing*)sortedPings[i2]).serverNanos + ((RMBTPing*)sortedPings[i2-1]).serverNanos)/2;
     }
-    //RMBTLog(@"Pings: %@, Sorted: %@, BEST: %" PRIu64, _pings, sortedPings, _bestPingNanos);
+
+    //RMBTLog(@"Pings: %@, Sorted: %@, Median: %" PRIu64, _pings, sortedPings, _bestPingNanos);
 }
 
 - (NSArray*)addLength:(uint64_t)length atNanos:(uint64_t)ns forThreadIndex:(NSUInteger)threadIndex {
