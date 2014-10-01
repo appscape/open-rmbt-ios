@@ -23,7 +23,6 @@
 @property (nonatomic, strong) IBOutlet UIButton *startTestButton;
 @property (nonatomic, strong) IBOutlet UIImageView *logoImageView;
 
-- (IBAction)unwindFromTest:(UIStoryboardSegue*)segue;
 - (IBAction)startTest:(id)sender;
 - (IBAction)showHelp:(id)sender;
 
