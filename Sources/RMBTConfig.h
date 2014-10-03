@@ -50,7 +50,7 @@
 // Note: $lang will be replaced by "de" is device language is german, or "en" in any other case:
 #define RMBT_PROJECT_URL     @"https://www.netztest.at/"
 #define RMBT_PROJECT_EMAIL   @"netztest@rtr.at"
-#define RMBT_PRIVACY_TOS_URL @"https://www.rtr.at/$lang/tk/netztestterms"
+#define RMBT_PRIVACY_TOS_URL @"https://www.netztest.at/redirect/$lang/terms"
 #define RMBT_ABOUT_URL       @"https://www.rtr.at/$lang/"
 #define RMBT_STATS_URL       @"https://www.netztest.at/$lang/Statistik"
 #define RMBT_HELP_URL        @"https://www.rtr.at/$lang/tk/netztesthilfe"
