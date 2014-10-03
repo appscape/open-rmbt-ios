@@ -67,12 +67,20 @@ NSString * const RMBTLocationTrackerNotification = @"RMBTLocationTrackerNotifica
     } else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
         // Not determined yet
         _authorizationCallback = callback;
-        [_locationManager startUpdatingLocation];
+        if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            [_locationManager requestWhenInUseAuthorization];
+        } else {
+            [_locationManager startUpdatingLocation];
+        }
     } else {
         RMBTLog(@"User hasn't enabled or authorized location services");
         // Location services was denied
         callback();
     }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"Failed to obtain location: %@", error);
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {

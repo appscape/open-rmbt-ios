@@ -25,6 +25,7 @@
     #import <SystemConfiguration/SystemConfiguration.h>
 
     #import <BlocksKit/BlocksKit.h>
+    #import <BlocksKit+UIKit.h>
 
     #import <libextobjc/EXTKeyPathCoding.h> // @keypath macro
 

@@ -26,7 +26,7 @@
 @implementation RMBTMapOptionsFilterViewController
 
 - (NSArray*)activeFilters {
-    return [self.mapOptions.activeSubtype.type.filters map:^id(RMBTMapOptionsFilter *f) {
+    return [self.mapOptions.activeSubtype.type.filters bk_map:^id(RMBTMapOptionsFilter *f) {
         return f.activeValue;
     }];
 }

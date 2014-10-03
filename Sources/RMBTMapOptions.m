@@ -89,7 +89,7 @@ NSString * const RMBTMapOptionsToastInfoValues = @"values";
 
     if (selection.subtypeIdentifier) {
         for (RMBTMapOptionsType* t in _types) {
-            RMBTMapOptionsSubtype *st = [t.subtypes match:^BOOL(RMBTMapOptionsSubtype *s) {
+            RMBTMapOptionsSubtype *st = [t.subtypes bk_match:^BOOL(RMBTMapOptionsSubtype *s) {
                 return [s.identifier isEqualToString:selection.subtypeIdentifier];
             }];
             if (st) {
@@ -114,7 +114,7 @@ NSString * const RMBTMapOptionsToastInfoValues = @"values";
         for (RMBTMapOptionsFilter* f in _activeSubtype.type.filters) {
             NSString *activeFilterValueTitle = selection.activeFilters[f.title];
             if (activeFilterValueTitle) {
-                RMBTMapOptionsFilterValue *v = [f.possibleValues match:^BOOL(RMBTMapOptionsFilterValue *fv) {
+                RMBTMapOptionsFilterValue *v = [f.possibleValues bk_match:^BOOL(RMBTMapOptionsFilterValue *fv) {
                     return [fv.title isEqualToString:activeFilterValueTitle];
                 }];
                 if (v) {

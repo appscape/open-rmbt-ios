@@ -57,7 +57,7 @@
         if (value) [self setValue:value forKey:keyPath];
 
         // Start observing
-        [self addObserverForKeyPath:keyPath options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
+        [self bk_addObserverForKeyPath:keyPath options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
             id newValue = change[NSKeyValueChangeNewKey];
             [[NSUserDefaults standardUserDefaults] setObject:newValue forKey:keyPath];
             [[NSUserDefaults standardUserDefaults] synchronize];

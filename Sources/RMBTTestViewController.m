@@ -138,7 +138,7 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
     // Allow turning off the screen again.
     // Note that enabling the idle timer won't reset it, so if the device has alredy been idle the screen will dim
     // immediately. To prevent this, we delay enabling by 5s.
-    [[UIApplication sharedApplication] performBlock:^(id sender) {
+    [[UIApplication sharedApplication] bk_performBlock:^(id sender) {
         [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     } afterDelay:5.0];
 }
@@ -450,9 +450,9 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
                  otherHandler:(RMBTBlock)otherHandler
 {
     if (_alertView) [_alertView dismissWithClickedButtonIndex:-1 animated:NO];
-    _alertView = [UIAlertView alertViewWithTitle:title message:message];
-    if (cancelButtonTitle) [_alertView setCancelButtonWithTitle:cancelButtonTitle handler:cancelHandler];
-    if (otherButtonTitle) [_alertView addButtonWithTitle:otherButtonTitle handler:otherHandler];
+    _alertView = [UIAlertView bk_alertViewWithTitle:title message:message];
+    if (cancelButtonTitle) [_alertView bk_setCancelButtonWithTitle:cancelButtonTitle handler:cancelHandler];
+    if (otherButtonTitle) [_alertView bk_addButtonWithTitle:otherButtonTitle handler:otherHandler];
     [_alertView show];
 }
 
@@ -479,7 +479,7 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
 
 - (void)restartTestAfterCountdown:(NSTimeInterval)interval {
     __block NSTimeInterval elapsed = 0;
-    _loopRestartTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 block:^(NSTimer *timer) {
+    _loopRestartTimer = [NSTimer bk_scheduledTimerWithTimeInterval:1.0 block:^(NSTimer *timer) {
         elapsed += timer.timeInterval;
         if (elapsed > interval) {
             [timer invalidate];

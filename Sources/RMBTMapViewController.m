@@ -259,7 +259,7 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
 
         if (state) {
             // autohide
-            [self performBlock:^(id sender) {
+            [self bk_performBlock:^(id sender) {
                 [self displayToast:NO withGenieEffect:YES];
             } afterDelay:3.0f];
         }

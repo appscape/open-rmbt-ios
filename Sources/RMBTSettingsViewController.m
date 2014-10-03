@@ -90,7 +90,7 @@
 
 - (void)bindSwitch:(UISwitch*)aSwitch toSettingsKeyPath:(NSString*)keyPath onToggle:(void(^)(BOOL value))onToggle {
     aSwitch.on = [[[RMBTSettings sharedSettings] valueForKey:keyPath] boolValue];
-    [aSwitch addEventHandler:^(UISwitch *sender) {
+    [aSwitch bk_addEventHandler:^(UISwitch *sender) {
         [[RMBTSettings sharedSettings] setValue:[NSNumber numberWithBool:sender.on] forKey:keyPath];
         if (onToggle) onToggle(sender.on);
     } forControlEvents:UIControlEventValueChanged];
@@ -102,7 +102,7 @@
     if (numeric && [stringValue isEqualToString:@"0"]) stringValue = nil;
     aTextField.text = stringValue;
 
-    [aTextField addEventHandler:^(UITextField *sender) {
+    [aTextField bk_addEventHandler:^(UITextField *sender) {
         id newValue = numeric ? [NSNumber numberWithInteger:[sender.text integerValue]] : sender.text;
         [[RMBTSettings sharedSettings] setValue:newValue forKey:keyPath];
     } forControlEvents:UIControlEventEditingDidEnd];

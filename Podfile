@@ -2,7 +2,7 @@ platform :ios, '7.0'
 
 pod 'AFNetworking', '~>1.2'
 
-pod 'BlocksKit', :git => 'https://github.com/pandamonia/BlocksKit.git', :branch => 'master'
+pod 'BlocksKit', '2.2.5'
 pod 'libextobjc/EXTKeyPathCoding'
 
 pod 'SVWebViewController', :git => 'https://github.com/samvermette/SVWebViewController.git'

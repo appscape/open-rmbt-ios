@@ -79,19 +79,19 @@ void RMBTLog(NSString* format, ...) {
             // Observe settings
             
             // 1. enabled
-            [_sharedSettings addObserverForKeyPath:@keypath(_sharedSettings.debugLoggingEnabled) options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
+            [_sharedSettings bk_addObserverForKeyPath:@keypath(_sharedSettings.debugLoggingEnabled) options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
                 enabled = _sharedSettings.debugLoggingEnabled;
             }];
             
             // 2. hostname and port
-            [_sharedSettings addObserverForKeyPath:@keypath(_sharedSettings.debugLoggingHostname) options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
+            [_sharedSettings bk_addObserverForKeyPath:@keypath(_sharedSettings.debugLoggingHostname) options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
                 NSString *hostname = _sharedSettings.debugLoggingHostname;
                 if (!hostname) hostname = @"255.255.255.255";
                 _sharedLogger.destinationHostname = hostname;
             }];
 
             // 3. port
-            [_sharedSettings addObserverForKeyPath:@keypath(_sharedSettings.debugLoggingHostname) options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
+            [_sharedSettings bk_addObserverForKeyPath:@keypath(_sharedSettings.debugLoggingHostname) options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
                 NSUInteger port = _sharedSettings.debugLoggingPort;
                 if (port == 0) port = 9000;
                 _sharedLogger.destinationPort = port;

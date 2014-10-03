@@ -36,7 +36,7 @@
         [RMBTSettings sharedSettings].debugUnlocked = unlock;
         NSString *stateString = unlock ? @"Unlocked" : @"Locked";
 
-        [UIAlertView showAlertViewWithTitle:[NSString stringWithFormat:@"Debug Mode %@", stateString]
+        [UIAlertView bk_showAlertViewWithTitle:[NSString stringWithFormat:@"Debug Mode %@", stateString]
                                     message:@"The app will now quit to apply the new settings."
                           cancelButtonTitle:@"OK"
                           otherButtonTitles:nil
@@ -71,7 +71,7 @@
         [self checkNews];
     } else if (isLaunched) {
         // Re-check after TOS gets accepted, but don't re-add listener on every foreground
-        [tos addObserverForKeyPath:@keypath(tos.lastAcceptedVersion) task:^(id sender) {
+        [tos bk_addObserverForKeyPath:@keypath(tos.lastAcceptedVersion) task:^(id sender) {
             RMBTLog(@"TOS accepted, checking news...");
             [self checkNews];
         }];
@@ -81,7 +81,7 @@
 - (void)checkNews {
     [[RMBTControlServer sharedControlServer] getNews:^(NSArray *news) {
         for (RMBTNews *n in news) {
-            [UIAlertView showAlertViewWithTitle:n.title
+            [UIAlertView bk_showAlertViewWithTitle:n.title
                                         message:n.text
                               cancelButtonTitle:NSLocalizedString(@"Dismiss", @"News alert view button")
                               otherButtonTitles:nil

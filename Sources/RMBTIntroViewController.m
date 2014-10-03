@@ -136,7 +136,7 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
 - (void)connectivityTrackerDidDetectNoConnectivity:(RMBTConnectivityTracker *)tracker {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (_radiateBlock) {
-            [NSObject cancelBlock:_radiateBlock];
+            [NSObject bk_cancelBlock:_radiateBlock];
             _radiateBlock = nil;
         }
         self.networkNameLabel.text = @"";
@@ -185,7 +185,7 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
 - (void)radiateFromPoint:(CGPoint)point {
     if (_radiateBlock) return;
 
-    _radiateBlock = [self performBlock:^(id sender) {
+    _radiateBlock = [self bk_performBlock:^(id sender) {
         [sender createWaveFromPoint:point last:NO];
         [sender createWaveFromPoint:point last:YES];
     } afterDelay:0.25]; // Wait half a second before starting animation

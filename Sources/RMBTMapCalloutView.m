@@ -39,14 +39,14 @@ static const CGSize kTriangleSize = {30.0f, 20.0f};
 - (void)setMeasurement:(RMBTMapMeasurement *)measurement {
     _titleLabel.text = measurement.timeString;
 
-    _measurementCells = [measurement.measurementItems map:^id(RMBTHistoryResultItem* i) {
+    _measurementCells = [measurement.measurementItems bk_map:^id(RMBTHistoryResultItem* i) {
         RMBTHistoryResultItemCell *cell = [[RMBTHistoryResultItemCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
         cell.item = i;
         [cell setEmbedded:YES];
         return cell;
     }];
 
-    _netCells = [measurement.netItems map:^id(RMBTHistoryResultItem* i) {
+    _netCells = [measurement.netItems bk_map:^id(RMBTHistoryResultItem* i) {
         RMBTHistoryResultItemCell *cell = [[RMBTHistoryResultItemCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
         cell.item = i;
         [cell setEmbedded:YES];

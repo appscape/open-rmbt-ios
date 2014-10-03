@@ -8,6 +8,10 @@
       "idiom" : "universal",
       "scale" : "2x",
       "filename" : "tab_info_selected.png"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

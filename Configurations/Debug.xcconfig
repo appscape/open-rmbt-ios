@@ -1,4 +1,4 @@
-#include "../Pods/Pods.xcconfig"
+#include "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"
 #include "_Shared.xcconfig"
 
 CONFIG_BUNDLE_ID=at.rtr.openrmbt

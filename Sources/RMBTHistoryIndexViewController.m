@@ -318,7 +318,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == kSyncSheetRequestCodeButtonIndex) {
         [[RMBTControlServer sharedControlServer] getSyncCode:^(NSString* code) {
-            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Sync Code", @"Display code alert title")
+            [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Sync Code", @"Display code alert title")
                                         message:code
                               cancelButtonTitle:NSLocalizedString(@"OK", @"Display code alert button")
                               otherButtonTitles:@[NSLocalizedString(@"Copy code", @"Display code alert button")]
@@ -349,7 +349,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         NSString* code = [[alertView textFieldAtIndex:0].text uppercaseString];
 
         [[RMBTControlServer sharedControlServer] syncWithCode:code success:^{
-            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Success", @"Sync success alert title")
+            [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Success", @"Sync success alert title")
                                       message:NSLocalizedString(@"History synchronisation was successful.", @"Sync success alert msg")
                             cancelButtonTitle:NSLocalizedString(@"Reload", @"Sync success button")
                             otherButtonTitles:nil
@@ -360,7 +360,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         } error:^(NSError *error, NSDictionary *response) {
             NSString *title = error.userInfo[@"msg_title"];
             NSString *text = error.userInfo[@"msg_text"];
-            [UIAlertView showAlertViewWithTitle:title message:text cancelButtonTitle:NSLocalizedString(@"Dismiss",@"Alert view button") otherButtonTitles:@[] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            [UIAlertView bk_showAlertViewWithTitle:title message:text cancelButtonTitle:NSLocalizedString(@"Dismiss",@"Alert view button") otherButtonTitles:@[] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 
             }];
         }];

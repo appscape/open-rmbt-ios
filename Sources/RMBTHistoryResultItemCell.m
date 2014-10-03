@@ -49,7 +49,7 @@ NSString * const RMBTTrafficLightTappedNotification = @"RMBTTrafficLightTappedNo
 
         CGFloat rightEdge = self.boundsWidth - 44.0f;
 
-        UITapGestureRecognizer *r = [UITapGestureRecognizer recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
+        UITapGestureRecognizer *r = [UITapGestureRecognizer bk_recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
             if (location.x >=rightEdge) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:RMBTTrafficLightTappedNotification object:self userInfo:nil];
             }
