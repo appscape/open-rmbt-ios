@@ -14,7 +14,7 @@ OpenRMBT is released under the [Apache License, Version 2.0]. The iOS App was de
 Building
 --------
 
-Xcode 5 with iOS 7 SDK is required to build the Open-RMBT iOS App.
+Xcode 6 with iOS 8 SDK is required to build the Open-RMBT iOS App.
 
 Before building, you need to supply a correct Google Maps API key as well as a Open-RMBT server parameters in `RMBTConfig.h`.
 
@@ -26,7 +26,7 @@ In addition Google Maps iOS SDK, OpenRMBT iOS App uses several open source 3rd-p
 * [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket), public domain license
 * [AFNetworking](https://github.com/AFNetworking/AFNetworking), MIT license
 * [SVWebViewController](https://github.com/samvermette/SVWebViewController), MIT license
-* [BlocksKit](https://github.com/pandamonia/BlocksKit), MIT license
+* [BlocksKit](https://github.com/zwaldowski/BlocksKit), MIT license
 * [libextobjc](https://github.com/jspahrsummers/libextobjc), MIT license
 * [TUSafariActivity](https://github.com/davbeck/TUSafariActivity), 2-clause BSD license
 * [BCGenieEeffect](https://github.com/Ciechan/BCGenieEffect), MIT license
