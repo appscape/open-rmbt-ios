@@ -7,11 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "tab_map_active.png"
+      "filename" : "tab_map_sel.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "tab_map_sel_3.png"
     }
   ],
   "info" : {

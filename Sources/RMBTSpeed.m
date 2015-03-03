@@ -26,15 +26,28 @@ double RMBTSpeedLogValue(uint32_t kbps) {
     } else {
         log = (2.0f + log10(bps/1e6))/4.0;
     }
-    if (log > 1.0) log = 1.0;
     return log;
 }
 
-NSString* RMBTSpeedMbpsString(uint32_t kbps) {
+NSString* RMBTSpeedMbpsSuffix() {
     static NSString *localizedMps = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         localizedMps = NSLocalizedString(@"Mbps", @"Speed suffix");
     });
-    return [NSString stringWithFormat:@"%@ %@", RMBTFormatNumber([NSNumber numberWithDouble:(double)kbps/1000.0]), localizedMps];
+    return localizedMps;
+}
+
+NSString* RMBTSpeedMbpsStringWithSuffix(uint32_t kbps, BOOL suffix) {
+    NSString *speed = RMBTFormatNumber([NSNumber numberWithDouble:(double)kbps/1000.0]);
+    if (suffix) {
+        return [NSString stringWithFormat:@"%@ %@", speed, RMBTSpeedMbpsSuffix()];
+    } else {
+        return speed;
+    }
+
+}
+
+NSString* RMBTSpeedMbpsString(uint32_t kbps) {
+    return RMBTSpeedMbpsStringWithSuffix(kbps, YES);
 }

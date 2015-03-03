@@ -29,15 +29,14 @@ static CGFloat const kExtendedHeight = 60.0f;
 - (void)setBarTintColor:(UIColor *)barTintColor {
     [super setBarTintColor:barTintColor];
 
-    if (!RMBTIsRunningiOS703()) {
-        if (self.colorLayer == nil) {
-            self.colorLayer = [CALayer layer];
-            self.colorLayer.opacity = kDefaultColorLayerOpacity;
-            [self.layer addSublayer:self.colorLayer];
-        }
-        
-        self.colorLayer.backgroundColor = barTintColor.CGColor;
+
+    if (self.colorLayer == nil) {
+        self.colorLayer = [CALayer layer];
+        self.colorLayer.opacity = kDefaultColorLayerOpacity;
+        [self.layer addSublayer:self.colorLayer];
     }
+    
+    self.colorLayer.backgroundColor = barTintColor.CGColor;
 }
 
 - (void)layoutSubviews {
@@ -53,12 +52,11 @@ static CGFloat const kExtendedHeight = 60.0f;
         }
     }
 
-    if (!RMBTIsRunningiOS703()) {
-        if (self.colorLayer != nil) {
-            self.colorLayer.frame = CGRectMake(0, 0 - kSpaceToCoverStatusBars, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) + kSpaceToCoverStatusBars);
-            
-            [self.layer insertSublayer:self.colorLayer atIndex:1];
-        }
+
+    if (self.colorLayer != nil) {
+        self.colorLayer.frame = CGRectMake(0, 0 - kSpaceToCoverStatusBars, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) + kSpaceToCoverStatusBars);
+        
+        [self.layer insertSublayer:self.colorLayer atIndex:1];
     }
 }
 

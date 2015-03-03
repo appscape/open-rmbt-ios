@@ -26,16 +26,8 @@
 #import "RMBTVerticalTransitionController.h"
 #import "RMBTGaugeView.h"
 
-typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
-    RMBTTestViewFooterStatus,
-    RMBTTestViewFooterLocation,
-    RMBTTestViewFooterLoop,
-    RMBTTestViewFooterConnection,
-    RMBTTestViewFooterPing,
-    RMBTTestViewFooterUp,
-    RMBTTestViewFooterDown,
-    RMBTTestViewFooterTestServer
-};
+#define RMBT_LIGHT_TEXT_DARK ([UIColor rmbt_colorWithRGBHex:0x3d454c])
+#define RMBT_LIGHT_TEXT_LIGHT ([UIColor rmbt_colorWithRGBHex:0x9da2a6])
 
 @interface RMBTTestViewController ()<RMBTTestRunnerDelegate, UIAlertViewDelegate, RMBTTestRunnerDelegate, UIViewControllerTransitioningDelegate> {
     RMBTTestRunner *_testRunner;
@@ -49,6 +41,8 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
 
     // Views
     RMBTGaugeView *_progressGaugeView, *_speedGaugeView;
+
+    NSDictionary *_footerLabelTitleAttributes, *_footerLabelDetailsAttributes;
 }
 @end
 
@@ -57,17 +51,18 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    NSParameterAssert(self.progressGaugePlaceholderView);
-    _progressGaugeView = [[RMBTGaugeView alloc] initWithFrame:self.progressGaugePlaceholderView.frame name:@"progress" startAngle:219.0f endAngle:219.0f + 261.0f ovalRect:CGRectMake(0.0,0,175.0, 175.0)];
-    [self.progressGaugePlaceholderView removeFromSuperview];
-    self.progressGaugePlaceholderView = nil; // release the placeholder view
-    [self.view addSubview:_progressGaugeView];
+    _loopMode = [RMBTSettings sharedSettings].debugUnlocked && [RMBTSettings sharedSettings].debugLoopMode;
+    _loopCounter = 1;
 
-    NSParameterAssert(self.speedGaugePlaceholderView);
-    _speedGaugeView = [[RMBTGaugeView alloc] initWithFrame:self.speedGaugePlaceholderView.frame name:@"speed" startAngle:37.0f endAngle:37.0f + 262.0f ovalRect:CGRectMake(0,0,175.0, 175.0)];
-    [self.speedGaugePlaceholderView removeFromSuperview];
-    self.speedGaugePlaceholderView = nil; // release the placeholder view
-    [self.view addSubview:_speedGaugeView];
+    if (self.roaming) {
+        self.networkNameLabel.hidden = YES;
+    }
+
+    if (!_loopMode) {
+        [_footerLoopLabel removeFromSuperview];
+    }
+
+    self.speedSuffixLabel.text = RMBTSpeedMbpsSuffix();
 
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] init];
     gestureRecognizer.numberOfTapsRequired = 1;
@@ -75,65 +70,72 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
     [gestureRecognizer addTarget:self action:@selector(tapped)];
     [self.view addGestureRecognizer:gestureRecognizer];
 
-    _loopMode = [RMBTSettings sharedSettings].debugUnlocked && [RMBTSettings sharedSettings].debugLoopMode;
-    _loopCounter = 1;
-
     // Only clear connectivity and location labels once at start to avoid blinking during test restart
     self.networkNameLabel.text = @"";
-    [self displayText:@"-" forFooter:RMBTTestViewFooterConnection];
-    [self displayText:@"-" forFooter:RMBTTestViewFooterLocation];
+    [self displayText:@"-" forLabel:self.networkTypeLabel];
+    [self displayText:@"-" forLabel:self.footerLocationLabel];
 
-    [self setupLayout];
+    [self adaptLayout];
+
+    [self.view layoutSubviews];
+
+    // Replace placeholder with speed gauges:
+    NSParameterAssert(self.progressGaugePlaceholderView);
+    _progressGaugeView = [[RMBTGaugeView alloc] initWithFrame:self.progressGaugePlaceholderView.frame name:@"progress" startAngle:219.0f endAngle:219.0f + 261.0f ovalRect:CGRectMake(0.0,0,175.0, 175.0)];
+    [self.view addSubview:_progressGaugeView];
+
+    NSParameterAssert(self.speedGaugePlaceholderView);
+    _speedGaugeView = [[RMBTGaugeView alloc] initWithFrame:self.speedGaugePlaceholderView.frame name:@"speed" startAngle:33.5f endAngle:277.5f ovalRect:CGRectMake(0,0,175.0, 175.0)];
+    [self.view addSubview:_speedGaugeView];
+
+    self.progressGaugePlaceholderView.hidden = YES;
+    self.speedGaugePlaceholderView.hidden = YES;
 
     [self startTest];
 }
 
-- (void)setupLayout {
-    NSMutableDictionary *m = [NSMutableDictionary dictionaryWithDictionary:@{@"s":@(10),@"v":@(6),@"ll":@(2)}];
-
-    if (!RMBTIsRunningOnWideScreen()) {
-        m[@"ll"] = @(0);
-        m[@"v"] = @(4);
-    }
-
-    NSDictionary *labels = NSDictionaryOfVariableBindings(_speedGraphView,
-                                                          _footerLoopLabel,
-                                                          _footerLocationLabel,
-                                                          _footerStatusLabel,
-                                                          _footerTestServerLabel);
-    for (UIView *l in [labels allValues]) {
-        [l setTranslatesAutoresizingMaskIntoConstraints:NO];
-        if (l != self.speedGraphView) {
-            // left and right margin for labels
-            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-s-[l]-s-|" options:0 metrics:m views:NSDictionaryOfVariableBindings(l)]];
-        } else {
-            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[l]|" options:0 metrics:m views:NSDictionaryOfVariableBindings(l)]];
-        }
-    }
-
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_footerStatusLabel]-ll-[_footerTestServerLabel]-ll-[_footerLocationLabel]-ll-[_footerLoopLabel]-(v@20)-|" options:0 metrics:m views:labels]];
-
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_footerLocationLabel]-(v@10)-|" options:0 metrics:m views:labels]];
-
-    NSLayoutConstraint *c = [NSLayoutConstraint constraintWithItem:self.speedGraphView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:_speedGaugeView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-44.0];
-    [self.view addConstraint:c];
-
-    c = [NSLayoutConstraint constraintWithItem:self.speedGraphView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self.footerStatusLabel attribute:NSLayoutAttributeBottom multiplier:1.0 constant:RMBTIsRunningOnWideScreen() ? 24.0 : 26.0];
-    [self.view addConstraint:c];
-
-    if (!_loopMode) {
-        [_footerLoopLabel removeFromSuperview];
-    }
-
-    if (!RMBTIsRunningOnWideScreen()) {
-        // Hide test server label on 3.5"
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_footerTestServerLabel(0)]" options:0 metrics:nil views:labels]];
+// Tweaks layout for various iPhones
+- (void)adaptLayout {
+    switch (RMBTGetFormFactor()) {
+        case RMBTFormFactoriPhone4:
+            // Collapse height of test server label, which hides it without affecting
+            // other autolayout rules
+            self.testServerLabelHeightConstraint.constant = 0.0f;
+            self.speedGraphBottomConstraint.constant = -10.0f;
+            self.progressGaugeTopConstraint.constant = 20.0f;
+            break;
+        case RMBTFormFactoriPhone5:
+            self.networkNameWidthConstraint.constant = 132.0f;
+            break;
+        case RMBTFormFactoriPhone6:
+            self.networkNameWidthConstraint.constant = 280.0f;
+            self.networkSymbolLeftConstraint.constant = 30.0f;
+            self.networkSymbolTopConstraint.constant = 60.0f;
+            self.progressGaugeTopConstraint.constant = 84.0f;
+            self.footerBottomConstraint.constant = 15.0f;
+            self.speedGraphBottomConstraint.constant = 10.0f;
+            break;
+        case RMBTFormFactoriPhone6Plus:
+            self.networkNameWidthConstraint.constant = 300.0f;
+            self.networkSymbolLeftConstraint.constant = 40.0f;
+            self.networkSymbolTopConstraint.constant = 70.0f;
+            self.progressGaugeTopConstraint.constant = 94.0f;
+            self.speedGraphBottomConstraint.constant = 20.0f;
+            self.footerBottomConstraint.constant = 20.0f;
+            break;
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
 
     // Allow turning off the screen again.
     // Note that enabling the idle timer won't reset it, so if the device has alredy been idle the screen will dim
@@ -150,16 +152,19 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
     _finishedPercentage = 0;
     [self displayPercentage:0];
 
-    [self displayText:@"-" forFooter:RMBTTestViewFooterPing];
-    [self displayText:@"-" forFooter:RMBTTestViewFooterDown];
-    [self displayText:@"-" forFooter:RMBTTestViewFooterUp];
-    [self displayText:@"-" forFooter:RMBTTestViewFooterStatus];
+    [self displayText:@"-" forLabel:self.footerTestServerLabel];
+    [self displayText:@"-" forLabel:self.pingResultLabel];
+    [self displayText:@"-" forLabel:self.downResultLabel];
+    [self displayText:@"-" forLabel:self.upResultLabel];
+    [self displayText:@"-" forLabel:self.footerStatusLabel];
 
-    [self displayText:[NSString stringWithFormat:@"%u/%u", _loopCounter,RMBT_TEST_LOOPMODE_LIMIT] forFooter:RMBTTestViewFooterLoop];
+    [self displayText:[NSString stringWithFormat:@"%u/%u", _loopCounter,RMBT_TEST_LOOPMODE_LIMIT] forLabel:self.footerLoopLabel];
 
     self.arrowImageView.image = nil;
 
     _speedGaugeView.value = 0.0;
+    self.speedLabel.text = @"";
+    self.speedSuffixLabel.hidden = YES;
     [self.speedGraphView clear];
 
     _testRunner = [[RMBTTestRunner alloc] initWithDelegate:self];
@@ -170,11 +175,12 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
 
 - (void)testRunnerDidDetectConnectivity:(RMBTConnectivity *)connectivity {
     self.networkNameLabel.text = RMBTValueOrString(connectivity.networkName, @"n/a");
-    [self displayText:RMBTValueOrString(connectivity.networkTypeDescription, @"n/a") forFooter:RMBTTestViewFooterConnection];
+    [self displayText:RMBTValueOrString(connectivity.networkTypeDescription, @"n/a") forLabel:self.networkTypeLabel];
 
     if (connectivity.networkType == RMBTNetworkTypeCellular) {
         self.networkTypeImageView.image = [UIImage imageNamed:@"test_cellular"];
     } else if (connectivity.networkType == RMBTNetworkTypeWiFi) {
+        NSParameterAssert(!self.roaming);
         self.networkTypeImageView.image = [UIImage imageNamed:@"test_wifi"];
     } else {
         self.networkTypeImageView.image = nil;
@@ -183,26 +189,28 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
 
 - (void)testRunnerDidDetectLocation:(CLLocation *)location {
     // Show location in status
-    [self displayText:[location rmbtFormattedString] forFooter:RMBTTestViewFooterLocation];
+    [self displayText:[location rmbtFormattedString] forLabel:self.footerLocationLabel];
 }
 
 - (void)testRunnerDidStartPhase:(RMBTTestRunnerPhase)phase {
     if (phase == RMBTTestRunnerPhaseInit || phase == RMBTTestRunnerPhaseWait) {
-        [self displayText:_testRunner.testParams.serverName forFooter:RMBTTestViewFooterTestServer];
+        [self displayText:_testRunner.testParams.serverName forLabel:self.footerTestServerLabel];
 //        self.footerTestServerLabel.text = _testRunner.testParams.serverName;
 //        self.footerLocalIpLabel.text = _testRunner.testParams.clientRemoteIp;
     } else if (phase == RMBTTestRunnerPhaseDown) {
         self.arrowImageView.image = [UIImage imageNamed:@"test_arrow_down"];
     } else if (phase == RMBTTestRunnerPhaseUp) {
         [self.speedGraphView clear];
+        self.speedLabel.text = @"";
+        self.speedSuffixLabel.hidden = YES;
         self.arrowImageView.image = [UIImage imageNamed:@"test_arrow_up"];
     }
-    [self displayText:[self statusStringForPhase:phase] forFooter:RMBTTestViewFooterStatus];
+    [self displayText:[self statusStringForPhase:phase] forLabel:self.footerStatusLabel];
 }
 
 - (void)testRunnerDidFinishPhase:(RMBTTestRunnerPhase)phase {
     if (phase == RMBTTestRunnerPhaseLatency) {
-        [self displayText:RMBTMillisecondsStringWithNanos(_testRunner.testResult.medianPingNanos) forFooter:RMBTTestViewFooterPing];
+        [self displayText:RMBTMillisecondsStringWithNanos(_testRunner.testResult.medianPingNanos) forLabel:self.pingResultLabel final:YES];
     } else if (phase == RMBTTestRunnerPhaseDown) {
         _speedGaugeView.value = 0;
         // Speed gauge set to 0, but leave the chart until we have measurements for the upload
@@ -248,7 +256,7 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
 
     for (RMBTThroughput* t in throughputs) {
         kbps = t.kilobitsPerSecond;
-        l = RMBTSpeedLogValue(kbps);
+        l = RMBTSpeedLogValue(MIN(kbps, RMBT_TEST_MAX_CHART_KBPS)); // Clip max display speed
         [self.speedGraphView addValue:l atTimeInterval:(double)t.endNanos/NSEC_PER_SEC];
     }
 
@@ -331,14 +339,17 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
         }
     }
 
-    [self displayText:NSLocalizedString(@"Aborted", @"Footer status label") forFooter:RMBTTestViewFooterStatus];
+    [self displayText:NSLocalizedString(@"Aborted", @"Footer status label") forLabel:self.footerStatusLabel];
 }
 
 #pragma mark - UI
 
 - (void)updateSpeedLabelForPhase:(RMBTTestRunnerPhase)phase withSpeed:(uint32_t)kbps isFinal:(BOOL)final {
-    RMBTTestViewFooter f = (phase == RMBTTestRunnerPhaseDown) ? RMBTTestViewFooterDown : RMBTTestViewFooterUp;
-    [self displayText:RMBTSpeedMbpsString(kbps) forFooter:f];
+    self.speedSuffixLabel.hidden = NO;
+    UILabel *l = (phase == RMBTTestRunnerPhaseDown) ? self.downResultLabel : self.upResultLabel;
+    [self displayText:RMBTSpeedMbpsString(kbps) forLabel:l final:final];
+    self.speedLabel.text = RMBTSpeedMbpsStringWithSuffix(kbps, NO);
+
 //    NSAssert(kbps > 0, @"Speed zero?");
 //
 //    UILabel *label = (phase == RMBTTestRunnerPhaseDown) ? self.downResultLabel : self.upResultLabel;
@@ -484,7 +495,7 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
             [timer invalidate];
             [self startNextLoop];
         } else {
-            [self displayText:[NSString stringWithFormat:@"Restarting test in %d seconds", (NSUInteger)(interval-elapsed)] forFooter:RMBTTestViewFooterStatus];
+            [self displayText:[NSString stringWithFormat:@"Restarting test in %d seconds", (NSUInteger)(interval-elapsed)] forLabel:self.footerStatusLabel];
         }
     } repeats:YES];
 }
@@ -502,54 +513,71 @@ typedef NS_ENUM(NSUInteger, RMBTTestViewFooter) {
 
 #pragma mark - Footer
 
-- (void)displayText:(NSString*)text forFooter:(RMBTTestViewFooter)footer {
-    UILabel *label = nil;
+- (void)displayText:(NSString*)text forLabel:(UILabel*)label  {
+    [self displayText:text forLabel:label final:NO];
+}
+
+- (void)displayText:(NSString*)text forLabel:(UILabel*)label final:(BOOL)final{
     NSString *title = nil;
-    switch (footer) {
-        case RMBTTestViewFooterLocation:
-            label = self.footerLocationLabel;
-            title = @"Location";
-            break;
-        case RMBTTestViewFooterStatus:
-            label = self.footerStatusLabel;
-            title = @"Status";
-            break;
-        case RMBTTestViewFooterLoop:
-            label = self.footerLoopLabel;
-            title = @"Loop";
-            break;
-        case RMBTTestViewFooterConnection: {
-            static NSString *localizedTitle;
-            static dispatch_once_t onceToken;
-            dispatch_once(&onceToken, ^{
-                localizedTitle = NSLocalizedString(@"Connection", @"Test view label");
-            });
-            title = localizedTitle;
-            label = self.networkTypeLabel;
-            break;
-        }
-        case RMBTTestViewFooterPing:
-            title = @"Ping";
-            label = self.pingResultLabel;
-            break;
-        case RMBTTestViewFooterUp:
-            title = @"Upload";
-            label = self.upResultLabel;
-            break;
-        case RMBTTestViewFooterDown:
-            title = @"Download";
-            label = self.downResultLabel;
-            break;
-        case RMBTTestViewFooterTestServer:
-            title = @"Server";
-            label = self.footerTestServerLabel;
-            break;
+    BOOL bottom = NO;
+
+    if (label == self.footerLocationLabel) {
+        bottom = YES;
+        title = @"Location";
+    } else if (label == self.footerStatusLabel) {
+        bottom = YES;
+        title = @"Status";
+    } else if (label == self.footerLoopLabel) {
+        bottom = YES;
+        title = @"Loop";
+    } else if (label == self.networkTypeLabel) {
+        static NSString *localizedTitle;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            localizedTitle = NSLocalizedString(@"Connection", @"Test view label");
+        });
+        title = localizedTitle;
+    } else if (label == self.pingResultLabel) {
+        title = @"Ping";
+    } else if (label == self.upResultLabel) {
+        title = @"Upload";
+    } else if (label == self.downResultLabel) {
+        title = @"Download";
+    } else if (label == self.footerTestServerLabel) {
+        bottom = YES;
+        title = @"Server";
+    } else {
+        NSParameterAssert(NO);
     }
 
     NSParameterAssert(label);
     NSParameterAssert(title);
 
-    label.text = [NSString stringWithFormat:@"%@: %@", title, text];
+    if (final && label.hidden) {
+        label.alpha = 0;
+        label.hidden = NO;
+        CGAffineTransform t = label.transform;
+        label.transform = CGAffineTransformMakeTranslation(0, 10);
+        [UIView animateWithDuration:0.4f delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            label.alpha = 1;
+            label.transform = t;
+        } completion:nil];
+    }
+
+    if (!_footerLabelTitleAttributes) {
+        _footerLabelTitleAttributes = @{NSForegroundColorAttributeName: RMBT_LIGHT_TEXT_LIGHT, NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Medium" size:10.5]};
+        _footerLabelDetailsAttributes = @{NSForegroundColorAttributeName: RMBT_LIGHT_TEXT_DARK, NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue" size:12.0]};
+    };
+
+    NSMutableAttributedString *line = [[NSMutableAttributedString alloc] init];
+
+    NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:[title uppercaseString] attributes:_footerLabelTitleAttributes];
+    [line appendAttributedString:attrTitle];
+    [line appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    NSAttributedString *attrText = [[NSAttributedString alloc] initWithString:text attributes:_footerLabelDetailsAttributes];
+    [line appendAttributedString:attrText];
+
+    label.attributedText = line;
 }
 
 @end

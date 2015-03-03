@@ -22,6 +22,7 @@
 @property (nonatomic, strong) IBOutlet UIImageView *networkTypeImageView;
 @property (nonatomic, strong) IBOutlet UIButton *startTestButton;
 @property (nonatomic, strong) IBOutlet UIImageView *logoImageView;
+@property (nonatomic, strong) IBOutlet UIView *containerView;
 
 - (IBAction)startTest:(id)sender;
 - (IBAction)showHelp:(id)sender;

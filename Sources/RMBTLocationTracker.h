@@ -18,6 +18,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+#import "CLLocation+RMBTFormat.h"
+
 extern NSString * const RMBTLocationTrackerNotification;
 
 @interface RMBTLocationTracker : NSObject

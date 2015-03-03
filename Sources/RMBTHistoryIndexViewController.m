@@ -28,11 +28,18 @@ static NSUInteger const kSyncSheetRequestCodeButtonIndex = 0;
 static NSUInteger const kSyncSheetEnterCodeButtonIndex = 1;
 static NSUInteger const kSyncSheetCancelButtonIndex = 2;
 
+static NSString* const kIndexCellReuseIdentifier = @"RMBTHistoryIndexCell";
+
 typedef NS_ENUM(NSUInteger, RMBTHistoryIndexViewControllerState) {
     RMBTHistoryIndexViewControllerStateLoading,
     RMBTHistoryIndexViewControllerStateEmpty,
     RMBTHistoryIndexViewControllerStateHasEntries
 };
+
+#define COLS 6
+static CGFloat kColumnWidthsPre6[COLS]  = {40,50,80,50,50,50};
+static CGFloat kColumnWidths6[COLS]     = {50,55,85,62,62,61};
+static CGFloat kColumnWidths6Plus[COLS] = {50,76,90,66,66,66};
 
 @interface RMBTHistoryIndexViewController ()<UIActionSheetDelegate, UIAlertViewDelegate> {
     UIAlertView *_enterCodeAlertView;
@@ -52,6 +59,9 @@ typedef NS_ENUM(NSUInteger, RMBTHistoryIndexViewControllerState) {
 
     BOOL _firstAppearance;
     BOOL _showingLastTestResult;
+
+    CGFloat *_columnWidths;
+    BOOL _bigScreen;
 }
 
 @property (nonatomic, assign) RMBTHistoryIndexViewControllerState state;
@@ -65,6 +75,19 @@ typedef NS_ENUM(NSUInteger, RMBTHistoryIndexViewControllerState) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+
+    if (screenWidth == 375.0) {
+        _bigScreen = YES;
+        _columnWidths = kColumnWidths6;
+    } else if (screenWidth == 414.0) {
+        _bigScreen = YES;
+        _columnWidths = kColumnWidths6Plus;
+    } else {
+        _bigScreen = NO;
+        _columnWidths = kColumnWidthsPre6;
+    }
 
     _firstAppearance = YES;
     
@@ -81,22 +104,22 @@ typedef NS_ENUM(NSUInteger, RMBTHistoryIndexViewControllerState) {
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, self.tabBarController.tabBar.frameHeight)];
     footerView.backgroundColor = [UIColor clearColor];
 	self.tableView.tableFooterView = footerView;
+    [self.tableView registerNib:[UINib nibWithNibName:@"RMBTHistoryIndexCell" bundle:nil] forCellReuseIdentifier:kIndexCellReuseIdentifier];
 
     UIEdgeInsets e = self.tableView.scrollIndicatorInsets;
     e.bottom = tabBarHeight;
     self.tableView.scrollIndicatorInsets = e;
 
-    [self addHeaderColumnWithWidth:40.0 title:@"" identifier:@"network"];
-    [self addHeaderColumnWithWidth:50.0 title:NSLocalizedString(@"Date", @"History column") identifier:nil];
-    [self addHeaderColumnWithWidth:80.0 title:NSLocalizedString(@"Device", @"History column")identifier:@"device"];
-    [self addHeaderColumnWithWidth:50.0 title:@"Down" identifier:nil];
-    [self addHeaderColumnWithWidth:50.0 title:@"Up" identifier:nil];
-    [self addHeaderColumnWithWidth:50.0 title:@"Ping" identifier:nil];
+    [self addHeaderColumnWithWidth:_columnWidths[0] title:@"" identifier:@"network"];
+    [self addHeaderColumnWithWidth:_columnWidths[1] title:NSLocalizedString(@"Date", @"History column") identifier:nil];
+    [self addHeaderColumnWithWidth:_columnWidths[2] title:NSLocalizedString(@"Device", @"History column")identifier:@"device"];
+    [self addHeaderColumnWithWidth:_columnWidths[3] title:@"Down" identifier:nil];
+    [self addHeaderColumnWithWidth:_columnWidths[4] title:@"Up" identifier:nil];
+    [self addHeaderColumnWithWidth:_columnWidths[5] title:@"Ping" identifier:nil];
 }
 
 - (void)setState:(RMBTHistoryIndexViewControllerState)state {
-    self.loadingLabel.hidden = YES;
-    self.loadingActivityIndicatorView.hidden = YES;
+    self.loadingContainerView.hidden = YES;
     self.emptyLabel.hidden = YES;
     self.tableView.hidden = YES;
     self.filterButtonItem.enabled = NO;
@@ -107,8 +130,7 @@ typedef NS_ENUM(NSUInteger, RMBTHistoryIndexViewControllerState) {
         self.tableView.hidden = NO;
         self.filterButtonItem.enabled = YES;
     } else if (state == RMBTHistoryIndexViewControllerStateLoading) {
-        self.loadingLabel.hidden = NO;
-        self.loadingActivityIndicatorView.hidden = NO;
+        self.loadingContainerView.hidden = NO;
     }
 }
 
@@ -202,7 +224,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
                            title:(NSString*)title
                       identifier:(NSString*)identifier
 {
-    if (!_headerView) _headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320.0f, 36.0f)];
+    if (!_headerView) _headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width, 36.0f)];
     if (!_headerBackgroundImage) {
         _headerBackgroundImage = [[UIImage imageNamed:@"table_column_header_ios7"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 1, 1)];
     }
@@ -268,30 +290,24 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
         
         return cell;
     } else {
-        static NSString* const reuseIdentifier = @"RMBTHistoryTestResultCell";
+        RMBTHistoryIndexCell *cell = [tableView dequeueReusableCellWithIdentifier:kIndexCellReuseIdentifier];
+        NSParameterAssert(cell);
 
-        RMBTHistoryIndexCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-        if (!cell) {
-            cell = (RMBTHistoryIndexCell*)[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-                                                                      reuseIdentifier:reuseIdentifier];
-        }
+        [cell setColumnWidths:_columnWidths];
         
         RMBTHistoryResult *testResult = [_testResults objectAtIndex:indexPath.row];
 
         cell.networkTypeLabel.text = testResult.networkTypeServerDescription;
         cell.dateLabel.text = [testResult formattedTimestamp];
+        if (_bigScreen) {
+            cell.dateLabel.text = [cell.dateLabel.text stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+        }
+        
         cell.deviceModelLabel.text = testResult.deviceModel;
         cell.downloadSpeedLabel.text = testResult.downloadSpeedMbpsString;
         cell.uploadSpeedLabel.text = testResult.uploadSpeedMbpsString;
         cell.pingLabel.text = testResult.shortestPingMillisString;
-        
-        //    if ([testResult.networkTypeString isEqualToString:@"WLAN"]) {
-        //        cell.typeImageView.image = [UIImage imageNamed:@"symbol_wifi"];
-        //    } else if ([testResult.networkTypeString isEqualToString:@"LAN"] || [testResult.networkTypeString isEqualToString:@"CLI"]) {
-        //        cell.typeImageView.image = nil;
-        //    } else {
-        //        cell.typeImageView.image = [UIImage imageNamed:@"symbol_cellular"];
-        //    }
+
         return cell;
     }
 }

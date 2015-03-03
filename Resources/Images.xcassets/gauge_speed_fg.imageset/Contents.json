@@ -7,11 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "speed_active.png"
+      "filename" : "circle_bottom_fg@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "circle_bottom_fg@3x.png"
     }
   ],
   "info" : {

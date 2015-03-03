@@ -30,6 +30,7 @@
 		C72A27A417E1ECD400EC98B3 /* RMBTSSLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C72A27A317E1ECD400EC98B3 /* RMBTSSLHelper.m */; };
 		C73E792717673EBE0009855E /* RMBTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C73E792617673EBE0009855E /* RMBTSettings.m */; };
 		C73E792A176761630009855E /* RMBTSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C73E7929176761630009855E /* RMBTSettingsViewController.m */; };
+		C74D81111A385FF3007FFA0C /* AutolayoutStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C74D81101A385FF3007FFA0C /* AutolayoutStoryboard.storyboard */; };
 		C7535B4818298F84003A8CC8 /* UITableViewCell+RMBTHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = C7535B4718298F84003A8CC8 /* UITableViewCell+RMBTHeight.m */; };
 		C75A1189179B12D800E2444F /* RMBTTOSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C75A1188179B12D800E2444F /* RMBTTOSViewController.m */; };
 		C75A118E179B3DEC00E2444F /* RMBTHistoryResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C75A118D179B3DEC00E2444F /* RMBTHistoryResultViewController.m */; };
@@ -65,6 +66,8 @@
 		C7B15A34180AA6810097676F /* RMBTStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B15A33180AA6810097676F /* RMBTStatsViewController.m */; };
 		C7B4A99F17E8D3E700223ABD /* RMBTPing.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B4A99E17E8D3E700223ABD /* RMBTPing.m */; };
 		C7B4A9A017E8D3E700223ABD /* RMBTPing.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B4A99E17E8D3E700223ABD /* RMBTPing.m */; };
+		C7B5C1C41A3B2B5F002BECF3 /* UIColor+RMBTHex.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B5C1C31A3B2B5F002BECF3 /* UIColor+RMBTHex.m */; };
+		C7C5424417A69E9C000180A1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7C5424617A69E9C000180A1 /* InfoPlist.strings */; };
 		C7C5424D17A6DD3A000180A1 /* RMBTHistoryFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7C5424C17A6DD3A000180A1 /* RMBTHistoryFilterViewController.m */; };
 		C7C5B54D17E884620035D752 /* RMBTMapSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7C5B54C17E884620035D752 /* RMBTMapSubViewController.m */; };
 		C7CBC54218105C140041301D /* RMBTModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7CBC54118105C140041301D /* RMBTModalWebViewController.m */; };
@@ -96,6 +99,7 @@
 		C7F3FB27179CA64D00E336CF /* RMBTSpeedTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F3FB26179CA64D00E336CF /* RMBTSpeedTest.m */; };
 		C7F3FB33179CC86900E336CF /* terms_conditions_long.html in Resources */ = {isa = PBXBuildFile; fileRef = C7F3FB35179CC86900E336CF /* terms_conditions_long.html */; };
 		C7F3FB3C179CCCD600E336CF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7F3FB3E179CCCD600E336CF /* Localizable.strings */; };
+		C7F599A71A2A81940020ADC4 /* RMBTHistoryIndexCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7F599A61A2A81940020ADC4 /* RMBTHistoryIndexCell.xib */; };
 		F74A0064B94F492FB6A6BC06 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A8E3D648BB433FACE84120 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -134,6 +138,7 @@
 		C73E792617673EBE0009855E /* RMBTSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTSettings.m; sourceTree = "<group>"; };
 		C73E7928176761630009855E /* RMBTSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTSettingsViewController.h; sourceTree = "<group>"; };
 		C73E7929176761630009855E /* RMBTSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTSettingsViewController.m; sourceTree = "<group>"; };
+		C74D81101A385FF3007FFA0C /* AutolayoutStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AutolayoutStoryboard.storyboard; sourceTree = "<group>"; };
 		C7535B4618298F84003A8CC8 /* UITableViewCell+RMBTHeight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+RMBTHeight.h"; sourceTree = "<group>"; };
 		C7535B4718298F84003A8CC8 /* UITableViewCell+RMBTHeight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+RMBTHeight.m"; sourceTree = "<group>"; };
 		C75A1187179B12D800E2444F /* RMBTTOSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTTOSViewController.h; sourceTree = "<group>"; };
@@ -178,6 +183,8 @@
 		C779CAA7182EFF6200398781 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		C779CAA9182EFF6200398781 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C779E9E817403364003874AB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C782A6F71AA62C7800297AFB /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C782A6F81AA62C8600297AFB /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
 		C78D26BD1764A65C008143DF /* RMBTThroughput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTThroughput.h; sourceTree = "<group>"; };
 		C78D26BE1764A65D008143DF /* RMBTThroughput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTThroughput.m; sourceTree = "<group>"; };
 		C7912CB4177D581F004AD2A4 /* RMBTSpeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTSpeed.h; sourceTree = "<group>"; };
@@ -203,6 +210,8 @@
 		C7B15A33180AA6810097676F /* RMBTStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTStatsViewController.m; sourceTree = "<group>"; };
 		C7B4A99D17E8D3E700223ABD /* RMBTPing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTPing.h; sourceTree = "<group>"; };
 		C7B4A99E17E8D3E700223ABD /* RMBTPing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTPing.m; sourceTree = "<group>"; };
+		C7B5C1C21A3B2B5F002BECF3 /* UIColor+RMBTHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RMBTHex.h"; sourceTree = "<group>"; };
+		C7B5C1C31A3B2B5F002BECF3 /* UIColor+RMBTHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RMBTHex.m"; sourceTree = "<group>"; };
 		C7C0EFE3176CD18F003758AA /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		C7C5424B17A6DD3A000180A1 /* RMBTHistoryFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTHistoryFilterViewController.h; sourceTree = "<group>"; };
 		C7C5424C17A6DD3A000180A1 /* RMBTHistoryFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTHistoryFilterViewController.m; sourceTree = "<group>"; };
@@ -253,8 +262,8 @@
 		C7ECD979174ED9AD000DF966 /* UIView+Position.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Position.m"; sourceTree = "<group>"; };
 		C7F08F691769F37600741844 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		C7F3FB26179CA64D00E336CF /* RMBTSpeedTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTSpeedTest.m; sourceTree = "<group>"; };
-		C7F3FB36179CC87300E336CF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = de; path = de.lproj/terms_conditions_long.html; sourceTree = "<group>"; };
 		C7F3FB3F179CCCD800E336CF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C7F599A61A2A81940020ADC4 /* RMBTHistoryIndexCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMBTHistoryIndexCell.xib; sourceTree = "<group>"; };
 		D4A8E3D648BB433FACE84120 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E517F21DE502C9204AF47139 /* Pods.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.distribution.xcconfig; path = "Pods/Target Support Files/Pods/Pods.distribution.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -381,6 +390,7 @@
 				C774EE7E1793676700D623A3 /* RMBTHistoryIndexViewController.m */,
 				C774EE841793742900D623A3 /* RMBTHistoryIndexCell.h */,
 				C774EE851793742900D623A3 /* RMBTHistoryIndexCell.m */,
+				C7F599A61A2A81940020ADC4 /* RMBTHistoryIndexCell.xib */,
 				C7C5424B17A6DD3A000180A1 /* RMBTHistoryFilterViewController.h */,
 				C7C5424C17A6DD3A000180A1 /* RMBTHistoryFilterViewController.m */,
 			);
@@ -496,6 +506,8 @@
 				C7228DE917FBAC0300FB984D /* CLLocation+RMBTFormat.m */,
 				C7535B4618298F84003A8CC8 /* UITableViewCell+RMBTHeight.h */,
 				C7535B4718298F84003A8CC8 /* UITableViewCell+RMBTHeight.m */,
+				C7B5C1C21A3B2B5F002BECF3 /* UIColor+RMBTHex.h */,
+				C7B5C1C31A3B2B5F002BECF3 /* UIColor+RMBTHex.m */,
 			);
 			name = _Utility;
 			sourceTree = "<group>";
@@ -513,8 +525,6 @@
 			isa = PBXGroup;
 			children = (
 				C7CC5560176CEAF300861605 /* _Shared.xcconfig */,
-				C7B47F89176CD7AE00B04ABF /* Release.xcconfig */,
-				C7CC88FE1807FAC7001C9256 /* Distribution.xcconfig */,
 				C7C0EFE3176CD18F003758AA /* Debug.xcconfig */,
 			);
 			name = Configurations;
@@ -651,6 +661,7 @@
 				C7DE148A173E8F610079477A /* RMBTAppDelegate.h */,
 				C7DE148B173E8F610079477A /* RMBTAppDelegate.m */,
 				C792B8751814AEC700D504DF /* MainStoryboard.storyboard */,
+				C74D81101A385FF3007FFA0C /* AutolayoutStoryboard.storyboard */,
 				C774EE7B1792FA3700D623A3 /* _Shared */,
 				C7946870175FF1B000B0DECD /* _Utility */,
 				C75A1186179B12C800E2444F /* TOS */,
@@ -754,7 +765,7 @@
 			attributes = {
 				CLASSPREFIX = RMBT;
 				LastTestingUpgradeCheck = 0600;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "appscape gmbh";
 				TargetAttributes = {
 					C7DE1477173E8F610079477A = {
@@ -774,6 +785,7 @@
 				sv,
 				es,
 				fr,
+				cs,
 			);
 			mainGroup = C7DE146F173E8F610079477A;
 			productRefGroup = C7DE1479173E8F610079477A /* Products */;
@@ -795,8 +807,11 @@
 				C7228DEC17FC199F00FB984D /* RMBTMapCalloutView.xib in Resources */,
 				C7F3FB33179CC86900E336CF /* terms_conditions_long.html in Resources */,
 				C7F3FB3C179CCCD600E336CF /* Localizable.strings in Resources */,
+				C7F599A71A2A81940020ADC4 /* RMBTHistoryIndexCell.xib in Resources */,
+				C7C5424417A69E9C000180A1 /* InfoPlist.strings in Resources */,
 				C7E3F28D17B0F4AE00AC5048 /* GoogleMaps.bundle in Resources */,
 				C70C178C17D7BFC400F55964 /* Images.xcassets in Resources */,
+				C74D81111A385FF3007FFA0C /* AutolayoutStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -892,6 +907,7 @@
 				C7228DF317FC1CC900FB984D /* RMBTMapCalloutView.m in Sources */,
 				C7228DEA17FBAC0300FB984D /* CLLocation+RMBTFormat.m in Sources */,
 				C7228DEF17FC1ADF00FB984D /* RMBTHistoryResultItemCell.m in Sources */,
+				C7B5C1C41A3B2B5F002BECF3 /* UIColor+RMBTHex.m in Sources */,
 				C703D3E21765CF5E00A38C34 /* RMBTSpeedGraphView.m in Sources */,
 				C73E792717673EBE0009855E /* RMBTSettings.m in Sources */,
 				C73E792A176761630009855E /* RMBTSettingsViewController.m in Sources */,
@@ -955,6 +971,7 @@
 				C779CAA7182EFF6200398781 /* sv */,
 				C7E8916218317A13003AECA6 /* es */,
 				C7C820FD184908B2009B757F /* fr */,
+				C782A6F81AA62C8600297AFB /* cs */,
 			);
 			name = MainStoryboard.storyboard;
 			path = ../Resources;
@@ -963,7 +980,6 @@
 		C7C5424617A69E9C000180A1 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C7C5424517A69E9C000180A1 /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -984,6 +1000,7 @@
 				C779CAA9182EFF6200398781 /* sv */,
 				C7E8916318317A13003AECA6 /* es */,
 				C7C82100184908B2009B757F /* fr */,
+				C782A6F71AA62C7800297AFB /* cs */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -991,86 +1008,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		C7CC89001807FAF7001C9256 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					armv7s,
-					armv7,
-				);
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				New_Setting = "";
-				OTHER_CFLAGS = (
-					"-DNS_BLOCK_ASSERTIONS=1",
-					"-DDISTRIBUTION=1",
-				);
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "13DA8112-B5DE-4905-9F02-ED6FD214DAAC";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Distribution;
-		};
-		C7CC89011807FAF7001C9256 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C7CC88FE1807FAC7001C9256 /* Distribution.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Vendor\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Sources/RMBT-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"DISTRIBUTION=1",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/Resources/RMBT-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "13DA8112-B5DE-4905-9F02-ED6FD214DAAC";
-				TARGETED_DEVICE_FAMILY = 1;
-				WRAPPER_EXTENSION = app;
-			};
-			name = Distribution;
-		};
-		C7CC89021807FAF7001C9256 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RMBTTests/RMBTTests-Prefix.pch";
-				INFOPLIST_FILE = "RMBTTests/RMBTTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Distribution;
-		};
 		C7DE149C173E8F610079477A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1101,43 +1038,11 @@
 				New_Setting = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DDEBUG=1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3e474441-c2e3-4192-a090-cd92a470e709";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
-		};
-		C7DE149D173E8F610079477A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					armv7s,
-					armv7,
-				);
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				New_Setting = "";
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EF557698-32EC-4594-A6D9-D221CB63EBD9";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
 		};
 		C7DE149F173E8F610079477A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1162,7 +1067,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a363eeb4-4140-4789-b53e-961b418f9b11";
+				PROVISIONING_PROFILE = "861a813d-f323-4064-aef0-f1cc5a679e72";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

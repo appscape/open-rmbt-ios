@@ -7,11 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "tab_stats_inactive.png"
+      "filename" : "tab_stats.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "tabstat.png"
     }
   ],
   "info" : {

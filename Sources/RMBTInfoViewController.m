@@ -45,7 +45,7 @@ typedef NS_ENUM(NSUInteger, RMBTInfoViewControllerSection) {
     [self.navigationController.tabBarItem setSelectedImage:[UIImage imageNamed:@"tab_info_selected"]];
 
     self.buildDetailsLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    self.buildDetailsLabel.text = [NSString stringWithFormat:@"%@ %@ (%@)",
+    self.buildDetailsLabel.text = [NSString stringWithFormat:@"%@ %@\n(%@)",
                                    [[NSBundle mainBundle] infoDictionary]
                                     [@"CFBundleShortVersionString"],
                                    RMBTBuildInfoString(),

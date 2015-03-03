@@ -104,14 +104,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
         NSDictionary *locationJSON = nil;
 
         if (l) {
-            locationJSON = @{
-              @"long": [NSNumber numberWithDouble:l.coordinate.longitude],
-              @"lat":  [NSNumber numberWithDouble:l.coordinate.latitude],
-              @"time":  RMBTTimestampWithNSDate(l.timestamp),
-              @"accuracy": [NSNumber numberWithDouble:l.horizontalAccuracy],
-              @"altitude": [NSNumber numberWithDouble:l.altitude],
-              @"speed": [NSNumber numberWithDouble:(l.speed > 0.0 ? l.speed : 0.0)]
-            };
+            locationJSON = [l paramsDictionary];
         }
 
         NSDictionary *params = @{

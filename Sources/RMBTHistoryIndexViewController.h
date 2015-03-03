@@ -22,8 +22,8 @@
 @interface RMBTHistoryIndexViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UILabel *loadingLabel, *emptyLabel;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingActivityIndicatorView;
+@property (weak, nonatomic) IBOutlet UIView *loadingContainerView;
+@property (weak, nonatomic) IBOutlet UILabel *emptyLabel;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem* filterButtonItem;
 
 - (IBAction)sync:(id)sender;

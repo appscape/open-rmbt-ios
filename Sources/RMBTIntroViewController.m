@@ -35,7 +35,10 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
     RMBTHistoryResult *_result;
     id _radiateBlock;
     BOOL _visible;
+
+    RMBTConnectivity *_currentConnectivity;
 }
+@property (nonatomic, assign) BOOL roaming;
 @end
 
 @implementation RMBTIntroViewController
@@ -64,10 +67,6 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
     self.startTestButton.layer.masksToBounds = YES;
     self.startTestButton.layer.cornerRadius = 5.0f;
 
-    if (!RMBTIsRunningOnWideScreen()) {
-        self.startTestButton.frameY -= 14.0f;
-    }
-
     if (RMBTIsRunningGermanLocale()) {
         self.logoImageView.image = [UIImage imageNamed:@"intro_logo_de"];
     }
@@ -95,6 +94,8 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
         [_connectivityTracker start];
     }
     _visible = YES;
+
+    [self updateRoamingStatus];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -125,13 +126,40 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES]; // Disallow turning off the screen
 
     [[RMBTLocationTracker sharedTracker] startAfterDeterminingAuthorizationStatus:^{
-        RMBTTestViewController *testVC = [self.storyboard instantiateViewControllerWithIdentifier:@"test_vc"];
+//        RMBTTestViewController *testVC = [self.storyboard instantiateViewControllerWithIdentifier:@"test_vc"];
+        RMBTTestViewController *testVC = [[UIStoryboard storyboardWithName:@"AutolayoutStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"test_vc"];
+        NSParameterAssert(testVC);
+
         testVC.transitioningDelegate = self;
         testVC.delegate = self;
+        testVC.roaming = self.roaming;
         [self presentViewController:testVC animated:YES completion:^{
-
         }];
     }];
+}
+
+#pragma mark - Roaming
+
+- (void)updateRoamingStatus {
+    if (_currentConnectivity && _currentConnectivity.networkType == RMBTNetworkTypeCellular) {
+        CLLocation *location = [RMBTLocationTracker sharedTracker].location;
+        if (!location) {
+            RMBTLog(@"Skipping roaming check as there's no location available yet");
+            return;
+        }
+
+        NSMutableDictionary *params = [[_currentConnectivity testResultDictionary] mutableCopy];
+        [params addEntriesFromDictionary:[location paramsDictionary]];
+
+        _currentConnectivity = nil;
+        [[RMBTControlServer sharedControlServer] getRoamingStatusWithParams:params success:^(id response) {
+            RMBTLog(@"Roaming = %@", response);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.roaming = [response boolValue];
+                self.networkNameLabel.hidden = self.roaming;
+            });
+        }];
+    }
 }
 
 
@@ -152,6 +180,9 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
 
 - (void)connectivityTracker:(RMBTConnectivityTracker *)tracker didDetectConnectivity:(RMBTConnectivity *)connectivity {
     dispatch_async(dispatch_get_main_queue(), ^{
+        _currentConnectivity = connectivity;
+        [self updateRoamingStatus];
+
         CGFloat radiateY = CGRectGetMidY(self.networkTypeImageView.frame);
         self.startTestButton.hidden = NO;
         self.networkNameLabel.text = connectivity.networkName;
@@ -165,7 +196,7 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
         }
 
         if (_visible) {
-            [self radiateFromPoint:CGPointMake(CGRectGetMidX(self.networkTypeImageView.frame),radiateY)];
+            [self radiateFromPoint:[self.view convertPoint:CGPointMake(CGRectGetMidX(self.networkTypeImageView.frame),radiateY) fromView:self.containerView]];
         }
     });
 }

@@ -17,32 +17,57 @@
 
 #import "RMBTStatsViewController.h"
 
-@implementation RMBTStatsViewController
+@interface RMBTStatsWebViewController : SVWebViewController
+@end
 
-- (void)awakeFromNib {
-    [self.navigationController.tabBarItem setSelectedImage:[UIImage imageNamed:@"tab_stats_selected"]];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-    // Call SVWebViewController constructor
-    id parent = [super initWithAddress:RMBTLocalizeURLString(RMBT_STATS_URL)];
-#pragma unused(parent)
-    
-}
+@implementation RMBTStatsWebViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [self.view setOpaque:NO];
+    self.view.opaque = NO;
     self.view.backgroundColor = [UIColor whiteColor];
+}
+
+@end
+
+static const NSTimeInterval kUnloadViewTimeout = 5.0;
+
+@interface RMBTStatsViewController() {
+    NSTimer *_idleTimer;
+}
+@end
+
+@implementation RMBTStatsViewController
+
+- (void)awakeFromNib {
+    [self.tabBarItem setSelectedImage:[UIImage imageNamed:@"tab_stats_selected"]];
+    [self setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {;
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+    [_idleTimer invalidate];
+
+    if (self.viewControllers.count == 0) {
+        [self loadWebView];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+
+    _idleTimer = [NSTimer scheduledTimerWithTimeInterval:kUnloadViewTimeout target:self selector:@selector(unloadWebView) userInfo:nil repeats:NO];
+}
+
+- (void)unloadWebView {
+    [self setViewControllers:@[] animated:NO];
+}
+
+- (void)loadWebView {
+    RMBTStatsWebViewController *webView = [[RMBTStatsWebViewController alloc] initWithAddress:RMBTLocalizeURLString(RMBT_STATS_URL)];
+    [self setViewControllers:@[webView] animated:NO];
 }
 
 @end

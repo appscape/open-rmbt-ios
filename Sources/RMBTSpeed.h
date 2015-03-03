@@ -15,5 +15,10 @@
  *
  */
 
+// Returns position of the measured speed in percentage of the 0-100 Mbit/s range.
+// Note that the function can return values higher than 1 for values above 100 Mbit/s.
 extern double RMBTSpeedLogValue(uint32_t kbps);
+
+extern NSString* RMBTSpeedMbpsSuffix();
+extern NSString* RMBTSpeedMbpsStringWithSuffix(uint32_t kbps, BOOL suffix);
 extern NSString* RMBTSpeedMbpsString(uint32_t kbps);

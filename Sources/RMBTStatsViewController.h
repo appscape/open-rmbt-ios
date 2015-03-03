@@ -17,5 +17,5 @@
 
 #import "SVWebViewController.h"
 
-@interface RMBTStatsViewController : SVWebViewController
+@interface RMBTStatsViewController : UINavigationController
 @end

@@ -41,17 +41,17 @@ BOOL RMBTIsRunningGermanLocale() {
     return [RMBTPreferredLanguage() isEqualToString:@"de"];
 }
 
-BOOL RMBTIsRunningOnWideScreen() {
-    return ([[UIScreen mainScreen] bounds].size.height >= 568.0f);
-}
-
-BOOL RMBTIsRunningiOS703() {
-    static BOOL result;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        result = [[[UIDevice currentDevice] systemVersion] compare:@"7.0.3" options:NSNumericSearch] != NSOrderedAscending;
-    });
-    return result;
+RMBTFormFactor RMBTGetFormFactor() {
+    CGFloat h = MAX([UIScreen mainScreen].bounds.size.height,[UIScreen mainScreen].bounds.size.width);
+    if (h >= 736.0f) {
+        return RMBTFormFactoriPhone6Plus;
+    } else if (h>= 667.0f) {
+        return RMBTFormFactoriPhone6;
+    } else if (h >= 568.0f) {
+        return RMBTFormFactoriPhone5;
+    } else {
+        return RMBTFormFactoriPhone4;
+    }
 }
 
 NSString* RMBTReformatHexIdentifier(NSString* identifier) {

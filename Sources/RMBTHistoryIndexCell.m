@@ -17,6 +17,21 @@
 
 #import "RMBTHistoryIndexCell.h"
 
+@interface RMBTHistoryIndexCell() {
+    BOOL _setWidths;
+}
+@end
+
 @implementation RMBTHistoryIndexCell
 
+- (void)setColumnWidths:(CGFloat*)widths {
+    if (_setWidths) return;
+    
+    for (NSUInteger i=0;i<self.columnsViewWidths.count;i++) {
+        NSLayoutConstraint *c = [self.columnsViewWidths objectAtIndex:i];
+        c.constant = widths[i];
+    }
+    _setWidths = YES;
+    [self setNeedsLayout];
+}
 @end

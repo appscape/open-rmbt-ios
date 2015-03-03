@@ -19,4 +19,5 @@
 
 @interface CLLocation (RMBTFormat)
 - (NSString*)rmbtFormattedString;
+- (NSDictionary*)paramsDictionary;
 @end

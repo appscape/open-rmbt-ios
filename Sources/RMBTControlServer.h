@@ -35,6 +35,10 @@
 // Retrieves news from server
 - (void)getNews:(RMBTSuccessBlock)success;
 
+// Retrieves home network (roaming) status from server. Resolved with a NSNumber representing
+// a boolean value, which is true if user is out of home country.
+- (void)getRoamingStatusWithParams:(NSDictionary*)params success:(RMBTSuccessBlock)success;
+
 // Retrieves test parameters for the next test, submitting current test counter and last test status.
 // If the client doesn't have an UUID yet, it first retrieves the settings to obtain the UUID
 - (void)getTestParamsWithParams:(NSDictionary*)params success:(RMBTSuccessBlock)success error:(RMBTBlock)error;

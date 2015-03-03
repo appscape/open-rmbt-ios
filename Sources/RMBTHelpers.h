@@ -22,8 +22,15 @@ extern NSString *RMBTPreferredLanguage();
 // Format a number to two significant digits. See https://trac.rtr.at/iosrtrnetztest/ticket/17
 extern NSString* RMBTFormatNumber(NSNumber *number);
 extern BOOL RMBTIsRunningGermanLocale();
-extern BOOL RMBTIsRunningOnWideScreen();
-extern BOOL RMBTIsRunningiOS703(); // Needed to customize navbar behavior
+
+typedef NS_ENUM(NSInteger, RMBTFormFactor) {
+    RMBTFormFactoriPhone4,
+    RMBTFormFactoriPhone5,
+    RMBTFormFactoriPhone6,
+    RMBTFormFactoriPhone6Plus
+};
+extern RMBTFormFactor RMBTGetFormFactor();
+
 
 // Normalize hexadecimal identifier, i.e. 0:1:c -> 00:01:0c
 extern NSString* RMBTReformatHexIdentifier(NSString *identifier);

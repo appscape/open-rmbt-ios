@@ -18,13 +18,13 @@
 #import "RMBTSpeedGraphView.h"
 #import <QuartzCore/QuartzCore.h>
 
-static CGRect const RMBTSpeedGraphViewContentFrame = {{46.0, 49.0},{244.0, 98.0}};
+static CGRect const RMBTSpeedGraphViewContentFrame = {{34.0, 38.0},{244.0, 92.0}};
 static NSTimeInterval const RMBTSpeedGraphViewSeconds = 8.0;
 
 @interface RMBTSpeedGraphView() {
-    UIImage *_backgroundImage, *_glossImage;
+    UIImage *_backgroundImage;
     UIBezierPath *_path;
-    UIColor *_strokeColor;
+    CGPoint _firstPoint;
 
     CGFloat _widthPerSecond;
 
@@ -32,8 +32,7 @@ static NSTimeInterval const RMBTSpeedGraphViewSeconds = 8.0;
     
     CALayer *_backgroundLayer;
     
-    CAShapeLayer *_linesLayer;
-    CALayer *_maskLayer;
+    CAShapeLayer *_linesLayer, *_fillLayer;
 }
 @end
 
@@ -44,7 +43,6 @@ static NSTimeInterval const RMBTSpeedGraphViewSeconds = 8.0;
 }
 
 - (void)setup {
-    _strokeColor = [UIColor colorWithRed:0.086 green:0.718 blue:0.357 alpha:1];
     self.backgroundColor = [UIColor clearColor];
     
     _backgroundImage = [self markedBackgroundImage];
@@ -59,12 +57,19 @@ static NSTimeInterval const RMBTSpeedGraphViewSeconds = 8.0;
     
     _linesLayer = [CAShapeLayer layer];
     _linesLayer.lineWidth = 1.0;
-    _linesLayer.strokeColor = [_strokeColor CGColor];
+    _linesLayer.strokeColor = [UIColor rmbt_colorWithRGBHex:0x3da11b].CGColor;
     _linesLayer.lineCap = kCALineCapRound;
     _linesLayer.fillColor = nil;
     _linesLayer.frame = RMBTSpeedGraphViewContentFrame;
     
     [self.layer addSublayer:_linesLayer];
+
+    _fillLayer = [CAShapeLayer layer];
+    _fillLayer.lineWidth = 0.0f;
+    _fillLayer.fillColor = [UIColor rmbt_colorWithRGBHex:0x52d301 alpha:0.4].CGColor;
+
+    _fillLayer.frame = RMBTSpeedGraphViewContentFrame;
+    [self.layer insertSublayer:_fillLayer below:_linesLayer];
     
     _widthPerSecond = RMBTSpeedGraphViewContentFrame.size.width / RMBTSpeedGraphViewSeconds;
     _path = [[UIBezierPath alloc] init];
@@ -82,7 +87,8 @@ static NSTimeInterval const RMBTSpeedGraphViewSeconds = 8.0;
 }
 
 - (void)addValue:(float)value atTimeInterval:(NSTimeInterval)interval {
-    CGFloat y = RMBTSpeedGraphViewContentFrame.size.height * (1.0 - value);
+    CGFloat maxY = RMBTSpeedGraphViewContentFrame.size.height;
+    CGFloat y = maxY * (1.0 - value);
 
     // Ignore values that come in after max seconds
     if (interval > RMBTSpeedGraphViewSeconds) return;
@@ -92,6 +98,7 @@ static NSTimeInterval const RMBTSpeedGraphViewSeconds = 8.0;
     if (_valueCount == 0) {
         CGPoint previousPoint = p;
         previousPoint.x = 0;
+        _firstPoint = previousPoint;
         [_path moveToPoint:previousPoint];
     }
     [_path addLineToPoint:p];
@@ -99,7 +106,17 @@ static NSTimeInterval const RMBTSpeedGraphViewSeconds = 8.0;
     _valueCount++;
     
     _linesLayer.path = [_path CGPath];
-//    [_linesLayer setNeedsDisplay];
+
+    // Fill path
+
+    UIBezierPath *fillPath = [[UIBezierPath alloc] init];
+    [fillPath appendPath:_path];
+    [fillPath addLineToPoint:CGPointMake(p.x, maxY)];
+    [fillPath addLineToPoint:CGPointMake(0, maxY)];
+    [fillPath addLineToPoint:_firstPoint];
+    [fillPath closePath];
+
+    _fillLayer.path = [fillPath CGPath];;
 }
 
 - (void)clear {
@@ -107,6 +124,7 @@ static NSTimeInterval const RMBTSpeedGraphViewSeconds = 8.0;
     _valueCount = 0;
     [_path removeAllPoints];
     _linesLayer.path = [_path CGPath];
+    _fillLayer.path = nil;
 //    [_linesLayer setNeedsDisplay];
 }
 

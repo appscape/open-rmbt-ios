@@ -73,14 +73,19 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
 
     self.filterBarButtonItem.enabled = NO;
 
-    if (!self.initialLocation) {
-        self.navigationItem.leftBarButtonItems = @[self.settingsBarButtonItem, self.filterBarButtonItem];
+    self.navigationItem.leftBarButtonItems = @[self.settingsBarButtonItem, self.filterBarButtonItem];
+
+    if (self.initialLocation) {
+        UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+        self.navigationItem.leftBarButtonItems = @[backItem, self.settingsBarButtonItem, self.filterBarButtonItem];
     }
 
     self.locateMeButton.translatesAutoresizingMaskIntoConstraints = NO;
     NSDictionary *views = @{@"bottom": self.bottomLayoutGuide, @"locme": self.locateMeButton};
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[locme(44)]-10-[bottom]" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[locme(44)]-10-|" options:0 metrics:nil views:views]];
+
+    [self.view layoutIfNeeded];
 }
 
 - (void)setupMapView {
@@ -117,7 +122,12 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
     _mapView.buildingsEnabled = NO;
     _mapView.myLocationEnabled = YES;
 
-    _mapView.padding = UIEdgeInsetsMake(60.0f, 10.0f, 60.0f, 10.0f);
+    CGFloat bottomPadding = 60.0f;
+    if (self.hidesBottomBarWhenPushed) {
+        bottomPadding -= self.bottomLayoutGuide.length;
+    }
+
+    _mapView.padding = UIEdgeInsetsMake(60.0f, 10.0f, bottomPadding, 10.0f);
     _mapView.settings.myLocationButton = NO;
     _mapView.settings.compassButton = NO;
     _mapView.settings.tiltGestures = NO;
@@ -265,7 +275,7 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
         }
     } else {
 //        self.toastBarButtonItem.enabled = NO;
-        CGRect buttonRect = CGRectMake(320-40-10,20,40,40);
+        CGRect buttonRect = CGRectMake(self.view.frame.size.width-40-10,20,40,40);
 
         if (state) {
             [self.toastView genieOutTransitionWithDuration:0.5f startRect:buttonRect startEdge:BCRectEdgeBottom completion:^{
@@ -330,6 +340,8 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
 }
 
 - (void)updateLayerVisiblity {
+    if (!_mapOptions) return;
+
     RMBTMapOptionsOverlay* overlay = _mapOptions.activeOverlay;
 
     BOOL heatmapVisible = NO;
@@ -384,6 +396,10 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
 }
 
 #pragma mark - Button actions
+
+- (void)back {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)showMapOptions {
     [self performSegueWithIdentifier:@"show_map_options" sender:self];

@@ -44,4 +44,15 @@
 
     return [NSString stringWithFormat:@"%c %d° %.3f' %c %d° %.3f' (+/- %.0fm)\n@%@", latDirection, latDegrees, latMinutes, longDirection, longDegrees, longMinutes, self.horizontalAccuracy, [timestampFormatter stringFromDate:self.timestamp]];
 }
+
+- (NSDictionary*)paramsDictionary {
+    return @{
+        @"long": [NSNumber numberWithDouble:self.coordinate.longitude],
+        @"lat":  [NSNumber numberWithDouble:self.coordinate.latitude],
+        @"time":  RMBTTimestampWithNSDate(self.timestamp),
+        @"accuracy": [NSNumber numberWithDouble:self.horizontalAccuracy],
+        @"altitude": [NSNumber numberWithDouble:self.altitude],
+        @"speed": [NSNumber numberWithDouble:(self.speed > 0.0 ? self.speed : 0.0)]
+    };
+}
 @end

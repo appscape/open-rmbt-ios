@@ -45,7 +45,10 @@ NSString * const RMBTTrafficLightTappedNotification = @"RMBTTrafficLightTappedNo
         } else {
             image = [UIImage imageNamed:@"traffic_lights_none"];
         }
-        self.accessoryView = [[UIImageView alloc] initWithImage:image];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        imageView.contentMode = UIViewContentModeRight;
+        imageView.frame = CGRectMake(0,0,image.size.width+8, image.size.height);
+        self.accessoryView = imageView;
 
         CGFloat rightEdge = self.boundsWidth - 44.0f;
 
@@ -58,6 +61,7 @@ NSString * const RMBTTrafficLightTappedNotification = @"RMBTTrafficLightTappedNo
         r.numberOfTouchesRequired = 1;
         [self addGestureRecognizer:r];
 
+        [self layoutIfNeeded];
     } else {
         self.accessoryView = nil;
     }

@@ -7,11 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "bg_chart_8_letzter.png"
+      "filename" : "light_chart@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "light_chart@3x.png"
     }
   ],
   "info" : {

@@ -28,4 +28,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *uploadSpeedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *pingLabel;
 
+@property (strong, nonatomic) IBOutletCollection(NSLayoutConstraint) NSArray *columnsViewWidths;
+
+- (void)setColumnWidths:(CGFloat*)widths;
+
 @end

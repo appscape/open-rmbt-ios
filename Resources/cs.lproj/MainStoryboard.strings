@@ -1,0 +1,285 @@
+/* Class = "IBUILabel"; text = "IPv4 Only"; ObjectID = "04b-al-rBB"; */
+"04b-al-rBB.text" = "Pouze IPv4";
+
+/* Class = "IBUILabel"; text = "Use SSL"; ObjectID = "1UU-LR-TqC"; */
+"1UU-LR-TqC.text" = "Použít SSL";
+
+/* Class = "IBUINavigationItem"; title = "History"; ObjectID = "1hJ-K3-4w4"; */
+"1hJ-K3-4w4.title" = "Historie";
+
+/* Class = "IBUILabel"; text = "-"; ObjectID = "2Ms-9K-Pty"; */
+"2Ms-9K-Pty.text" = "-";
+
+/* Class = "IBUILabel"; text = "netztest@rtr.at"; ObjectID = "36D-5D-Gug"; */
+"36D-5D-Gug.text" = "netztest@rtr.at";
+
+/* Class = "IBUISegmentedControl"; 3kw-hI-x2S.segmentTitles[0] = "Standard"; ObjectID = "3kw-hI-x2S"; */
+"3kw-hI-x2S.segmentTitles[0]" = "Standardní";
+
+/* Class = "IBUISegmentedControl"; 3kw-hI-x2S.segmentTitles[1] = "Satellite"; ObjectID = "3kw-hI-x2S"; */
+"3kw-hI-x2S.segmentTitles[1]" = "Satelitní";
+
+/* Class = "IBUISegmentedControl"; 3kw-hI-x2S.segmentTitles[2] = "Hybrid"; ObjectID = "3kw-hI-x2S"; */
+"3kw-hI-x2S.segmentTitles[2]" = "Kombinovaný";
+
+/* Class = "IBUINavigationItem"; title = "Details"; ObjectID = "4VX-V2-nQH"; */
+"4VX-V2-nQH.title" = "Detaily";
+
+/* Class = "IBUILabel"; text = "I agree with RTR’s Privacy Policy and Terms of Use for the RTR-NetTest."; ObjectID = "6j6-E6-J4e"; */
+"6j6-E6-J4e.text" = "Souhlasím s pravidly použití a zásadami ochrany osobních údajů aplikace RTR-NetTest.";
+
+/* Class = "IBUILabel"; text = "Ping:"; ObjectID = "7AM-iq-ePS"; */
+"7AM-iq-ePS.text" = "Ping:";
+
+/* Class = "IBUILabel"; text = "WLAN"; ObjectID = "919-KC-26T"; */
+"919-KC-26T.text" = "WLAN";
+
+/* Class = "IBUITableViewSection"; footerTitle = "Log messages will be sent to the selected destination via UDP."; ObjectID = "9FU-cp-Acq"; */
+"9FU-cp-Acq.footerTitle" = "Log bude zaslán na vybrané místo pomocí UDP.";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Logging"; ObjectID = "9FU-cp-Acq"; */
+"9FU-cp-Acq.headerTitle" = "Loguji";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "9lm-B8-ECL"; */
+"9lm-B8-ECL.text" = "Název";
+
+/* Class = "IBUIBarButtonItem"; title = "Sync"; ObjectID = "B5m-sk-EWR"; */
+"B5m-sk-EWR.title" = "Synch.";
+
+/* Class = "IBUIButton"; normalTitle = "Help"; ObjectID = "Bss-Qc-Z52"; */
+"Bss-Qc-Z52.normalTitle" = "Nápověda";
+
+/* Class = "IBUINavigationItem"; title = "Map"; ObjectID = "CDF-SX-tUd"; */
+"CDF-SX-tUd.title" = "Mapa";
+
+/* Class = "IBUILabel"; text = "Loop Mode"; ObjectID = "CYs-86-gHI"; */
+"CYs-86-gHI.text" = "Loop mód";
+
+/* Class = "IBUILabel"; text = "Detail"; ObjectID = "Cd9-Ok-adp"; */
+"Cd9-Ok-adp.text" = "Detail";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Custom Control Server"; ObjectID = "D8A-FE-iL1"; */
+"D8A-FE-iL1.headerTitle" = "Vlastní control server";
+
+/* Class = "IBUILabel"; text = "Detail"; ObjectID = "Ds8-Gl-bkf"; */
+"Ds8-Gl-bkf.text" = "Detail";
+
+/* Class = "IBUILabel"; text = "Current Settings"; ObjectID = "Duh-fz-rBd"; */
+"Duh-fz-rBd.text" = "Současné nastavení";
+
+/* Class = "IBUILabel"; text = "IPv6 Only"; ObjectID = "FGY-fP-Hc7"; */
+"FGY-fP-Hc7.text" = "Pouze IPv6";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "FeU-U5-Ogw"; */
+"FeU-U5-Ogw.text" = "Název";
+
+/* Class = "IBUILabel"; text = "       "; ObjectID = "GIt-zq-u03"; */
+"GIt-zq-u03.text" = "       ";
+
+/* Class = "IBUILabel"; text = "Server"; ObjectID = "GNV-uG-Qjr"; */
+"GNV-uG-Qjr.text" = "Server";
+
+/* Class = "IBUILabel"; text = "Enabled"; ObjectID = "GnU-rY-H1M"; */
+"GnU-rY-H1M.text" = "Zapnuto";
+
+/* Class = "IBUILabel"; text = "appscape gmbh"; ObjectID = "HNj-QV-kLh"; */
+"HNj-QV-kLh.text" = "appscape gmbh";
+
+/* Class = "IBUILabel"; text = "© Austrian Regulatory Authority for Broadcasting and Telecommunications (RTR)"; ObjectID = "HkQ-xs-42E"; */
+"HkQ-xs-42E.text" = "© Austrian Regulatory Authority for Broadcasting and Telecommunications (RTR)";
+
+/* Class = "IBUILabel"; text = "Source Code"; ObjectID = "I2J-cV-SOo"; */
+"I2J-cV-SOo.text" = "Zdrojový kód";
+
+/* Class = "IBUITabBarItem"; title = "Map"; ObjectID = "ICs-96-xXy"; */
+"ICs-96-xXy.title" = "Mapa";
+
+/* Class = "IBUILabel"; text = "Port"; ObjectID = "ITV-y0-1wq"; */
+"ITV-y0-1wq.text" = "Port";
+
+/* Class = "IBUILabel"; text = "No tests have been performed from this device yet"; ObjectID = "ItF-LF-HpC"; */
+"ItF-LF-HpC.text" = "Z tohoto zařízení zatím nebyly spuštěny žádné testy";
+
+/* Class = "IBUILabel"; text = "Client UUID"; ObjectID = "Iw2-pt-kDb"; */
+"Iw2-pt-kDb.text" = "Klientské UUID";
+
+/* Class = "IBUILabel"; text = "Detail"; ObjectID = "JU2-4h-vri"; */
+"JU2-4h-vri.text" = "Detail";
+
+/* Class = "IBUILabel"; text = "iPhone 3GS"; ObjectID = "KGt-qv-h80"; */
+"KGt-qv-h80.text" = "iPhone 3GS";
+
+/* Class = "IBUIViewController"; title = "Statistics"; ObjectID = "KID-T6-Kbj"; */
+"KID-T6-Kbj.title" = "Statistiky";
+
+/* Class = "IBUILabel"; text = "Developed AT by"; ObjectID = "Kfu-7H-bob"; */
+"Kfu-7H-bob.text" = "Vyvinuto";
+
+/* Class = "IBUITabBarItem"; title = "Info"; ObjectID = "Lj3-co-7HX"; */
+"Lj3-co-7HX.title" = "Info";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Debug Options"; ObjectID = "M1M-gv-ni1"; */
+"M1M-gv-ni1.headerTitle" = "Debug volby";
+
+/* Class = "IBUILabel"; text = "Google Maps Legal Notice"; ObjectID = "MUN-oZ-jtl"; */
+"MUN-oZ-jtl.text" = "Google Maps právní upozornění";
+
+/* Class = "IBUIButton"; normalTitle = "Test Connection"; ObjectID = "NMh-Z8-CZY"; */
+"NMh-Z8-CZY.normalTitle" = "Test připojení";
+
+/* Class = "IBUIButton"; normalTitle = "Map"; ObjectID = "P2I-EB-W3H"; */
+"P2I-EB-W3H.normalTitle" = "Mapa";
+
+/* Class = "IBUILabel"; text = "Upload:"; ObjectID = "PBA-oD-gNV"; */
+"PBA-oD-gNV.text" = "Upload:";
+
+/* Class = "IBUINavigationItem"; title = "Privacy Policy and Terms of Use"; ObjectID = "QFg-ex-08M"; */
+"QFg-ex-08M.title" = "Ochrana osobních údajů a podmínky použití";
+
+/* Class = "IBUILabel"; text = "10.6"; ObjectID = "QpQ-Y4-0xm"; */
+"QpQ-Y4-0xm.text" = "10.6";
+
+/* Class = "IBUILabel"; text = "Server"; ObjectID = "R1N-CG-97h"; */
+"R1N-CG-97h.text" = "Server";
+
+/* Class = "IBUILabel"; text = "Version"; ObjectID = "SHA-Ol-hOM"; */
+"SHA-Ol-hOM.text" = "Verze";
+
+/* Class = "IBUILabel"; text = "Connection:"; ObjectID = "T7b-cY-aIn"; */
+"T7b-cY-aIn.text" = "Připojení:";
+
+/* Class = "IBUILabel"; text = "Website"; ObjectID = "TD2-Ds-ahg"; */
+"TD2-Ds-ahg.text" = "Webové stránky";
+
+/* Class = "IBUIBarButtonItem"; title = "Agree"; ObjectID = "TdW-y3-nGZ"; */
+"TdW-y3-nGZ.title" = "Souhlasím";
+
+/* Class = "IBUITabBarItem"; title = "Test"; ObjectID = "UYh-Jo-SaU"; */
+"UYh-Jo-SaU.title" = "Test";
+
+/* Class = "IBUILabel"; text = "Privacy Policy and Terms of Use"; ObjectID = "XjG-VW-Fij"; */
+"XjG-VW-Fij.text" = "Ochrana osobních údajů a podmínky použití";
+
+/* Class = "IBUINavigationItem"; title = "Info"; ObjectID = "bK4-5E-zle"; */
+"bK4-5E-zle.title" = "Info";
+
+/* Class = "IBUIBarButtonItem"; title = "Filter"; ObjectID = "bT7-jx-Esy"; */
+"bT7-jx-Esy.title" = "Filtr";
+
+/* Class = "IBUINavigationItem"; title = "Filter"; ObjectID = "crq-GA-d5P"; */
+"crq-GA-d5P.title" = "Filtr";
+
+/* Class = "IBUIButton"; normalTitle = "Show Details"; ObjectID = "czN-l1-tI6"; */
+"czN-l1-tI6.normalTitle" = "Detaily";
+
+/* Class = "IBUITextField"; placeholder = "hostname.example.org"; ObjectID = "deH-kU-Bd7"; */
+"deH-kU-Bd7.placeholder" = "hostname.example.org";
+
+/* Class = "IBUIBarButtonItem"; title = "Settings"; ObjectID = "eHz-he-95l"; */
+"eHz-he-95l.title" = "Nastavení";
+
+/* Class = "IBUILabel"; text = "Port"; ObjectID = "gJC-Gy-GYW"; */
+"gJC-Gy-GYW.text" = "Port";
+
+/* Class = "IBUILabel"; text = "RTR-NetTest"; ObjectID = "i2g-8p-gHV"; */
+"i2g-8p-gHV.text" = "RTR-NetTest";
+
+/* Class = "IBUILabel"; text = "Status:"; ObjectID = "iQn-PO-BM6"; */
+"iQn-PO-BM6.text" = "Stav:";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "iSg-YF-0Tp"; */
+"iSg-YF-0Tp.text" = "Popisek";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "iil-fJ-fPp"; */
+"iil-fJ-fPp.text" = "Popisek";
+
+/* Class = "IBUITextField"; placeholder = "9000"; ObjectID = "ilL-IN-kyB"; */
+"ilL-IN-kyB.placeholder" = "9000";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "kOi-NW-gDP"; */
+"kOi-NW-gDP.text" = "Název";
+
+/* Class = "IBUITextField"; placeholder = "255.255.255.255"; ObjectID = "l4T-hu-ebd"; */
+"l4T-hu-ebd.placeholder" = "255.255.255.255";
+
+/* Class = "IBUILabel"; text = "Enabled"; ObjectID = "lN6-FT-bcj"; */
+"lN6-FT-bcj.text" = "Zapnuto";
+
+/* Class = "IBUILabel"; text = "Mbps"; ObjectID = "lfU-IQ-tAq"; */
+"lfU-IQ-tAq.text" = "Mbit/s";
+
+/* Class = "IBUIBarButtonItem"; title = "Show All"; ObjectID = "lob-fS-lvo"; */
+"lob-fS-lvo.title" = "Ukázat vše";
+
+/* Class = "IBUILabel"; text = "Test Server:"; ObjectID = "mPm-g6-fpc"; */
+"mPm-g6-fpc.text" = "Test Server:";
+
+/* Class = "IBUILabel"; text = "180"; ObjectID = "mSU-ne-L8v"; */
+"mSU-ne-L8v.text" = "180";
+
+/* Class = "IBUINavigationItem"; title = "Filter"; ObjectID = "n28-cO-IDP"; */
+"n28-cO-IDP.title" = "Filtr";
+
+/* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "o1N-5f-IjT"; */
+"o1N-5f-IjT.title" = "Nastavení";
+
+/* Class = "IBUILabel"; text = "10.6"; ObjectID = "o5R-Nv-a4c"; */
+"o5R-Nv-a4c.text" = "10.6";
+
+/* Class = "IBUILabel"; text = "Loading"; ObjectID = "oPV-DG-qLx"; */
+"oPV-DG-qLx.text" = "Načítám";
+
+/* Class = "IBUITextField"; placeholder = "80"; ObjectID = "olo-CY-5Dd"; */
+"olo-CY-5Dd.placeholder" = "80";
+
+/* Class = "IBUIBarButtonItem"; title = "Cancel"; ObjectID = "pQV-Ff-gX8"; */
+"pQV-Ff-gX8.title" = "Zrušit";
+
+/* Class = "IBUINavigationItem"; title = "Statistics"; ObjectID = "pcA-uV-3ux"; */
+"pcA-uV-3ux.title" = "Statistiky";
+
+/* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "rYu-SK-dod"; */
+"rYu-SK-dod.title" = "Nastavení";
+
+/* Class = "IBUILabel"; text = "E-Mail"; ObjectID = "rlV-IF-S7v"; */
+"rlV-IF-S7v.text" = "E-Mail";
+
+/* Class = "IBUILabel"; text = "Loop:"; ObjectID = "rsA-gY-xt9"; */
+"rsA-gY-xt9.text" = "Loop:";
+
+/* Class = "IBUINavigationItem"; title = "Test Result"; ObjectID = "sjE-nJ-bCH"; */
+"sjE-nJ-bCH.title" = "Výsledky testu";
+
+/* Class = "IBUINavigationItem"; title = "Test läuft..."; ObjectID = "uws-jO-IST"; */
+"uws-jO-IST.title" = "Test běží...";
+
+/* Class = "IBUILabel"; text = "Test Counter"; ObjectID = "ves-sB-IMP"; */
+"ves-sB-IMP.text" = "Čítač testů";
+
+/* Class = "IBUITableViewSection"; headerTitle = "General"; ObjectID = "xDR-6d-mU0"; */
+"xDR-6d-mU0.headerTitle" = "Hlavní";
+
+/* Class = "IBUILabel"; text = "Jul 15 18:39"; ObjectID = "xkD-ok-C3R"; */
+"xkD-ok-C3R.text" = "Jul 15 18:39";
+
+/* Class = "IBUILabel"; text = "Location:"; ObjectID = "ypU-LT-SUe"; */
+"ypU-LT-SUe.text" = "Poloha:";
+
+/* Class = "IBUITabBarItem"; title = "Statistics"; ObjectID = "yzM-Br-Dak"; */
+"yzM-Br-Dak.title" = "Statistiky";
+
+/* Class = "IBUILabel"; text = "Betreibername"; ObjectID = "zD3-eD-7ET"; */
+"zD3-eD-7ET.text" = "Název operátora";
+
+/* Class = "IBUILabel"; text = "-"; ObjectID = "zKd-3I-V7i"; */
+"zKd-3I-V7i.text" = "-";
+
+/* Class = "IBUILabel"; text = "Download:"; ObjectID = "zKz-K4-oLf"; */
+"zKz-K4-oLf.text" = "Download:";
+
+/* Class = "IBUILabel"; text = "https://www.netztest.at/"; ObjectID = "zX0-n4-yQp"; */
+"zX0-n4-yQp.text" = "https://www.netztest.at/";
+
+/* Class = "IBUITabBarItem"; title = "History"; ObjectID = "zoN-J1-92T"; */
+"zoN-J1-92T.title" = "Historie";
+

@@ -29,6 +29,9 @@
 
 @property (nonatomic, weak) id<RMBTTestViewControllerDelegate> delegate;
 
+// This will hide the network name label in case of cellular connection
+@property (nonatomic, assign) BOOL roaming;
+
 // Network name and type
 @property (nonatomic, strong) IBOutlet UILabel *networkTypeLabel, *networkNameLabel;
 @property (nonatomic, strong) IBOutlet UIImageView *networkTypeImageView;
@@ -44,6 +47,7 @@
 @property (nonatomic, strong) IBOutlet UIImageView *speedGaugePlaceholderView;
 @property (nonatomic, strong) IBOutlet RMBTSpeedGraphView *speedGraphView;
 @property (nonatomic, strong) IBOutlet UIImageView *arrowImageView;
+@property (nonatomic, strong) IBOutlet UILabel *speedLabel, *speedSuffixLabel;
 
 
 // Footer
@@ -53,5 +57,11 @@
 @property (nonatomic, strong) IBOutlet UILabel *footerLocationLabel;
 @property (nonatomic, strong) IBOutlet UILabel *footerLoopLabel;
 
-
+// Layout constraints
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *networkSymbolTopConstraint, *networkSymbolLeftConstraint;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *networkNameWidthConstraint;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *testServerLabelHeightConstraint;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *speedGraphBottomConstraint;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *progressGaugeTopConstraint;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *footerBottomConstraint;
 @end

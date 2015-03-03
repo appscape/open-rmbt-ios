@@ -24,6 +24,7 @@
 #define RMBT_TEST_PRETEST_MIN_CHUNKS_FOR_MULTITHREADED_TEST 4
 #define RMBT_TEST_PRETEST_DURATION_S    2.0
 #define RMBT_TEST_PING_COUNT            10
+#define RMBT_TEST_MAX_CHART_KBPS        200000 // Clip speed at 200 Mbit/s (only on charts)
 
 // In case of slow upload, we finalize the test even if this many seconds still haven't been received:
 #define RMBT_TEST_UPLOAD_MAX_DISCARD_S  1.0
@@ -52,7 +53,7 @@
 #define RMBT_PROJECT_EMAIL   @"netztest@rtr.at"
 #define RMBT_PRIVACY_TOS_URL @"https://www.netztest.at/redirect/$lang/terms"
 #define RMBT_ABOUT_URL       @"https://www.rtr.at/$lang/"
-#define RMBT_STATS_URL       @"https://www.netztest.at/$lang/Statistik"
+#define RMBT_STATS_URL       @"https://www.netztest.at/$lang/Statistik#noMMenu"
 #define RMBT_HELP_URL        @"https://www.rtr.at/$lang/tk/netztesthilfe"
 #define RMBT_HELP_RESULT_URL @"https://www.rtr.at/$lang/rtr/netztestfaq_testergebnis"
 
@@ -82,5 +83,5 @@
 // Current TOS version. Bump to force displaying TOS to users again.
 #define RMBT_TOS_VERSION 1
 
-#define RMBT_DARK_COLOR ([UIColor colorWithRed:0.0 green:0.0666 blue:0.16 alpha:1])
-#define RMBT_TINT_COLOR ([UIColor colorWithRed:0.000 green:0.671 blue:0.906 alpha:1])
+#define RMBT_DARK_COLOR ([UIColor rmbt_colorWithRGBHex:0x001028])
+#define RMBT_TINT_COLOR ([UIColor rmbt_colorWithRGBHex:0x00abe7])

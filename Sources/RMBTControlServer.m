@@ -179,6 +179,21 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
     }];
 }
 
+- (void)getRoamingStatusWithParams:(NSDictionary*)params success:(RMBTSuccessBlock)success {
+    RMBTLog(@"Checking roaming status (params = %@)", params);
+    [self performWithUUID:^{
+        [self requestWithMethod:@"POST" path:@"status" params:params success:^(id response) {
+            if (response && response[@"home_country"] && [response[@"home_country"] boolValue] == NO) {
+                success(@(YES));
+            } else {
+                success(@(NO));
+            }
+        } error:^(NSError *error, NSDictionary *info) {
+        }];
+    } error:^(NSError *error, NSDictionary *info) {
+    }];
+}
+
 - (void)getTestParamsWithParams:(NSDictionary*)params success:(RMBTSuccessBlock)success error:(RMBTBlock)errorCallback {
     NSMutableDictionary *requestParams = [NSMutableDictionary dictionaryWithDictionary:@{
         @"ndt": @NO,
