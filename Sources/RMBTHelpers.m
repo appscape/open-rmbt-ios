@@ -19,9 +19,8 @@
 #import "RMBTHelpers.h"
 
 NSString *RMBTPreferredLanguage() {
-    NSArray *preferredLanguages = [NSLocale preferredLanguages];
-    if ([preferredLanguages count] < 1) return nil;
-    return preferredLanguages[0];
+    NSString *mostPreferredLanguage = [[NSLocale preferredLanguages] firstObject];
+    return [[[mostPreferredLanguage componentsSeparatedByString:@"-"] firstObject] lowercaseString];
 }
 
 NSString *RMBTFormatNumber(NSNumber *number) {
