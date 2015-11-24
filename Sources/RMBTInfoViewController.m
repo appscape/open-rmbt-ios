@@ -19,7 +19,7 @@
 #import "RMBTInfoTextViewController.h"
 
 #import <GoogleMaps/GoogleMaps.h>
- #import <MessageUI/MFMailComposeViewController.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
 #import "RMBTSettings.h"
 #import "UIViewController+ModalBrowser.h"
