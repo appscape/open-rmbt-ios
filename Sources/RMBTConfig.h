@@ -26,6 +26,12 @@
 #define RMBT_TEST_PING_COUNT            10
 #define RMBT_TEST_MAX_CHART_KBPS        200000 // Clip speed at 200 Mbit/s (only on charts)
 
+// The getaddrinfo() used by GCDAsync socket will fail immediately if the hostname of the test server
+// is not in the DNS cache. To work around this, in case of this particular error we will retry couple
+// of times before giving up:
+#define RMBT_TEST_HOST_LOOKUP_RETRIES   1 // How many times to retry
+#define RMBT_TEST_HOST_LOOKUP_WAIT_S    0.2 // How long to wait before next retry
+
 // In case of slow upload, we finalize the test even if this many seconds still haven't been received:
 #define RMBT_TEST_UPLOAD_MAX_DISCARD_S  1.0
 

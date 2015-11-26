@@ -122,6 +122,8 @@ typedef NS_ENUM(long, RMBTTestTag) {
 
     // Server reports total number of bytes received. We need to track last amount reported so we can calculate relative amounts.
     long long       _testUploadLastUploadLength;
+
+    uint            _hostLookupRetries;
 }
 @end
 
@@ -243,13 +245,22 @@ typedef NS_ENUM(long, RMBTTestTag) {
         _negotiatedEncryptionString = [RMBTSSLHelper encryptionStringForSSLContext:sock.sslContext];
     }];
 
+    RMBTLog(@"Thread %lu: connected and secured.", (long)_index);
+
     [self readLineWithTag:RMBTTestTagRxBanner];
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
     if (err) {
         RMBTLog(@"Socket disconnected with error %@", err);
-        [self fail];
+        // See https://github.com/robbiehanson/CocoaAsyncSocket/issues/382
+        if ([err.domain isEqualToString:@"kCFStreamErrorDomainNetDB"] && _hostLookupRetries++ < RMBT_TEST_HOST_LOOKUP_RETRIES) {
+            RMBTLog(@"Thread %ld retrying lookup (%ld/%ld)", (long)_index, (long)_hostLookupRetries, RMBT_TEST_HOST_LOOKUP_RETRIES);
+            usleep(RMBT_TEST_HOST_LOOKUP_WAIT_S * USEC_PER_SEC);
+            [self connect];
+        } else {
+            [self fail];
+        }
     } else {
         if (_state == RMBTTestWorkerStateDownlinkTestStarted) {
             _state = RMBTTestWorkerStateDownlinkTestFinished;
