@@ -40,12 +40,12 @@ EXTERNAL SOURCES:
     :git: https://github.com/samvermette/SVWebViewController.git
 
 SPEC CHECKSUMS:
-  AFNetworking: 5db28423ed062e2b15b97c731f06cfb6668e607a
-  BCGenieEffect: 89f89437ab3fe986ef6527c2324f4e3197a5822b
-  BlocksKit: 4439e7f30a9f90743462ca63545a15c1f4304cef
+  AFNetworking: f0d89caedb504adcb43e7d90e57f42e703adf415
+  BCGenieEffect: 9221dfe59d02c9edf5332f9a895d42be904f5a8c
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   CocoaAsyncSocket: 4f37d721606ef34ba30ba6e76f84db420bfc8fc5
-  libextobjc: eb69a38c5a342c019a7ea0b90ce3a302218bd595
+  libextobjc: 8c105ed22b1f05d44c102bf04f3e0f0c468a40ca
   SVWebViewController: 8b32a4b7017bca79799e0fdb0ffc4d47d0769db2
-  TUSafariActivity: afff9b1d2eacf7cbace752c5f2bf56db852714de
+  TUSafariActivity: dd346df54a8f1cbb4fd05d504c76d47225fac99e
 
 COCOAPODS: 0.34.4
