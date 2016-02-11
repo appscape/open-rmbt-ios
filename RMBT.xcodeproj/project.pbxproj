@@ -10,7 +10,6 @@
 		C573F2A5175281D300C728FC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C573F2A4175281D300C728FC /* MapKit.framework */; };
 		C573F2B1175294A500C728FC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C573F2B0175294A500C728FC /* CoreLocation.framework */; };
 		C59D7B471764E6CF003E9702 /* RMBTHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D7B461764E6CF003E9702 /* RMBTHelpers.m */; };
-		C5DEB4721763647E00187C94 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DEB4711763647E00187C94 /* GoogleMaps.framework */; };
 		C5DEB476176364B100187C94 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DEB475176364B100187C94 /* AVFoundation.framework */; };
 		C5DEB478176364BC00187C94 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DEB477176364BC00187C94 /* CoreData.framework */; };
 		C5DEB47A176364C300187C94 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DEB479176364C300187C94 /* CoreText.framework */; };
@@ -78,7 +77,6 @@
 		C7DE148C173E8F610079477A /* RMBTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE148B173E8F610079477A /* RMBTAppDelegate.m */; };
 		C7DE149B173E8F610079477A /* RMBTTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DE149A173E8F610079477A /* RMBTTestViewController.m */; };
 		C7DF2BB617D91AE400A0E76B /* RMBTNews.m in Sources */ = {isa = PBXBuildFile; fileRef = C7DF2BB517D91AE400A0E76B /* RMBTNews.m */; };
-		C7E3F28D17B0F4AE00AC5048 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C7E3F28C17B0F4AE00AC5048 /* GoogleMaps.bundle */; };
 		C7E4672D177CDDB600AAF7F0 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E4672C177CDDB600AAF7F0 /* SenTestingKit.framework */; };
 		C7E4672E177CDDB600AAF7F0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7DE147B173E8F610079477A /* UIKit.framework */; };
 		C7E4672F177CDDB600AAF7F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7DE147D173E8F610079477A /* Foundation.framework */; };
@@ -110,7 +108,6 @@
 		C573F2B0175294A500C728FC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C59D7B451764E6CF003E9702 /* RMBTHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTHelpers.h; sourceTree = "<group>"; };
 		C59D7B461764E6CF003E9702 /* RMBTHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTHelpers.m; sourceTree = "<group>"; };
-		C5DEB4711763647E00187C94 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		C5DEB475176364B100187C94 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C5DEB477176364BC00187C94 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C5DEB479176364C300187C94 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -234,7 +231,6 @@
 		C7DE149A173E8F610079477A /* RMBTTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RMBTTestViewController.m; sourceTree = "<group>"; };
 		C7DF2BB417D91AE400A0E76B /* RMBTNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTNews.h; sourceTree = "<group>"; };
 		C7DF2BB517D91AE400A0E76B /* RMBTNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTNews.m; sourceTree = "<group>"; };
-		C7E3F28C17B0F4AE00AC5048 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		C7E4672B177CDDB600AAF7F0 /* RMBTTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RMBTTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7E4672C177CDDB600AAF7F0 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		C7E46732177CDDB600AAF7F0 /* RMBTTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RMBTTests-Info.plist"; sourceTree = "<group>"; };
@@ -292,7 +288,6 @@
 				C7DE147E173E8F610079477A /* Foundation.framework in Frameworks */,
 				C7DE1480173E8F610079477A /* CoreGraphics.framework in Frameworks */,
 				F74A0064B94F492FB6A6BC06 /* libPods.a in Frameworks */,
-				C5DEB4721763647E00187C94 /* GoogleMaps.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,7 +574,6 @@
 		C7DE147A173E8F610079477A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C7E3F28C17B0F4AE00AC5048 /* GoogleMaps.bundle */,
 				C7F08F691769F37600741844 /* CoreTelephony.framework */,
 				C5DEB485176364E400187C94 /* OpenGLES.framework */,
 				C5DEB483176364DF00187C94 /* libz.dylib */,
@@ -590,7 +584,6 @@
 				C5DEB479176364C300187C94 /* CoreText.framework */,
 				C5DEB477176364BC00187C94 /* CoreData.framework */,
 				C5DEB475176364B100187C94 /* AVFoundation.framework */,
-				C5DEB4711763647E00187C94 /* GoogleMaps.framework */,
 				C573F2B0175294A500C728FC /* CoreLocation.framework */,
 				C573F2A4175281D300C728FC /* MapKit.framework */,
 				C779E9E817403364003874AB /* QuartzCore.framework */,
@@ -809,7 +802,6 @@
 				C7F3FB3C179CCCD600E336CF /* Localizable.strings in Resources */,
 				C7F599A71A2A81940020ADC4 /* RMBTHistoryIndexCell.xib in Resources */,
 				C7C5424417A69E9C000180A1 /* InfoPlist.strings in Resources */,
-				C7E3F28D17B0F4AE00AC5048 /* GoogleMaps.bundle in Resources */,
 				C70C178C17D7BFC400F55964 /* Images.xcassets in Resources */,
 				C74D81111A385FF3007FFA0C /* AutolayoutStoryboard.storyboard in Resources */,
 			);

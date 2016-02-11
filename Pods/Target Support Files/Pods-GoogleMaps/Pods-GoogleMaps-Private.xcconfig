@@ -1,0 +1,6 @@
+#include "Pods-GoogleMaps.xcconfig"
+FRAMEWORK_SEARCH_PATHS = ${PODS_GOOGLEMAPS_FRAMEWORK_SEARCH_PATHS}
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/GoogleMaps" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/BCGenieEffect" "${PODS_ROOT}/Headers/Public/BlocksKit" "${PODS_ROOT}/Headers/Public/CocoaAsyncSocket" "${PODS_ROOT}/Headers/Public/GoogleMaps" "${PODS_ROOT}/Headers/Public/SVWebViewController" "${PODS_ROOT}/Headers/Public/TUSafariActivity" "${PODS_ROOT}/Headers/Public/libextobjc"
+OTHER_LDFLAGS = ${PODS_GOOGLEMAPS_OTHER_LDFLAGS} -ObjC
+PODS_ROOT = ${SRCROOT}

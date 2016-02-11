@@ -61,6 +61,17 @@ The original TCP version (AsyncSocket) was created by Dustin Voss in January 200
 Updated and maintained by Deusty LLC and the Apple development community.
 
 
+## GoogleMaps
+
+If you use the Google Maps SDK for iOS in your application, you must
+include the attribution text as part of a legal notices section in your
+application. Including legal notices as an independent menu item, or as
+part of an "About" menu item, is recommended.
+
+You can get the attribution text by making a call to
+[GMSServices openSourceLicenseInfo].
+
+
 ## SVWebViewController
 
 Copyright (c) 2011 Sam Vermette

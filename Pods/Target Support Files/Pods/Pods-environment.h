@@ -60,6 +60,12 @@
 #define COCOAPODS_VERSION_MINOR_CocoaAsyncSocket 3
 #define COCOAPODS_VERSION_PATCH_CocoaAsyncSocket 1
 
+// GoogleMaps
+#define COCOAPODS_POD_AVAILABLE_GoogleMaps
+#define COCOAPODS_VERSION_MAJOR_GoogleMaps 1
+#define COCOAPODS_VERSION_MINOR_GoogleMaps 10
+#define COCOAPODS_VERSION_PATCH_GoogleMaps 5
+
 // SVWebViewController
 #define COCOAPODS_POD_AVAILABLE_SVWebViewController
 #define COCOAPODS_VERSION_MAJOR_SVWebViewController 0

@@ -17,6 +17,7 @@ PODS:
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
   - CocoaAsyncSocket (7.3.1)
+  - GoogleMaps (1.10.5)
   - libextobjc/EXTKeyPathCoding (0.2.5):
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.2.5)
@@ -28,6 +29,7 @@ DEPENDENCIES:
   - BCGenieEffect
   - BlocksKit (= 2.2.5)
   - CocoaAsyncSocket (from `https://github.com/appscape/CocoaAsyncSocket.git`, commit `350ac5f09002ac92a333175cb87ab8b59ebd0571`)
+  - GoogleMaps (~> 1.10.5)
   - libextobjc/EXTKeyPathCoding
   - SVWebViewController (from `https://github.com/samvermette/SVWebViewController.git`)
   - TUSafariActivity
@@ -44,6 +46,7 @@ SPEC CHECKSUMS:
   BCGenieEffect: 9221dfe59d02c9edf5332f9a895d42be904f5a8c
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   CocoaAsyncSocket: 4f37d721606ef34ba30ba6e76f84db420bfc8fc5
+  GoogleMaps: da51c62c338c2d9c47cdad470a0d1e0e4b8544e4
   libextobjc: 8c105ed22b1f05d44c102bf04f3e0f0c468a40ca
   SVWebViewController: 8b32a4b7017bca79799e0fdb0ffc4d47d0769db2
   TUSafariActivity: dd346df54a8f1cbb4fd05d504c76d47225fac99e

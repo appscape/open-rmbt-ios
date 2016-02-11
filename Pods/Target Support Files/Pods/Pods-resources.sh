@@ -43,7 +43,8 @@ install_resource()
       ;;
   esac
 }
-          install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle"
+          install_resource "GoogleMaps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"
+                    install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle"
                     install_resource "TUSafariActivity/TUSafariActivity/Safari.png"
                     install_resource "TUSafariActivity/TUSafariActivity/Safari@2x.png"
                     install_resource "TUSafariActivity/TUSafariActivity/Safari@2x~ipad.png"

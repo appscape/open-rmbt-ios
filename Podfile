@@ -17,3 +17,5 @@ else
 end
 
 pod 'BCGenieEffect'
+
+pod 'GoogleMaps', '~> 1.10.5'
