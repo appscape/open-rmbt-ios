@@ -17,7 +17,7 @@
 
 #import "RMBTThroughputHistory.h"
 
-@interface RMBTThroughputHistoryTest : SenTestCase
+@interface RMBTThroughputHistoryTest : XCTestCase
 @end
 
 @implementation RMBTThroughputHistoryTest
@@ -26,61 +26,61 @@
     // One block = 250ms
     RMBTThroughputHistory *h = [[RMBTThroughputHistory alloc] initWithResolutionNanos:T(250)];
     
-    STAssertEquals(h.totalThroughput.endNanos, T(0), nil);
+    XCTAssertEqual(h.totalThroughput.endNanos, T(0));
     
     // Transfer 10 kilobit in one second
     [h addLength:1250 atNanos:T(1000)];
     
     // Assert correct total throughput
-    STAssertEquals(h.totalThroughput.endNanos, T(1000), nil);
-    STAssertTrue(h.totalThroughput.kilobitsPerSecond == 10, nil);
+    XCTAssertEqual(h.totalThroughput.endNanos, T(1000));
+    XCTAssertTrue(h.totalThroughput.kilobitsPerSecond == 10);
     
     // Assert correct period division
-    STAssertEquals(h.periods.count, 4U, nil);
+    XCTAssertEqual(h.periods.count, 4U);
     
     // ..and bytes per period (note that 1250 isn't divisible by 4)
     for (int i = 0; i<3;i++) {
-        STAssertTrue([h.periods[i] length] == 312, nil);
+        XCTAssertTrue([h.periods[i] length] == 312);
     }
-    STAssertTrue([h.periods[3] length] == 314, nil);
+    XCTAssertTrue([h.periods[3] length] == 314);
 }
 
 - (void)testBoundaries {
     RMBTThroughputHistory *h = [[RMBTThroughputHistory alloc] initWithResolutionNanos:T(1000)];
-    STAssertEquals(h.lastFrozenPeriodIndex, -1, nil);
+    XCTAssertEqual(h.lastFrozenPeriodIndex, -1);
     
     [h addLength:1050 atNanos:T(1050)];
-    STAssertEquals(h.lastFrozenPeriodIndex, 0, nil);
+    XCTAssertEqual(h.lastFrozenPeriodIndex, 0);
 
     [h addLength:150 atNanos:T(1200)];
-    STAssertEquals(h.lastFrozenPeriodIndex, 0, nil);
-    STAssertEquals(h.periods.count, 2U, nil);
-    STAssertEquals(h.totalThroughput.endNanos, T(1200), nil);
-    STAssertEquals([[h.periods lastObject] endNanos], T(1200), nil);
+    XCTAssertEqual(h.lastFrozenPeriodIndex, 0);
+    XCTAssertEqual(h.periods.count, 2U);
+    XCTAssertEqual(h.totalThroughput.endNanos, T(1200));
+    XCTAssertEqual([[h.periods lastObject] endNanos], T(1200));
     
     [h addLength:800 atNanos:T(2000)];
-    STAssertEquals(h.lastFrozenPeriodIndex, 0, nil);
-    STAssertEquals(h.periods.count, 2U, nil);
+    XCTAssertEqual(h.lastFrozenPeriodIndex, 0);
+    XCTAssertEqual(h.periods.count, 2U);
     
-    STAssertTrue([h.periods[0] length] == 1000, nil);
-    STAssertTrue([h.periods[1] length] == 1000, nil);
+    XCTAssertTrue([h.periods[0] length] == 1000);
+    XCTAssertTrue([h.periods[1] length] == 1000);
     
     [h addLength:1000 atNanos:T(3000)];
-    STAssertEquals(h.lastFrozenPeriodIndex, 1, nil);
-    STAssertEquals(h.periods.count, 3U, nil);
-    STAssertEquals([[h.periods lastObject] startNanos], T(2000), nil);
-    STAssertEquals([[h.periods lastObject] endNanos], T(3000), nil);
-    STAssertTrue([h.periods[2] length] == 1000, nil);
+    XCTAssertEqual(h.lastFrozenPeriodIndex, 1);
+    XCTAssertEqual(h.periods.count, 3U);
+    XCTAssertEqual([[h.periods lastObject] startNanos], T(2000));
+    XCTAssertEqual([[h.periods lastObject] endNanos], T(3000));
+    XCTAssertTrue([h.periods[2] length] == 1000);
 }
 
 - (void)testFreeze {
     RMBTThroughputHistory *h = [[RMBTThroughputHistory alloc] initWithResolutionNanos:T(1000)];
     [h addLength:1024 atNanos:T(500)];
-    STAssertEquals(h.lastFrozenPeriodIndex, -1, nil);
-    STAssertEquals([[h totalThroughput] endNanos], T(500), nil);
+    XCTAssertEqual(h.lastFrozenPeriodIndex, -1);
+    XCTAssertEqual([[h totalThroughput] endNanos], T(500));
     [h freeze];
-    STAssertEquals(h.lastFrozenPeriodIndex, 0, nil);
-    STAssertEquals([[h.periods lastObject] endNanos], T(500), nil);
+    XCTAssertEqual(h.lastFrozenPeriodIndex, 0);
+    XCTAssertEqual([[h.periods lastObject] endNanos], T(500));
 }
 
 - (void)testSquash1 {
@@ -96,12 +96,12 @@
     
     [h freeze];
     
-    STAssertEquals([[h periods] count], 3U, nil);
+    XCTAssertEqual([[h periods] count], 3U);
     [h squashLastPeriods:1];
     
-    STAssertEquals([[h periods] count], 2U, nil);
-    STAssertEquals([[[h periods] lastObject] endNanos], T(3000), nil);
-    STAssertEquals([[[h periods] lastObject] length], 4000U, nil);
+    XCTAssertEqual([[h periods] count], 2U);
+    XCTAssertEqual([[[h periods] lastObject] endNanos], T(3000));
+    XCTAssertEqual([[[h periods] lastObject] length], 4000U);
 }
 
 - (void)testSquash2 {
@@ -117,12 +117,12 @@
     
     [h freeze];
     
-    STAssertEquals([[h periods] count], 3U, nil);
+    XCTAssertEqual([[h periods] count], 3U);
     [h squashLastPeriods:2];
     
-    STAssertEquals([[h periods] count], 1U, nil);
-    STAssertEquals([[[h periods] lastObject] endNanos], T(3000), nil);
-    STAssertEquals([[[h periods] lastObject] length], 6000U, nil);
+    XCTAssertEqual([[h periods] count], 1U);
+    XCTAssertEqual([[[h periods] lastObject] endNanos], T(3000));
+    XCTAssertEqual([[[h periods] lastObject] length], 6000U);
 }
 
 @end

@@ -17,26 +17,26 @@
 
 #import "RMBTSpeed.h"
 
-@interface RMBTSpeedTest : SenTestCase
+@interface RMBTSpeedTest : XCTestCase
 @end
 
 @implementation RMBTSpeedTest
 
 - (void)testFormatting {
-    STAssertEqualObjects(RMBTSpeedMbpsString(11221), @"11 Mbps", NULL);
-    STAssertEqualObjects(RMBTSpeedMbpsString(11500), @"12 Mbps", NULL); // bankers' rounding
-    STAssertEqualObjects(RMBTSpeedMbpsString(11490), @"11 Mbps", NULL);
+    XCTAssertEqualObjects(RMBTSpeedMbpsString(11221), @"11 Mbps");
+    XCTAssertEqualObjects(RMBTSpeedMbpsString(11500), @"12 Mbps"); // bankers' rounding
+    XCTAssertEqualObjects(RMBTSpeedMbpsString(11490), @"11 Mbps");
     
-    STAssertEqualObjects(RMBTSpeedMbpsString(11490), @"11 Mbps", NULL);
-    STAssertEqualObjects(RMBTSpeedMbpsString(11490), @"11 Mbps", NULL);
-    STAssertEqualObjects(RMBTSpeedMbpsString(11490), @"11 Mbps", NULL);
+    XCTAssertEqualObjects(RMBTSpeedMbpsString(11490), @"11 Mbps");
+    XCTAssertEqualObjects(RMBTSpeedMbpsString(11490), @"11 Mbps");
+    XCTAssertEqualObjects(RMBTSpeedMbpsString(11490), @"11 Mbps");
     
-    STAssertEqualObjects(RMBTSpeedMbpsString(154), @"0.15 Mbps", NULL);
-    STAssertEqualObjects(RMBTSpeedMbpsString(155), @"0.16 Mbps", NULL);
+    XCTAssertEqualObjects(RMBTSpeedMbpsString(154), @"0.15 Mbps");
+    XCTAssertEqualObjects(RMBTSpeedMbpsString(155), @"0.16 Mbps");
     
-    STAssertEqualObjects(RMBTSpeedMbpsString(123000), @"120 Mbps", NULL);
+    XCTAssertEqualObjects(RMBTSpeedMbpsString(123000), @"120 Mbps");
     
-    STAssertEqualObjects(RMBTSpeedMbpsString(1250), @"1.2 Mbps", NULL);
+    XCTAssertEqualObjects(RMBTSpeedMbpsString(1250), @"1.2 Mbps");
 }
 
 @end

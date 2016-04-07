@@ -15,15 +15,15 @@
  *
  */
 
-@interface RMBTHelpersTest : SenTestCase
+@interface RMBTHelpersTest : XCTestCase
 @end
 
 @implementation RMBTHelpersTest
 
 - (void)testBSSIDConversion {
-    STAssertEqualObjects(RMBTReformatHexIdentifier(@"0:0:fb:1"), @"00:00:fb:01", NULL);
-    STAssertEqualObjects(RMBTReformatHexIdentifier(@"hello"), @"hello", NULL);
-    STAssertEqualObjects(RMBTReformatHexIdentifier(@"::FF:1"), @"00:00:FF:01", NULL);
+    XCTAssertEqualObjects(RMBTReformatHexIdentifier(@"0:0:fb:1"), @"00:00:fb:01");
+    XCTAssertEqualObjects(RMBTReformatHexIdentifier(@"hello"), @"hello");
+    XCTAssertEqualObjects(RMBTReformatHexIdentifier(@"::FF:1"), @"00:00:FF:01");
 }
 
 @end
