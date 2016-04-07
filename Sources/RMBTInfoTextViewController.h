@@ -20,6 +20,6 @@
 @interface RMBTInfoTextViewController : UIViewController
 
 @property (nonatomic, weak) IBOutlet UITextView *textView;
-@property (nonatomic, copy) NSString *text, *title;
+@property (nonatomic, copy) NSString *text;
 
 @end
