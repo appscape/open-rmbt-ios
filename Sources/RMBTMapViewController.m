@@ -210,8 +210,6 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self togglePopGestureRecognizer:YES];
-    [_mapView stopRendering];
-
     self.tabBarController.delegate = nil;
 }
 
