@@ -360,7 +360,7 @@ typedef NS_ENUM(long, RMBTTestTag) {
             // ..no, get more chunks
             _pretestChunksCount *= 2;
             // -> GETCHUNKS *2
-            [self writeLine:[NSString stringWithFormat:@"GETCHUNKS %d",_pretestChunksCount] withTag:RMBTTestTagTxGetChunks];
+            [self writeLine:[NSString stringWithFormat:@"GETCHUNKS %lu",(unsigned long)_pretestChunksCount] withTag:RMBTTestTagTxGetChunks];
         }
     }
 

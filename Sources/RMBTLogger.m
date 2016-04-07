@@ -70,7 +70,7 @@ void RMBTLog(NSString* format, ...) {
             
             void (^announce)() = ^(void) {
                 if (enabled) {
-                    NSLog(@"Logging via UDP to %@:%d", _sharedLogger.destinationHostname, _sharedLogger.destinationPort);
+                    NSLog(@"Logging via UDP to %@:%lu", _sharedLogger.destinationHostname, (unsigned long)_sharedLogger.destinationPort);
                 } else {
                     NSLog(@"Logging via UDP disabled.");
                 }

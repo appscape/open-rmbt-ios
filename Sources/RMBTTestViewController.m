@@ -158,7 +158,7 @@
     [self displayText:@"-" forLabel:self.upResultLabel];
     [self displayText:@"-" forLabel:self.footerStatusLabel];
 
-    [self displayText:[NSString stringWithFormat:@"%u/%u", _loopCounter,RMBT_TEST_LOOPMODE_LIMIT] forLabel:self.footerLoopLabel];
+    [self displayText:[NSString stringWithFormat:@"%lu/%u", (unsigned long)_loopCounter, RMBT_TEST_LOOPMODE_LIMIT] forLabel:self.footerLoopLabel];
 
     self.arrowImageView.image = nil;
 
@@ -435,7 +435,7 @@
 }
 
 - (void)displayPercentage:(NSUInteger)percentage {
-    self.progressLabel.text = [NSString stringWithFormat:@"%d%%", percentage];
+    self.progressLabel.text = [NSString stringWithFormat:@"%lu%%", (unsigned long)percentage];
     _progressGaugeView.value = percentage/100.0f;
 }
 
@@ -495,7 +495,7 @@
             [timer invalidate];
             [self startNextLoop];
         } else {
-            [self displayText:[NSString stringWithFormat:@"Restarting test in %d seconds", (NSUInteger)(interval-elapsed)] forLabel:self.footerStatusLabel];
+            [self displayText:[NSString stringWithFormat:@"Restarting test in %lu seconds", (unsigned long)(interval-elapsed)] forLabel:self.footerStatusLabel];
         }
     } repeats:YES];
 }

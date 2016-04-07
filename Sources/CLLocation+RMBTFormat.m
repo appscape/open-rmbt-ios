@@ -27,12 +27,12 @@
         [timestampFormatter setDateFormat:@"HH:mm:ss"];
     });
 
-    NSInteger latSeconds = (NSInteger)round(abs(self.coordinate.latitude * 3600));
+    NSInteger latSeconds = (NSInteger)round(fabs(self.coordinate.latitude * 3600));
     NSInteger latDegrees = latSeconds / 3600;
     latSeconds = latSeconds % 3600;
     CLLocationDegrees latMinutes = latSeconds / 60.0;
 
-    NSInteger longSeconds = (NSInteger)round(abs(self.coordinate.longitude * 3600));
+    NSInteger longSeconds = (NSInteger)round(fabs(self.coordinate.longitude * 3600));
     NSInteger longDegrees = longSeconds / 3600;
     longSeconds = longSeconds % 3600;
     CLLocationDegrees longMinutes = longSeconds / 60.0;
@@ -42,7 +42,7 @@
 
     
 
-    return [NSString stringWithFormat:@"%c %d° %.3f' %c %d° %.3f' (+/- %.0fm)\n@%@", latDirection, latDegrees, latMinutes, longDirection, longDegrees, longMinutes, self.horizontalAccuracy, [timestampFormatter stringFromDate:self.timestamp]];
+    return [NSString stringWithFormat:@"%c %ld° %.3f' %c %ld° %.3f' (+/- %.0fm)\n@%@", latDirection, (long)latDegrees, latMinutes, longDirection, (long)longDegrees, longMinutes, self.horizontalAccuracy, [timestampFormatter stringFromDate:self.timestamp]];
 }
 
 - (NSDictionary*)paramsDictionary {

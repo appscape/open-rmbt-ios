@@ -51,9 +51,9 @@
     NSUInteger startPeriodIndex = _periods.count - 1;
     NSUInteger endPeriodIndex = timestampNanos / _resolutionNanos;
     if (timestampNanos - (_resolutionNanos * endPeriodIndex) == 0) endPeriodIndex -= 1; // Boundary condition
-    
-    NSAssert((int)startPeriodIndex > _lastFrozenPeriodIndex, @"Start period %d < %d", startPeriodIndex, _lastFrozenPeriodIndex);
-    NSAssert((int)endPeriodIndex > _lastFrozenPeriodIndex, @"End period %d < %d", endPeriodIndex, _lastFrozenPeriodIndex);
+
+    NSAssert((int)startPeriodIndex > _lastFrozenPeriodIndex, @"Start period %lu < %ld", (unsigned long)startPeriodIndex, (long)_lastFrozenPeriodIndex);
+    NSAssert((int)endPeriodIndex > _lastFrozenPeriodIndex, @"End period %lu < %ld", (unsigned long)endPeriodIndex, (long)_lastFrozenPeriodIndex);
         
     RMBTThroughput *startPeriod = [_periods objectAtIndex:startPeriodIndex];
     

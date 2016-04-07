@@ -85,7 +85,7 @@ NSString *RMBTQueryStringFromDictionary(NSDictionary *input) {
 
 - (NSURL*)tileURLForMapOverlayType:(NSString*)overlayType x:(NSUInteger)x y:(NSUInteger)y zoom:(NSUInteger)zoom params:(NSDictionary*)params {
     NSMutableString *urlString = [NSMutableString stringWithString:[_httpClient.baseURL absoluteString]];
-    [urlString appendFormat:@"tiles/%@?path=%d/%d/%d&", overlayType, zoom, x, y];
+    [urlString appendFormat:@"tiles/%@?path=%lu/%lu/%lu&", overlayType, (unsigned long)zoom, (unsigned long)x, (unsigned long)y];
     [urlString appendString:RMBTQueryStringFromDictionary(params)];
     
     NSString *uuid = [RMBTControlServer sharedControlServer].uuid;

@@ -69,7 +69,7 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
         NSString *scheme = settings.debugControlServerUseSSL ? @"https" : @"http";
         NSString *hostname = settings.debugControlServerHostname;
         if (settings.debugControlServerPort != 0 && settings.debugControlServerPort != 80) {
-            hostname = [hostname stringByAppendingFormat:@":%d", settings.debugControlServerPort];
+            hostname = [hostname stringByAppendingFormat:@":%lu", (unsigned long)settings.debugControlServerPort];
         }
         baseURL =  [[NSURL alloc] initWithScheme:scheme host:hostname path:@"/RMBTControlServer"];
         _uuidKey = [NSString stringWithFormat:@"uuid_%@", baseURL.host];
@@ -121,8 +121,8 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
 //    NSLog(@"Submit %@", mergedParams);
 
     [self requestWithMethod:@"POST" path:@"result" params:mergedParams success:^(NSDictionary *response) {
-        if (!response || (response[@"error"] && ![response[@"error"] count] == 0)) {
-            RMBTLog(@"Error subitting rest result: %@", response[@"error"]);
+        if (!response || (response[@"error"] && [response[@"error"] count] > 0)) {
+            RMBTLog(@"Error submitting rest result: %@", response[@"error"]);
             error();
         } else {
             RMBTLog(@"Test result submitted");

@@ -60,7 +60,7 @@
                 return @"Cellular";
             }
         default:
-            NSLog(@"Invalid network type %d", _networkType);
+            NSLog(@"Invalid network type %ld", (long)_networkType);
             return @"Unknown";
     }
 }
@@ -108,7 +108,7 @@
         case RMBTNetworkTypeNone:
             break;
         default:
-            NSAssert1(false, @"Invalid network type %d", _networkType);
+            NSAssert1(false, @"Invalid network type %ld", (long)_networkType);
     }
 }
 
@@ -182,7 +182,7 @@
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
 
     NSInteger code = self.networkType;
-    if (code > 0) result[@"network_type"] = [NSNumber numberWithUnsignedInt:code];
+    if (code > 0) result[@"network_type"] = [NSNumber numberWithInteger:code];
 
     if (self.networkType == RMBTNetworkTypeWiFi) {
         if (_networkName) result[@"wifi_ssid"] = _networkName;
