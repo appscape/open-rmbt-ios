@@ -233,8 +233,8 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
 - (void)refresh {
     _tileParamsDictionary = [_mapOptions.activeSubtype.paramsDictionary mutableCopy];
     [_tileParamsDictionary addEntriesFromDictionary:@{
-        @"size": [NSString stringWithFormat:@"%d", _tileSize],
-        @"point_diameter": [NSString stringWithFormat:@"%d", _pointDiameterSize]
+        @"size": [NSString stringWithFormat:@"%lu", (unsigned long)_tileSize],
+        @"point_diameter": [NSString stringWithFormat:@"%lu", (unsigned long)_pointDiameterSize]
     }];
 
     [self updateLayerVisiblity];
