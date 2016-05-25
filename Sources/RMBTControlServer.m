@@ -210,7 +210,7 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
     [requestParams addEntriesFromDictionary:params];
     
     [self performWithUUID:^{
-        [self requestWithMethod:@"POST" path:@"" params:requestParams success:^(NSDictionary *response) {
+        [self requestWithMethod:@"POST" path:@"testRequest" params:requestParams success:^(NSDictionary *response) {
              RMBTTestParams *tp = [[RMBTTestParams alloc] initWithResponse:response];
              success(tp);
          } error:^(NSError *err, NSDictionary *response) {
