@@ -17,6 +17,7 @@
 
 #import "RMBTControlServer.h"
 #import "RMBTSettings.h"
+#import "RMBTTOS.h"
 
 #import <AFNetworking/AFHTTPClient.h>
 #include <sys/sysctl.h>
@@ -135,7 +136,13 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
 }
 
 - (void)getSettings:(RMBTBlock)success error:(RMBTErrorBlock)errorCallback {
-    [self requestWithMethod:@"POST" path:@"settings" params:@{@"terms_and_conditions_accepted": @YES} success:^(NSDictionary *response) {
+    [self requestWithMethod:@"POST"
+                       path:@"settings"
+                     params:@{
+                              @"terms_and_conditions_accepted": @YES,
+                              @"terms_and_conditions_accepted_version": @([RMBTTOS sharedTOS].lastAcceptedVersion)
+                            }
+                    success:^(NSDictionary *response) {
         // If we didn't have UUID yet and server is sending us one, save it for future requests
         if (!self.uuid && response[@"settings"] && response[@"settings"][0][@"uuid"]) {
             self.uuid = response[@"settings"][0][@"uuid"];
