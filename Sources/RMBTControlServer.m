@@ -368,6 +368,7 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
              @"softwareVersion": RMBTValueOrNull(infoDictionary[@"CFBundleShortVersionString"]),
              @"softwareVersionCode": RMBTValueOrNull(infoDictionary[@"CFBundleVersion"]),
              @"softwareRevision": RMBTValueOrNull(RMBTBuildInfoString()),
+             @"capabilities": @{ @"classification": @{ @"count": @(4) } }
     };
 }
 

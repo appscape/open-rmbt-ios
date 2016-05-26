@@ -42,6 +42,8 @@ NSString * const RMBTTrafficLightTappedNotification = @"RMBTTrafficLightTappedNo
             image = [UIImage imageNamed:@"traffic_lights_yellow"];
         } else if (item.classification == 3) {
             image = [UIImage imageNamed:@"traffic_lights_green"];
+        } else if (item.classification == 4) {
+            image = [UIImage imageNamed:@"traffic_lights_darkgreen"];
         } else {
             image = [UIImage imageNamed:@"traffic_lights_none"];
         }
