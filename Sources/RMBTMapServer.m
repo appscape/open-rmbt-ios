@@ -42,7 +42,9 @@ NSString *RMBTQueryStringFromDictionary(NSDictionary *input) {
 
 - (id)init {
     if (self = [super init]) {
-        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[RMBTControlServer sharedControlServer].mapServerURL];
+        NSURL *mapServerURL = [RMBTControlServer sharedControlServer].mapServerURL;
+        RMBTLog(@"Map server URL = %@", mapServerURL);
+        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:mapServerURL];
         _httpClient.parameterEncoding = AFJSONParameterEncoding;
     }
     return self;

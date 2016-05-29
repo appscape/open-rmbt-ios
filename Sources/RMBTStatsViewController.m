@@ -67,6 +67,7 @@ static const NSTimeInterval kUnloadViewTimeout = 5.0;
 
 - (void)loadWebView {
     NSURL *url = [RMBTControlServer sharedControlServer].statsURL;
+    RMBTLog(@"Stats URL = %@", url);
     RMBTStatsWebViewController *webView = [[RMBTStatsWebViewController alloc] initWithURL:url];
     [self setViewControllers:@[webView] animated:NO];
 }
