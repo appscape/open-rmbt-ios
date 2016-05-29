@@ -79,6 +79,10 @@
 }
 
 - (void)checkNews {
+    [[RMBTControlServer sharedControlServer] getSettings:^{
+    } error:^(NSError *error, NSDictionary *info) {
+    }]; // Update URLs
+
     [[RMBTControlServer sharedControlServer] getNews:^(NSArray *news) {
         for (RMBTNews *n in news) {
             [UIAlertView bk_showAlertViewWithTitle:n.title
