@@ -42,10 +42,7 @@ NSString *RMBTQueryStringFromDictionary(NSDictionary *input) {
 
 - (id)init {
     if (self = [super init]) {
-        // Take over base URL from control server, but use /RMBTMapServer as path:
-        NSURL *controlServerURL = [RMBTControlServer sharedControlServer].baseURL;
-        NSURL *mapServerURL = [[controlServerURL URLByDeletingLastPathComponent] URLByAppendingPathComponent:@"RMBTMapServer"];
-        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:mapServerURL];
+        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[RMBTControlServer sharedControlServer].mapServerURL];
         _httpClient.parameterEncoding = AFJSONParameterEncoding;
     }
     return self;

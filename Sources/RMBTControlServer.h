@@ -26,6 +26,9 @@
 @property (readonly, nonatomic) NSDictionary *historyFilters;
 @property (readonly, nonatomic) NSString *openTestBaseURL;
 
+@property (readonly, nonatomic) NSURL *mapServerURL;
+@property (readonly, nonatomic) NSURL *statsURL;
+
 + (instancetype)sharedControlServer;
 
 - (void)updateWithCurrentSettings;

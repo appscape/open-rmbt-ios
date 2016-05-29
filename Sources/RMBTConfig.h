@@ -59,7 +59,10 @@
 #define RMBT_PROJECT_EMAIL   @"netztest@rtr.at"
 #define RMBT_PRIVACY_TOS_URL @"https://www.netztest.at/redirect/$lang/terms"
 #define RMBT_ABOUT_URL       @"https://www.rtr.at/$lang/"
+
+// Note: stats url can can be replaced with the /settings response from control server
 #define RMBT_STATS_URL       @"https://www.netztest.at/$lang/Statistik#noMMenu"
+
 #define RMBT_HELP_URL        @"https://www.rtr.at/$lang/tk/netztesthilfe"
 #define RMBT_HELP_RESULT_URL @"https://www.rtr.at/$lang/rtr/netztestfaq_testergebnis"
 

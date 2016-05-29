@@ -91,6 +91,9 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
     } else {
         _lastNewsUid = 0;
     }
+
+    _mapServerURL = [[baseURL URLByDeletingLastPathComponent] URLByAppendingPathComponent:@"RMBTMapServer"];
+    _statsURL = [NSURL URLWithString:RMBTLocalizeURLString(RMBT_STATS_URL)];
 }
 
 - (void)setLastNewsUid:(long)lastNewsUid {
@@ -142,7 +145,8 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
                               @"terms_and_conditions_accepted": @YES,
                               @"terms_and_conditions_accepted_version": @([RMBTTOS sharedTOS].lastAcceptedVersion)
                             }
-                    success:^(NSDictionary *response) {
+                    success:^(NSDictionary *response)
+    {
         // If we didn't have UUID yet and server is sending us one, save it for future requests
         if (!self.uuid && response[@"settings"] && response[@"settings"][0][@"uuid"]) {
             self.uuid = response[@"settings"][0][@"uuid"];
@@ -153,6 +157,16 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
         
         _historyFilters = response[@"settings"][0][@"history"];
         _openTestBaseURL = response[@"settings"][0][@"urls"][@"open_data_prefix"];
+
+        NSURL *statsURL = [NSURL URLWithString:response[@"settings"][0][@"urls"][@"statistics"]];
+        if (statsURL) {
+            _statsURL = statsURL;
+        }
+
+        NSURL *mapsURL = [NSURL URLWithString:response[@"settings"][0][@"urls"][@"url_map_server"]];
+        if (mapsURL) {
+            _mapServerURL = mapsURL;
+        }
 
         success();
     } error:^(NSError *error, NSDictionary *response) {
