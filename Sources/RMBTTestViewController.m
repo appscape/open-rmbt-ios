@@ -126,6 +126,12 @@
     }
 }
 
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    _progressGaugeView.frame = self.progressGaugePlaceholderView.frame;
+    _speedGaugeView.frame = self.speedGaugePlaceholderView.frame;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
