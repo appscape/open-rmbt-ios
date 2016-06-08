@@ -108,7 +108,8 @@ NSString *RMBTQueryStringFromDictionary(NSDictionary *input) {
              @"lon": [NSNumber numberWithDouble:coordinate.longitude],
              @"z": [NSNumber numberWithUnsignedInteger:zoom]
          },
-         @"size": @"40"
+         @"size": @"40",
+         @"capabilities": [RMBTControlServer sharedControlServer].capabilities
     }];
     
     [self requestWithMethod:@"POST" path:@"tiles/markers" params:finalParams success:^(id response) {

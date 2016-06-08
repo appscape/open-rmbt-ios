@@ -60,6 +60,8 @@
 - (NSString *)uuid;
 - (NSURL *)baseURL;
 
+- (NSDictionary *)capabilities;
+
 - (void)performWithUUID:(RMBTBlock)callback error:(RMBTErrorBlock)errorCallback;
 - (void)cancelAllRequests;
 

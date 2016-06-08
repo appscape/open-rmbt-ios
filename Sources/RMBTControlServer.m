@@ -367,6 +367,10 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
 
 #pragma mark - System Info
 
+- (NSDictionary *)capabilities {
+    return @{ @"classification": @{ @"count": @(4) } };
+}
+
 - (NSDictionary *)systemInfoParams {
     id infoDictionary = [[NSBundle mainBundle] infoDictionary];
 
@@ -384,7 +388,7 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
              @"softwareVersion": RMBTValueOrNull(infoDictionary[@"CFBundleShortVersionString"]),
              @"softwareVersionCode": RMBTValueOrNull(infoDictionary[@"CFBundleVersion"]),
              @"softwareRevision": RMBTValueOrNull(RMBTBuildInfoString()),
-             @"capabilities": @{ @"classification": @{ @"count": @(4) } }
+             @"capabilities": [self capabilities]
     };
 }
 
