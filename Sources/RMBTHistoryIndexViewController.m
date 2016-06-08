@@ -26,7 +26,7 @@ static NSUInteger const kBatchSize = 25; // Entries to fetch from server
 
 static NSUInteger const kSyncSheetRequestCodeButtonIndex = 0;
 static NSUInteger const kSyncSheetEnterCodeButtonIndex = 1;
-static NSUInteger const kSyncSheetCancelButtonIndex = 2;
+static NSUInteger __attribute__((__unused__)) const kSyncSheetCancelButtonIndex = 2;
 
 static NSString* const kIndexCellReuseIdentifier = @"RMBTHistoryIndexCell";
 
