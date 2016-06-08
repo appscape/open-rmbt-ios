@@ -160,13 +160,13 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
 
         NSURL *statsURL = [NSURL URLWithString:response[@"settings"][0][@"urls"][@"statistics"]];
         if (statsURL) {
-            RMBTLog(@"Stats URL updated to %@", statsURL);
+            RMBTLog(@"Stats URL updated: %@ -> %@", _statsURL, statsURL);
             _statsURL = statsURL;
         }
 
         NSURL *mapsURL = [NSURL URLWithString:response[@"settings"][0][@"urls"][@"url_map_server"]];
         if (mapsURL) {
-            RMBTLog(@"Map server URL updated to %@", mapsURL);
+            RMBTLog(@"Map server URL updated: %@ -> %@", _mapServerURL, mapsURL);
             _mapServerURL = mapsURL;
         }
 
