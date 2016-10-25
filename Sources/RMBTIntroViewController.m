@@ -30,7 +30,7 @@ static const CGFloat kRadiateAnimationStartRadius = 9.0;
 static const CGFloat kRadiateAnimationStartOffsetWifi = 22.0f;
 static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
 
-@interface RMBTIntroViewController ()<RMBTTestViewControllerDelegate, RMBTConnectivityTrackerDelegate, UIViewControllerTransitioningDelegate> {
+@interface RMBTIntroViewController ()<RMBTTestViewControllerDelegate, RMBTConnectivityTrackerDelegate, UIViewControllerTransitioningDelegate, CAAnimationDelegate> {
     RMBTConnectivityTracker *_connectivityTracker;
     RMBTHistoryResult *_result;
     id _radiateBlock;
@@ -44,6 +44,7 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
 @implementation RMBTIntroViewController
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self.navigationController.tabBarItem setSelectedImage:[UIImage imageNamed:@"tab_test_selected"]];
 }
 
@@ -274,7 +275,7 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
     }
 
     if ([[animation valueForKey:@"animationLastCircle"] boolValue]) {
-        _radiateBlock = NO;
+        _radiateBlock = nil;
     }
 }
 

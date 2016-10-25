@@ -70,6 +70,7 @@ static CGFloat kColumnWidths6Plus[COLS] = {50,76,90,66,66,66};
 @implementation RMBTHistoryIndexViewController
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self.navigationController.tabBarItem setSelectedImage:[UIImage imageNamed:@"tab_history_selected"]];
 }
 

@@ -71,6 +71,7 @@ static const CGSize kTriangleSize = {30.0f, 20.0f};
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self setup];
 }
 

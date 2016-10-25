@@ -40,6 +40,7 @@ static const NSTimeInterval kUnloadViewTimeout = 5.0;
 @implementation RMBTStatsViewController
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self.tabBarItem setSelectedImage:[UIImage imageNamed:@"tab_stats_selected"]];
     [self setNavigationBarHidden:YES animated:NO];
 }

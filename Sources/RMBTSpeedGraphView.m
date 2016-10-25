@@ -83,6 +83,7 @@ static NSTimeInterval const RMBTSpeedGraphViewSeconds = 8.0;
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self setup];
 }
 

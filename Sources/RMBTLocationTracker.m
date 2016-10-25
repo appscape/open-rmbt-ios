@@ -53,8 +53,7 @@ NSString * const RMBTLocationTrackerNotification = @"RMBTLocationTrackerNotifica
 }
 
 - (BOOL)startIfAuthorized {
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized ||
-        [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways ||
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways ||
         [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse ) {
         [_locationManager startUpdatingLocation];
         return YES;
