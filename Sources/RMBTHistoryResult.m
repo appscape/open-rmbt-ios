@@ -71,12 +71,11 @@
         previousYearFormatter = [[NSDateFormatter alloc] init];
         [previousYearFormatter setDateFormat:@"MMM dd\nYYYY"];
     });
-    NSDateComponents *historyDateComponents = [[NSCalendar currentCalendar] components: NSDayCalendarUnit |  NSMonthCalendarUnit | NSYearCalendarUnit
-                                                                              fromDate:_timestamp];
-    
-    NSDateComponents *currentDateComponents = [[NSCalendar currentCalendar] components: NSDayCalendarUnit |  NSMonthCalendarUnit | NSYearCalendarUnit
-                                                                              fromDate:[NSDate date]];
 
+    NSDateComponents *historyDateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear
+                                                                              fromDate:_timestamp];
+    NSDateComponents *currentDateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear
+                                                                              fromDate:[NSDate date]];
     NSString *result;
 
     if (currentDateComponents.year == historyDateComponents.year) {
