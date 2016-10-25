@@ -549,21 +549,21 @@ typedef NS_ENUM(long, RMBTTestTag) {
 
             if (_testUploadLastChunkSent && now >= _testUploadMaxWaitReachedClientNanos) {
                 RMBTLog(@"Max wait reached in thread %u. Finalizing.", _index);
-                [self finalize];
+                [self succeed];
                 return;
             }
 
             if (_testUploadLastChunkSent && now >= _testUploadEnoughClientNanos && ns >= _testUploadEnoughServerNanos) {
                 // We can finalize
                 RMBTLog(@"Thread %u has read enough upload reports at local=%" PRIu64 " server=%" PRIu64 ". Finalizing...", _index, now - _testStartNanos, ns);
-                [self finalize];
+                [self succeed];
                 return;
             }
             
             [self readLineWithTag:RMBTTestTagRxPutStatistic];
         } else if ([line hasPrefix:@"ACCEPT"]) {
             RMBTLog(@"Thread %u has read ALL upload reports. Finalizing...", _index);
-            [self finalize];
+            [self succeed];
         } else {
             // INVALID LINE
             NSAssert(false, @"Invalid response received");
@@ -578,7 +578,7 @@ typedef NS_ENUM(long, RMBTTestTag) {
 }
 
 // Finishes the uplink test and closes the connection
-- (void)finalize {
+- (void)succeed {
     _state = RMBTTestWorkerStateUplinkTestFinished;
     [_socket disconnect];
     [_delegate testWorkerDidFinishUplinkTest:self];

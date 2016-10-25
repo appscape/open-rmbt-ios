@@ -337,7 +337,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 
     if ([self markWorkerAsFinished]) {
         // Stop observing now, test is finished
-        [self finalize];
+        [self cleanup];
 
         _uplinkEndInterfaceInfo = [[_testResult lastConnectivity] getInterfaceInfo];
 
@@ -596,7 +596,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 
 #pragma mark - Cancelling and cleanup
 
-- (void)finalize {
+- (void)cleanup {
     // Stop observing
     [_connectivityTracker stop];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -609,13 +609,13 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 }
 
 - (void)dealloc {
-    [self finalize];
+    [self cleanup];
 }
 
 - (void)cancelWithReason:(RMBTTestRunnerCancelReason)reason {
     ASSERT_ON_WORKER_QUEUE();
 
-    [self finalize];
+    [self cleanup];
 
     if (_workers) {
         for (RMBTTestWorker *w in _workers) {
