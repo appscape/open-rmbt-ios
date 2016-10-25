@@ -1,2 +1,0 @@
-PODS_GOOGLEMAPS_FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/GoogleMaps/Frameworks"
-PODS_GOOGLEMAPS_OTHER_LDFLAGS = -l"c++" -l"icucore" -l"z" -framework "AVFoundation" -framework "Accelerate" -framework "CoreBluetooth" -framework "CoreData" -framework "CoreGraphics" -framework "CoreLocation" -framework "CoreText" -framework "GLKit" -framework "GoogleMaps" -framework "ImageIO" -framework "OpenGLES" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration"

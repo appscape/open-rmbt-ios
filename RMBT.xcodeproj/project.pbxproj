@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7ABF93939D07A19DF172C790 /* libPods-RMBT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74B5D1F96A5D607CBD1C4902 /* libPods-RMBT.a */; };
 		C573F2A5175281D300C728FC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C573F2A4175281D300C728FC /* MapKit.framework */; };
 		C573F2B1175294A500C728FC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C573F2B0175294A500C728FC /* CoreLocation.framework */; };
 		C59D7B471764E6CF003E9702 /* RMBTHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C59D7B461764E6CF003E9702 /* RMBTHelpers.m */; };
@@ -89,7 +90,6 @@
 		C7F3FB33179CC86900E336CF /* terms_conditions_long.html in Resources */ = {isa = PBXBuildFile; fileRef = C7F3FB35179CC86900E336CF /* terms_conditions_long.html */; };
 		C7F3FB3C179CCCD600E336CF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7F3FB3E179CCCD600E336CF /* Localizable.strings */; };
 		C7F599A71A2A81940020ADC4 /* RMBTHistoryIndexCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7F599A61A2A81940020ADC4 /* RMBTHistoryIndexCell.xib */; };
-		F74A0064B94F492FB6A6BC06 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A8E3D648BB433FACE84120 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,8 +103,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0AE21C8BA24C2E4C017FEF46 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		AA5A0316418D1F351D7EFD13 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		74B5D1F96A5D607CBD1C4902 /* libPods-RMBT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RMBT.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C573F2A4175281D300C728FC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C573F2B0175294A500C728FC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C59D7B451764E6CF003E9702 /* RMBTHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTHelpers.h; sourceTree = "<group>"; };
@@ -261,8 +260,6 @@
 		C7F3FB26179CA64D00E336CF /* RMBTSpeedTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTSpeedTest.m; sourceTree = "<group>"; };
 		C7F3FB3F179CCCD800E336CF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C7F599A61A2A81940020ADC4 /* RMBTHistoryIndexCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RMBTHistoryIndexCell.xib; sourceTree = "<group>"; };
-		D4A8E3D648BB433FACE84120 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E517F21DE502C9204AF47139 /* Pods.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.distribution.xcconfig; path = "Pods/Target Support Files/Pods/Pods.distribution.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,13 +292,20 @@
 				C7DE147C173E8F610079477A /* UIKit.framework in Frameworks */,
 				C7DE147E173E8F610079477A /* Foundation.framework in Frameworks */,
 				C7DE1480173E8F610079477A /* CoreGraphics.framework in Frameworks */,
-				F74A0064B94F492FB6A6BC06 /* libPods.a in Frameworks */,
+				7ABF93939D07A19DF172C790 /* libPods-RMBT.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B5AF762C1C3DE54BD04B4440 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C5DEB48B1763A0A800187C94 /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -556,7 +560,7 @@
 				C7916E9A173E90DB00B40152 /* Resources */,
 				C7DE147A173E8F610079477A /* Frameworks */,
 				C7DE1479173E8F610079477A /* Products */,
-				E17A8D565EC23E1DFDB515F6 /* Pods */,
+				B5AF762C1C3DE54BD04B4440 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -590,8 +594,8 @@
 				C7DE147B173E8F610079477A /* UIKit.framework */,
 				C7DE147D173E8F610079477A /* Foundation.framework */,
 				C7DE147F173E8F610079477A /* CoreGraphics.framework */,
-				D4A8E3D648BB433FACE84120 /* libPods.a */,
 				C7E4672C177CDDB600AAF7F0 /* SenTestingKit.framework */,
+				74B5D1F96A5D607CBD1C4902 /* libPods-RMBT.a */,
 			);
 			name = Frameworks;
 			path = Vendor;
@@ -697,16 +701,6 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		E17A8D565EC23E1DFDB515F6 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0AE21C8BA24C2E4C017FEF46 /* Pods.debug.xcconfig */,
-				AA5A0316418D1F351D7EFD13 /* Pods.release.xcconfig */,
-				E517F21DE502C9204AF47139 /* Pods.distribution.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -732,12 +726,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C7DE149E173E8F610079477A /* Build configuration list for PBXNativeTarget "RMBT" */;
 			buildPhases = (
-				6C772892F8C34AB1ACA517A8 /* Check Pods Manifest.lock */,
+				D2C080EC48316E5A53399219 /* [CP] Check Pods Manifest.lock */,
 				C7DE1474173E8F610079477A /* Sources */,
 				C7DE1475173E8F610079477A /* Frameworks */,
 				C7DE1476173E8F610079477A /* Resources */,
-				6C28D5F376E34DCFB978448D /* Copy Pods Resources */,
 				C79401F017FB021000484B8A /* Run Script: Add Build Infos */,
+				C7F33E2218551D1A00A6ABC0 /* Run Script: Overlay Icons */,
+				0EAFA3233FFCB28802C03579 /* [CP] Embed Pods Frameworks */,
+				2EFF0F7A027008F7C09ABC37 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -819,33 +815,35 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6C28D5F376E34DCFB978448D /* Copy Pods Resources */ = {
+		0EAFA3233FFCB28802C03579 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RMBT/Pods-RMBT-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
-		6C772892F8C34AB1ACA517A8 /* Check Pods Manifest.lock */ = {
+		2EFF0F7A027008F7C09ABC37 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RMBT/Pods-RMBT-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		C79401F017FB021000484B8A /* Run Script: Add Build Infos */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -860,6 +858,35 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Scripts/add_build_infos.sh\"";
+		};
+		C7F33E2218551D1A00A6ABC0 /* Run Script: Overlay Icons */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script: Overlay Icons";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PROJECT_DIR}/Scripts/overlay_icons.sh";
+		};
+		D2C080EC48316E5A53399219 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1161,7 +1188,6 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/RMBT-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "861a813d-f323-4064-aef0-f1cc5a679e72";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1186,7 +1212,6 @@
 				GCC_PREFIX_HEADER = "Sources/RMBT-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/RMBT-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
