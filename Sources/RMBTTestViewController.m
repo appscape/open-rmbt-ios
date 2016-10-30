@@ -98,9 +98,8 @@
 - (void)adaptLayout {
     switch (RMBTGetFormFactor()) {
         case RMBTFormFactoriPhone4:
-            // Collapse height of test server label, which hides it without affecting
-            // other autolayout rules
-            self.testServerLabelHeightConstraint.constant = 0.0f;
+            // Hide server label on iPhone 4 as there's not enough space:
+            [self.footerTestServerLabel removeFromSuperview];
             self.speedGraphBottomConstraint.constant = -10.0f;
             self.progressGaugeTopConstraint.constant = 20.0f;
             break;
