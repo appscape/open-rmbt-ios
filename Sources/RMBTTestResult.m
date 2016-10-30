@@ -123,7 +123,7 @@ const int32_t RMBTTestResultSpeedMeasurementFinished = -2;
             // We're adding up the last throughput, clip totals according to spec
             // 1) find t*
             uint64_t minEndNanos = 0;
-            uint64_t minPeriodIndex = 0;
+            NSInteger minPeriodIndex = 0;
             for (NSUInteger threadIndex = 0; threadIndex<_threadCount; threadIndex++) {
                 RMBTThroughputHistory *threadHistory = [_currentHistories objectAtIndex:threadIndex];
                 NSAssert(threadHistory.isFrozen, nil);

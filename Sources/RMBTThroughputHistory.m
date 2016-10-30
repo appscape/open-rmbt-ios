@@ -49,7 +49,7 @@
     uint64_t leftoverLength = length;
     
     NSUInteger startPeriodIndex = _periods.count - 1;
-    NSUInteger endPeriodIndex = timestampNanos / _resolutionNanos;
+    NSUInteger endPeriodIndex = (NSUInteger)(timestampNanos / _resolutionNanos);
     if (timestampNanos - (_resolutionNanos * endPeriodIndex) == 0) endPeriodIndex -= 1; // Boundary condition
 
     NSAssert((int)startPeriodIndex > _lastFrozenPeriodIndex, @"Start period %lu < %ld", (unsigned long)startPeriodIndex, (long)_lastFrozenPeriodIndex);
