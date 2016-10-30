@@ -14,7 +14,7 @@ OpenRMBT is released under the [Apache License, Version 2.0]. The iOS App was de
 Building
 --------
 
-Xcode 6 with iOS 8 SDK is required to build the Open-RMBT iOS App.
+Xcode 8+ with iOS 10 SDK is required to build the Open-RMBT iOS App.
 
 Before building, you need to supply a correct Google Maps API key as well as a Open-RMBT server parameters in `RMBTConfig.h`.
 
@@ -31,5 +31,3 @@ In addition Google Maps iOS SDK, OpenRMBT iOS App uses several open source 3rd-p
 * [TUSafariActivity](https://github.com/davbeck/TUSafariActivity), 2-clause BSD license
 * [BCGenieEeffect](https://github.com/Ciechan/BCGenieEffect), MIT license
 * [GCNetworkReachability](https://github.com/GlennChiu/GCNetworkReachability), MIT license
-
-For details, see `Pods/Pods-acknowledgements.markdown`.

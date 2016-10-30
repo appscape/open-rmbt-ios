@@ -43,7 +43,6 @@
 		C75FF5D517B1970600A58056 /* RMBTMapOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = C75FF5D417B1970600A58056 /* RMBTMapOptions.m */; };
 		C75FF5D817B2602F00A58056 /* RMBTMapOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C75FF5D717B2602E00A58056 /* RMBTMapOptionsViewController.m */; };
 		C75FF5DC17B3DD4A00A58056 /* RMBTMapOptionsFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C75FF5DB17B3DD4900A58056 /* RMBTMapOptionsFilterViewController.m */; };
-		C762B14917F5E75E00BD0725 /* GCNetworkReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C762B14817F5E75E00BD0725 /* GCNetworkReachability.m */; };
 		C76B8C87177709C800925BE1 /* RMBTThroughputHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = C76B8C86177709C800925BE1 /* RMBTThroughputHistory.m */; };
 		C774EE7717920C9C00D623A3 /* RMBTConnectivity.m in Sources */ = {isa = PBXBuildFile; fileRef = C774EE7617920C9C00D623A3 /* RMBTConnectivity.m */; };
 		C774EE7A1792F73D00D623A3 /* RMBTLocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = C774EE791792F73D00D623A3 /* RMBTLocationTracker.m */; };
@@ -160,8 +159,6 @@
 		C75FF5D717B2602E00A58056 /* RMBTMapOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTMapOptionsViewController.m; sourceTree = "<group>"; };
 		C75FF5DA17B3DD4800A58056 /* RMBTMapOptionsFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTMapOptionsFilterViewController.h; sourceTree = "<group>"; };
 		C75FF5DB17B3DD4900A58056 /* RMBTMapOptionsFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTMapOptionsFilterViewController.m; sourceTree = "<group>"; };
-		C762B14717F5E75E00BD0725 /* GCNetworkReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCNetworkReachability.h; path = Vendor/GCNetworkReachability/GCNetworkReachability.h; sourceTree = SOURCE_ROOT; };
-		C762B14817F5E75E00BD0725 /* GCNetworkReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCNetworkReachability.m; path = Vendor/GCNetworkReachability/GCNetworkReachability.m; sourceTree = SOURCE_ROOT; };
 		C76B8C85177709C800925BE1 /* RMBTThroughputHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTThroughputHistory.h; sourceTree = "<group>"; };
 		C76B8C86177709C800925BE1 /* RMBTThroughputHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTThroughputHistory.m; sourceTree = "<group>"; };
 		C774E17017B0EBBD00C6129F /* RMBTConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTConfig.h; sourceTree = "<group>"; };
@@ -323,14 +320,6 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
-		C703D3EA1765EB8100A38C34 /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-				C762B14617F5E74900BD0725 /* GCNetworkReachability */,
-			);
-			name = Vendor;
-			sourceTree = "<group>";
-		};
 		C7228DF017FC1CB100FB984D /* Callout */ = {
 			isa = PBXGroup;
 			children = (
@@ -412,15 +401,6 @@
 				C75A1190179B50CE00E2444F /* RMBTHistoryResultDetailsViewController.m */,
 			);
 			name = "Full Details";
-			sourceTree = "<group>";
-		};
-		C762B14617F5E74900BD0725 /* GCNetworkReachability */ = {
-			isa = PBXGroup;
-			children = (
-				C762B14717F5E75E00BD0725 /* GCNetworkReachability.h */,
-				C762B14817F5E75E00BD0725 /* GCNetworkReachability.m */,
-			);
-			name = GCNetworkReachability;
 			sourceTree = "<group>";
 		};
 		C774EE7B1792FA3700D623A3 /* _Shared */ = {
@@ -606,7 +586,6 @@
 			children = (
 				C7ECD90A174DAE92000DF966 /* App */,
 				C7DE1482173E8F610079477A /* Supporting Files */,
-				C703D3EA1765EB8100A38C34 /* Vendor */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -917,7 +896,6 @@
 				C7ECD919174E93E1000DF966 /* RMBTTestResult.m in Sources */,
 				C7ECD920174EB8EB000DF966 /* RMBTGaugeView.m in Sources */,
 				C7E5817518075B5400706848 /* RMBTIntroViewController.m in Sources */,
-				C762B14917F5E75E00BD0725 /* GCNetworkReachability.m in Sources */,
 				C7ECD97A174ED9AE000DF966 /* UIView+Position.m in Sources */,
 				C7B4A99F17E8D3E700223ABD /* RMBTPing.m in Sources */,
 				C78D26BF1764A65D008143DF /* RMBTThroughput.m in Sources */,
@@ -1178,7 +1156,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Vendor\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sources/RMBT-Prefix.pch";
@@ -1206,7 +1183,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/Vendor\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sources/RMBT-Prefix.pch";
