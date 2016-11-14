@@ -32,7 +32,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 1.3)
   - BCGenieEffect
-  - BlocksKit (= 2.2.5)
+  - BlocksKit (from `./BlocksKit.podspec`)
   - CocoaAsyncSocket (from `https://github.com/appscape/CocoaAsyncSocket.git`, commit `350ac5f09002ac92a333175cb87ab8b59ebd0571`)
   - GCNetworkReachability (= 1.3.2)
   - GoogleMaps (~> 2.1)
@@ -41,6 +41,8 @@ DEPENDENCIES:
   - TUSafariActivity
 
 EXTERNAL SOURCES:
+  BlocksKit:
+    :podspec: "./BlocksKit.podspec"
   CocoaAsyncSocket:
     :commit: 350ac5f09002ac92a333175cb87ab8b59ebd0571
     :git: https://github.com/appscape/CocoaAsyncSocket.git
@@ -53,7 +55,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AFNetworking: f0d89caedb504adcb43e7d90e57f42e703adf415
   BCGenieEffect: 9221dfe59d02c9edf5332f9a895d42be904f5a8c
-  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  BlocksKit: 6c0cc3d5f81aa74beb6aa52dc8f9dc532507a08c
   CocoaAsyncSocket: 7f7db5178f80b39891e97f2b355e800fed8ed509
   GCNetworkReachability: 2a7dd53d362220326b3e38df68c91b3ef84418d1
   GoogleMaps: a5b5bbe47734e2443bde781a6aa64e69fdb6d785
@@ -61,6 +63,6 @@ SPEC CHECKSUMS:
   SVWebViewController: c36dda7326e81fcae0abf5d02bf7bbf7e41be901
   TUSafariActivity: dd346df54a8f1cbb4fd05d504c76d47225fac99e
 
-PODFILE CHECKSUM: b3aadc78d4ef988ee9079f5498b59b0ae3137761
+PODFILE CHECKSUM: 4bb09cbfa6be0250b76a91018080784a85f911f7
 
 COCOAPODS: 1.1.1

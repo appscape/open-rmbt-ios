@@ -3,7 +3,7 @@ platform :ios, '8.0'
 target 'RMBT' do
   pod 'AFNetworking', '~>1.3'
   pod 'GCNetworkReachability', '1.3.2'
-  pod 'BlocksKit', '2.2.5'
+  pod 'BlocksKit', podspec: './BlocksKit.podspec'
   pod 'libextobjc/EXTKeyPathCoding'
   pod 'SVWebViewController', '1.0'
   pod 'TUSafariActivity'

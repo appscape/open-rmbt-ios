@@ -26,7 +26,11 @@
     #import <SystemConfiguration/SystemConfiguration.h>
 
     #import <BlocksKit/BlocksKit.h>
-    #import <BlocksKit+UIKit.h>
+    #import <BlocksKit/UIAlertView+BlocksKit.h>
+    #import <BlocksKit/UIGestureRecognizer+BlocksKit.h>
+    #import <BlocksKit/UIControl+BlocksKit.h>
+    #import <BlocksKit/NSObject+BKBlockExecution.h>
+    #import <BlocksKit/NSObject+BKBlockObservation.h>
 
     #import <libextobjc/EXTKeyPathCoding.h> // @keypath macro
 
