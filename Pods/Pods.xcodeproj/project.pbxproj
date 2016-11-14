@@ -231,6 +231,7 @@
 		110B3F12C51A1521ABC0CD8A66B4A2FE /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLConnectionOperation.m; path = AFNetworking/AFURLConnectionOperation.m; sourceTree = "<group>"; };
 		122B6AC8AE4F11FC2F9EE07BEF480558 /* Safari.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = Safari.png; path = TUSafariActivity/Safari.png; sourceTree = "<group>"; };
 		14650B101615FB40EF3A3851D28060C2 /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = ja.lproj; path = TUSafariActivity/ja.lproj; sourceTree = "<group>"; };
+		1545C4B57E3947C54A9CD255A42827A0 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = Maps/Frameworks/GoogleMapsCore.framework; sourceTree = "<group>"; };
 		15FD67EF5C744DAA78320D43648B5913 /* libextobjc-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "libextobjc-dummy.m"; sourceTree = "<group>"; };
 		1A3F9DD441CED8C871523C5E8CB2551E /* UIActionSheet+BlocksKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIActionSheet+BlocksKit.h"; path = "BlocksKit/UIKit/UIActionSheet+BlocksKit.h"; sourceTree = "<group>"; };
 		1AA2CF5F0A7962504B7212BB0A500F11 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GCDAsyncUdpSocket.h; path = GCD/GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
@@ -287,6 +288,7 @@
 		60CE6755E6F75F288C73E47EDCBC777A /* AFNetworking-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AFNetworking-dummy.m"; sourceTree = "<group>"; };
 		614A88B25D18F969987689EB975F0713 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkActivityIndicatorManager.h; path = AFNetworking/AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
 		628813C6BC7177A96125D8D1D7ED8B77 /* NSCache+BlocksKit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSCache+BlocksKit.m"; path = "BlocksKit/DynamicDelegate/Foundation/NSCache+BlocksKit.m"; sourceTree = "<group>"; };
+		66762F0901E17173D4E0E9FDF716045B /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = Maps/Frameworks/GoogleMaps.framework; sourceTree = "<group>"; };
 		6750CD5F31276D7FA522A1E8322A391F /* GCNetworkReachability.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GCNetworkReachability.xcconfig; sourceTree = "<group>"; };
 		67EA2552EDBD567A2992A49BEE92FA3E /* SVWebViewControllerActivitySafari.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVWebViewControllerActivitySafari.m; path = SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari.m; sourceTree = "<group>"; };
 		6BB1110DFF9CBE68D5FF711ABDF55D69 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperation.m; path = AFNetworking/AFHTTPRequestOperation.m; sourceTree = "<group>"; };
@@ -298,7 +300,6 @@
 		77DD4665BCF0C94728A37C6072BBA84D /* EXTKeyPathCoding.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXTKeyPathCoding.h; path = extobjc/EXTKeyPathCoding.h; sourceTree = "<group>"; };
 		78E6C53E9BC81474D0AED74F09A1A438 /* AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworking.h; path = AFNetworking/AFNetworking.h; sourceTree = "<group>"; };
 		794EE465EF5059DF60470756E62AC2FD /* Safari~ipad.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Safari~ipad.png"; path = "TUSafariActivity/Safari~ipad.png"; sourceTree = "<group>"; };
-		7A45EBF603D036AFE38447497BA28161 /* GoogleMaps.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		7AA915B76C6F6171E397A2AB6ABA0A56 /* CocoaAsyncSocket.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CocoaAsyncSocket.xcconfig; sourceTree = "<group>"; };
 		7CAF016486A3AA8AD3625D121623F52A /* AFJSONRequestOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFJSONRequestOperation.m; path = AFNetworking/AFJSONRequestOperation.m; sourceTree = "<group>"; };
 		7D744F3F3C323173B10DC5C47CD4B67D /* BCGenieEffect-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BCGenieEffect-prefix.pch"; sourceTree = "<group>"; };
@@ -328,7 +329,6 @@
 		945918D2D8DAE98F28CA7732221210D1 /* NSIndexSet+BlocksKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSIndexSet+BlocksKit.h"; path = "BlocksKit/Core/NSIndexSet+BlocksKit.h"; sourceTree = "<group>"; };
 		94DC3FFFE1303FB6A952E4C85295DCCD /* UIPopoverController+BlocksKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIPopoverController+BlocksKit.h"; path = "BlocksKit/UIKit/UIPopoverController+BlocksKit.h"; sourceTree = "<group>"; };
 		955CBFF1E6DCC0DB0F4F4824122D9991 /* A2DynamicDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = A2DynamicDelegate.h; path = BlocksKit/DynamicDelegate/A2DynamicDelegate.h; sourceTree = "<group>"; };
-		963290DC9DF7E70DB2A4D66B7822A027 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = Frameworks/GoogleMaps.framework; sourceTree = "<group>"; };
 		966F7D588645726D73D82FBECAB8E6DE /* AsyncSocket.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = RunLoop/AsyncSocket.h; sourceTree = "<group>"; };
 		97BDC59BF0B8514AB7DEAC4D1A29166E /* libPods-RMBT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RMBT.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		983125D4A3E7EDD7C9239840A400DF86 /* NSMutableArray+BlocksKit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+BlocksKit.m"; path = "BlocksKit/Core/NSMutableArray+BlocksKit.m"; sourceTree = "<group>"; };
@@ -393,9 +393,11 @@
 		E764AB547D3092AA0A36EA561E1B1B1D /* AFHTTPClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFHTTPClient.h; path = AFNetworking/AFHTTPClient.h; sourceTree = "<group>"; };
 		E7F49FA62B1F3913AA480675474DBA01 /* Pods-RMBT-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RMBT-acknowledgements.plist"; sourceTree = "<group>"; };
 		EC5DDE85EE2B989FD19135FCC0A368C3 /* SVModalWebViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVModalWebViewController.h; path = SVWebViewController/SVModalWebViewController.h; sourceTree = "<group>"; };
+		F0A5ECF627CBC89CD6FA5732978862C0 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = Base/Frameworks/GoogleMapsBase.framework; sourceTree = "<group>"; };
 		F2C6CC4F5627E502F851A84CB5B0EA31 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = TUSafariActivity/en.lproj; sourceTree = "<group>"; };
 		F48F5340738FB01B659890D880F3593F /* sv.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = sv.lproj; path = TUSafariActivity/sv.lproj; sourceTree = "<group>"; };
 		F6BF0D9FF6B9983AA6B9D4382D05EEF2 /* BlocksKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BlocksKit.h; path = BlocksKit/BlocksKit.h; sourceTree = "<group>"; };
+		F6DA078928D78618F92DA9A836261E21 /* GoogleMaps.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		F6EA5358F9FDB212DAA798D50C81B063 /* SVWebViewControllerActivitySafari.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVWebViewControllerActivitySafari.h; path = SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari.h; sourceTree = "<group>"; };
 		F6F45877039D03C2D3C4E879144F8A02 /* NSObject+A2DynamicDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+A2DynamicDelegate.m"; path = "BlocksKit/DynamicDelegate/NSObject+A2DynamicDelegate.m"; sourceTree = "<group>"; };
 		F703C76B91E94082B59E30535072E2AA /* SVWebViewControllerBack@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerBack@2x.png"; path = "SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack@2x.png"; sourceTree = "<group>"; };
@@ -540,6 +542,14 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		13BC60D2F3833B9973D0BAC6930EEA3E /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				E4261A15D55F955A8AA36C72971E49B1 /* Frameworks */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
 		1B470406FCB30A0D51726EFA03A5C13B /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -578,14 +588,6 @@
 				747096D6A705B68B645F493CE260EBC8 /* Support Files */,
 			);
 			path = SVWebViewController;
-			sourceTree = "<group>";
-		};
-		3EC99AA02E02B465E3638E19E2757889 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				963290DC9DF7E70DB2A4D66B7822A027 /* GoogleMaps.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4250772266157B74EA62AEC5585C9ABC /* Resources */ = {
@@ -641,7 +643,7 @@
 				6082603CDEF8BC838BDF5442A52275AC /* BlocksKit */,
 				CFE0A023E8B5A442A267810AB51B6507 /* CocoaAsyncSocket */,
 				58B55B43597B0D77330B2DC464AA9680 /* GCNetworkReachability */,
-				929446D652537F39CDF1523A80BF6A52 /* GoogleMaps */,
+				8D2836DE05FE777BA3FC337978E9E49E /* GoogleMaps */,
 				38EF6DF19DE7058543B4AD569986F38F /* libextobjc */,
 				3E50A7F536B3B8DF50FD90101F33436E /* SVWebViewController */,
 				D192CE266DBE75C8E81FA71B8ABF93AE /* TUSafariActivity */,
@@ -657,6 +659,15 @@
 				CC49A77FA4725B5941FB589DC94A0C19 /* Support Files */,
 			);
 			path = GCNetworkReachability;
+			sourceTree = "<group>";
+		};
+		5D2F91473793C80BC519FECCACB86D65 /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				EA51965AA2BD5F83AC92F3EE4CD60DBF /* Frameworks */,
+				622166D325DCFA3FE8B140BEEF57D6AD /* Resources */,
+			);
+			name = Maps;
 			sourceTree = "<group>";
 		};
 		6082603CDEF8BC838BDF5442A52275AC /* BlocksKit */ = {
@@ -699,6 +710,14 @@
 			name = UIKit;
 			sourceTree = "<group>";
 		};
+		622166D325DCFA3FE8B140BEEF57D6AD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F6DA078928D78618F92DA9A836261E21 /* GoogleMaps.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		747096D6A705B68B645F493CE260EBC8 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -708,14 +727,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SVWebViewController";
-			sourceTree = "<group>";
-		};
-		747222539E5EFD2606DBEE01602C27DF /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				7A45EBF603D036AFE38447497BA28161 /* GoogleMaps.bundle */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		756860A05EE8198FF88229DB84068318 /* iOS */ = {
@@ -783,11 +794,11 @@
 			name = DynamicDelegate;
 			sourceTree = "<group>";
 		};
-		929446D652537F39CDF1523A80BF6A52 /* GoogleMaps */ = {
+		8D2836DE05FE777BA3FC337978E9E49E /* GoogleMaps */ = {
 			isa = PBXGroup;
 			children = (
-				3EC99AA02E02B465E3638E19E2757889 /* Frameworks */,
-				747222539E5EFD2606DBEE01602C27DF /* Resources */,
+				13BC60D2F3833B9973D0BAC6930EEA3E /* Base */,
+				5D2F91473793C80BC519FECCACB86D65 /* Maps */,
 			);
 			path = GoogleMaps;
 			sourceTree = "<group>";
@@ -886,6 +897,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E4261A15D55F955A8AA36C72971E49B1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F0A5ECF627CBC89CD6FA5732978862C0 /* GoogleMapsBase.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E8C1BC3D7535364BC2FF74B896DA7A3C /* EXTKeyPathCoding */ = {
 			isa = PBXGroup;
 			children = (
@@ -969,6 +988,15 @@
 				D6D70CFEA242D7C22BB42E39C8C0B64D /* NSTimer+BlocksKit.m */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		EA51965AA2BD5F83AC92F3EE4CD60DBF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				66762F0901E17173D4E0E9FDF716045B /* GoogleMaps.framework */,
+				1545C4B57E3947C54A9CD255A42827A0 /* GoogleMapsCore.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		F4CDA5FA9197A41E0081E84F932906EB /* Frameworks */ = {

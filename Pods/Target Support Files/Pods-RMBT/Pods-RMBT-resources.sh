@@ -74,7 +74,7 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "GoogleMaps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"
+  install_resource "GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"
   install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack.png"
   install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack@2x.png"
   install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerNext.png"
@@ -111,7 +111,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "TUSafariActivity/TUSafariActivity/zh_CN.lproj"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "GoogleMaps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"
+  install_resource "GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"
   install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack.png"
   install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack@2x.png"
   install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerNext.png"

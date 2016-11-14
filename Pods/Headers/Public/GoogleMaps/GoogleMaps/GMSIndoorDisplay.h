@@ -1,1 +1,1 @@
-../../../../GoogleMaps/Frameworks/GoogleMaps.framework/Versions/A/Headers/GMSIndoorDisplay.h
+../../../../GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Versions/A/Headers/GMSIndoorDisplay.h
