@@ -18,7 +18,7 @@
 #import "RMBTSpeedGraphView.h"
 #import <QuartzCore/QuartzCore.h>
 
-static CGRect const RMBTSpeedGraphViewContentFrame = {{34.0, 38.0},{244.0, 92.0}};
+static CGRect const RMBTSpeedGraphViewContentFrame = {{34.5, 32.5},{243.0, 92.0}};
 static NSTimeInterval const RMBTSpeedGraphViewSeconds = 8.0;
 
 @interface RMBTSpeedGraphView() {

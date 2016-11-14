@@ -85,7 +85,7 @@
     [self.view addSubview:_progressGaugeView];
 
     NSParameterAssert(self.speedGaugePlaceholderView);
-    _speedGaugeView = [[RMBTGaugeView alloc] initWithFrame:self.speedGaugePlaceholderView.frame name:@"speed" startAngle:33.5f endAngle:277.5f ovalRect:CGRectMake(0,0,175.0, 175.0)];
+    _speedGaugeView = [[RMBTGaugeView alloc] initWithFrame:self.speedGaugePlaceholderView.frame name:@"speed" startAngle:33.5f endAngle:299.0f ovalRect:CGRectMake(0,0,175.0, 175.0)];
     [self.view addSubview:_speedGaugeView];
 
     self.progressGaugePlaceholderView.hidden = YES;
@@ -242,26 +242,16 @@
     [self displayPercentage:totalPercentage];
 }
 
-//- (void)testRunnerDidCalculateSpeed:(uint32_t)kbps
-//                     atTimeInterval:(NSTimeInterval)interval
-//                            inPhase:(RMBTTestRunnerPhase)phase
-//{
-//    NSAssert(phase == RMBTTestRunnerPhaseDown || phase == RMBTTestRunnerPhaseUp, @"Speed calculated outside dl/ul phase");
-//    
-//    double l = RMBTSpeedLogValue(kbps);
-//    self.testBoxView.speedGaugeView.value = l;
-//    [self.speedGraphView addValue:l atTimeInterval:interval];
-//
-//    [self updateSpeedLabelForPhase:phase withSpeed:kbps isFinal:NO];
-//}
-
 - (void)testRunnerDidMeasureThroughputs:(NSArray *)throughputs inPhase:(RMBTTestRunnerPhase)phase {
     uint32_t kbps = 0;
     double l;
 
     for (RMBTThroughput* t in throughputs) {
         kbps = t.kilobitsPerSecond;
-        l = RMBTSpeedLogValue(MIN(kbps, RMBT_TEST_MAX_CHART_KBPS)); // Clip max display speed
+
+        l = RMBTSpeedLogValue(kbps);
+        if (l>1.0) { l = 1.0; } // Clip to 1.0 (Gbit/s)
+
         [self.speedGraphView addValue:l atTimeInterval:(double)t.endNanos/NSEC_PER_SEC];
     }
 

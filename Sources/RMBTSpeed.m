@@ -21,10 +21,10 @@
 double RMBTSpeedLogValue(uint32_t kbps) {
     uint64_t bps = kbps * 1000;
     double log;
-    if (bps < 10000) {
+    if (bps < 1e5) {
         log = 0;
     } else {
-        log = (2.0f + log10(bps/1e6))/4.0;
+        log = (2.0f + log10(bps/1e7))/4.0;
     }
     return log;
 }

@@ -6,13 +6,13 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "circle_bottom_fg@2x.png"
+      "filename" : "gauge_speed_fg@2x.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "circle_bottom_fg@3x.png"
+      "filename" : "gauge_speed_fg@3x.png",
+      "scale" : "3x"
     }
   ],
   "info" : {
