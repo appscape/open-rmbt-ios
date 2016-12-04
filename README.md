@@ -21,7 +21,7 @@ Before building, you need to supply a correct Google Maps API key as well as a O
 Third-party Libraries
 ---------------------
 
-In addition Google Maps iOS SDK, OpenRMBT iOS App uses several open source 3rd-party libraries that are under terms of a separate license:
+In addition to Google Maps iOS SDK, OpenRMBT iOS App uses several open source 3rd-party libraries that are under terms of a separate license:
 
 * [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket), public domain license
 * [AFNetworking](https://github.com/AFNetworking/AFNetworking), MIT license
@@ -31,3 +31,5 @@ In addition Google Maps iOS SDK, OpenRMBT iOS App uses several open source 3rd-p
 * [TUSafariActivity](https://github.com/davbeck/TUSafariActivity), 2-clause BSD license
 * [BCGenieEeffect](https://github.com/Ciechan/BCGenieEffect), MIT license
 * [GCNetworkReachability](https://github.com/GlennChiu/GCNetworkReachability), MIT license
+
+For details, see [acknowledgements](Pods/Target Support Files/Pods-RMBT/Pods-RMBT-acknowledgements.markdown).
