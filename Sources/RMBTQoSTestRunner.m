@@ -1,10 +1,19 @@
-//
-//  RMBTQoSTestRunner.m
-//  RMBT
-//
-//  Created by Esad Hajdarevic on 13/11/16.
-//  Copyright © 2016 appscape gmbh. All rights reserved.
-//
+/*
+ * Copyright 2017 appscape gmbh
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 
 #import "RMBTQoSTestRunner.h"
 #import "RMBTQoSTestGroup.h"
@@ -76,8 +85,11 @@
                         __weak RMBTQoSTestRunner *weakSelf = self;
 
                         gp.onFractionCompleteChange = ^(float p) {
-                            dispatch_async(_notificationQueue, ^{
-                                [_delegate qosRunnerDidUpdateProgress:p inGroup:wg totalProgress:weakSelf.totalProgress.fractionCompleted];
+                            typeof(self) strongSelf = weakSelf;
+                            if (!strongSelf) return;
+
+                            dispatch_async(strongSelf->_notificationQueue, ^{
+                                [strongSelf->_delegate qosRunnerDidUpdateProgress:p inGroup:wg totalProgress:strongSelf.totalProgress.fractionCompleted];
                             });
                         };
 
@@ -143,6 +155,8 @@
     NSParameterAssert(!_dead);
     NSParameterAssert(_tests);
 
+    __weak typeof(self) weakSelf = self;
+
     dispatch_group_t group = dispatch_group_create();
 
     if (_tests.count > 0) {
@@ -185,10 +199,11 @@
             dispatch_group_enter(group);
 
             t.completionBlock = ^{
-                dispatch_async(_notificationQueue, ^{
-                    NSParameterAssert(weakTest);
-                    NSParameterAssert(!_dead);
+                typeof(self) strongSelf = weakSelf;
+                if (!strongSelf) return;
 
+                dispatch_async(strongSelf->_notificationQueue, ^{
+                    NSCParameterAssert(weakTest);
                     // Add test type and uid to result dictionary and store it
                     NSMutableDictionary *result = [weakTest.result mutableCopy];
                     if (result) {
@@ -197,7 +212,7 @@
                         if (weakTest.durationNanos) {
                             result[@"duration_ns"] = weakTest.durationNanos;
                         }
-                        [_results setObject:result forKey:weakTest.uid];
+                        [strongSelf->_results setObject:result forKey:weakTest.uid];
                     }
 
                     // Ensure test progress is complete
@@ -206,15 +221,18 @@
                     dispatch_group_leave(group);
                 });
             };
+
             [_queue addOperation:t];
         }
     }
 
     [_queue addOperationWithBlock:^{
         dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
-        dispatch_async(_notificationQueue, ^{
-            [_delegate qosRunnerDidCompleteWithResults:[_results allValues]];
-            [self done];
+        typeof(self) strongSelf = weakSelf;
+        if (!strongSelf) return;
+        dispatch_async(strongSelf->_notificationQueue, ^{
+            [strongSelf->_delegate qosRunnerDidCompleteWithResults:[strongSelf->_results allValues]];
+            [strongSelf done];
         });
     }];
 

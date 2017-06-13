@@ -19,8 +19,28 @@
 
 #define RMBT_TEST_CIPHER                SSL_RSA_WITH_RC4_128_MD5
 #define RMBT_TEST_SOCKET_TIMEOUT_S      30.0
-#define RMBT_TEST_LOOPMODE_LIMIT        100 // Maximum number of tests to perform in loop mode
-#define RMBT_TEST_LOOPMODE_WAIT_BETWEEN_RETRIES_S 5
+
+#define RMBT_TEST_LOOPMODE_MIN_COUNT            1
+#define RMBT_TEST_LOOPMODE_MAX_COUNT            100
+
+// Loop mode will stop automatically after this many seconds:
+#define RMBT_TEST_LOOPMODE_MAX_DURATION_S       (48*60*60) // 48 hours
+
+// Minimum/maximum number of minutes that user can choose to wait before next test is started:
+#define RMBT_TEST_LOOPMODE_MIN_DELAY_MINS       15
+#define RMBT_TEST_LOOPMODE_DEFAULT_DELAY_MINS   30
+#define RMBT_TEST_LOOPMODE_MAX_DELAY_MINS       (24 * 60) // one day
+
+// ... meters user locations must change before next test is started:
+#define RMBT_TEST_LOOPMODE_MIN_MOVEMENT_M       50
+#define RMBT_TEST_LOOPMODE_DEFAULT_MOVEMENT_M   250
+#define RMBT_TEST_LOOPMODE_MAX_MOVEMENT_M       10000
+
+// How accurate the location needs to be before it's considered for the movement (less that this value)
+#define RMBT_TEST_LOOPMODE_MOVEMENT_MIN_ACCURACY_M 20
+
+#define RMBT_TEST_LOOPMODE_DEFAULT_COUNT        10
+
 #define RMBT_TEST_PRETEST_MIN_CHUNKS_FOR_MULTITHREADED_TEST 4
 #define RMBT_TEST_PRETEST_DURATION_S    2.0
 #define RMBT_TEST_PING_COUNT            10

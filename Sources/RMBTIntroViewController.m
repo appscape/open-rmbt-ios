@@ -21,9 +21,11 @@
 #import "RMBTConnectivityTracker.h"
 #import "RMBTLocationTracker.h"
 #import "RMBTTestViewController.h"
+#import "RMBTLoopModeTestViewController.h"
 #import "RMBTHistoryIndexViewController.h"
 #import "RMBTVerticalTransitionController.h"
 #import "RMBTTOS.h"
+#import "RMBTSettings.h"
 #import "UIViewController+ModalBrowser.h"
 
 static const CGFloat kRadiateAnimationStartRadius = 9.0;
@@ -35,6 +37,7 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
     RMBTHistoryResult *_result;
     id _radiateBlock;
     BOOL _visible;
+    BOOL _loop;
 
     RMBTConnectivity *_currentConnectivity;
 }
@@ -95,7 +98,7 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
         [_connectivityTracker start];
     }
     _visible = YES;
-
+    [self updateLoopModeStatus];
     [self updateRoamingStatus];
 }
 
@@ -122,20 +125,59 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
     }];
 }
 
-// Before transitioning to test view controller, we want to wait for user to allow/deny location services first
 - (IBAction)startTest:(id)sender {
-    [[UIApplication sharedApplication] setIdleTimerDisabled:YES]; // Disallow turning off the screen
+    if (_loop) {
+        RMBTSettings *settings = [RMBTSettings sharedSettings];
 
-    [[RMBTLocationTracker sharedTracker] startAfterDeterminingAuthorizationStatus:^{
-//        RMBTTestViewController *testVC = [self.storyboard instantiateViewControllerWithIdentifier:@"test_vc"];
-        RMBTTestViewController *testVC = [[UIStoryboard storyboardWithName:@"AutolayoutStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"test_vc"];
-        NSParameterAssert(testVC);
+        // Ask user how many tests to run
+        NSString *title = NSLocalizedString(@"Number of tests", @"Loop mode alert title");
+        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"You are about to start tests in loop mode. The distance is set to %@ meters. The waiting time between tests is %@ minutes.", @"Loop mode alert message"), @(settings.loopModeEveryMeters), @(settings.loopModeEveryMinutes)];
+        UIAlertView *av = [UIAlertView bk_alertViewWithTitle:title message:message];
+        av.alertViewStyle = UIAlertViewStylePlainTextInput;
+        UITextField *tf = [av textFieldAtIndex:0];
+        [tf setText:[NSString stringWithFormat:@"%@", @(settings.loopModeLastCount)]];
+        NSParameterAssert(tf);
+        tf.keyboardType = UIKeyboardTypeNumberPad;
+        [av bk_addButtonWithTitle:NSLocalizedString(@"Start tests", @"Loop mode alert button") handler:^{
+            NSInteger i = [tf.text integerValue];
+            NSInteger max = settings.debugUnlocked ? NSIntegerMax : RMBT_TEST_LOOPMODE_MAX_COUNT;
+            if (i < RMBT_TEST_LOOPMODE_MIN_COUNT || i > max) {
+                [UIAlertView bk_showAlertViewWithTitle:@"Invalid number of tests" message:[NSString stringWithFormat:@"Please enter a value between %@ and %@", @(RMBT_TEST_LOOPMODE_MIN_COUNT), @(max)] cancelButtonTitle:@"OK" otherButtonTitles:@[] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                    [self performSelector:@selector(startTest:) withObject:nil afterDelay:0.0];
+                }];
+            } else {
+                settings.loopModeLastCount = i;
 
-        testVC.transitioningDelegate = self;
-        testVC.delegate = self;
-        testVC.roaming = self.roaming;
-        [self presentViewController:testVC animated:YES completion:^{
+                RMBTLoopInfo *info = [[RMBTLoopInfo alloc] initWithMeters:settings.loopModeEveryMeters minutes:settings.loopModeEveryMinutes total:i];
+                [self startTestWithLoopModeInfo:info];
+            }
         }];
+        [av bk_setCancelButtonWithTitle:NSLocalizedString(@"Cancel", @"Button title") handler:^{}];
+        [av show];
+    } else {
+        [self startTestWithLoopModeInfo:nil];
+    }
+}
+
+- (void)startTestWithLoopModeInfo:(RMBTLoopInfo*)info {
+    NSParameterAssert(!info || info.total > 0);
+
+    // Before transitioning to test view controller, we want to wait for user to allow/deny location services first
+    [[RMBTLocationTracker sharedTracker] startAfterDeterminingAuthorizationStatus:^{
+        if (info) {
+            RMBTLoopModeTestViewController *loopVC = [[UIStoryboard storyboardWithName:@"TestStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"loop_test_vc"];
+            NSParameterAssert(loopVC);
+            loopVC.info = info;
+            loopVC.transitioningDelegate = self;
+            [self presentViewController:loopVC animated:YES completion:^{}];
+        } else {
+            RMBTTestViewController *testVC = [[UIStoryboard storyboardWithName:@"TestStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"test_vc"];
+            NSParameterAssert(testVC);
+            testVC.transitioningDelegate = self;
+            testVC.delegate = self;
+            testVC.roaming = self.roaming;
+            [self presentViewController:testVC animated:YES completion:^{}];
+        }
     }];
 }
 
@@ -277,6 +319,16 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
     if ([[animation valueForKey:@"animationLastCircle"] boolValue]) {
         _radiateBlock = nil;
     }
+}
+
+#pragma mark - Loop mode
+
+- (void)updateLoopModeStatus {
+    _loop = [RMBTSettings sharedSettings].loopMode;
+    NSString *buttonTitle = _loop
+        ? NSLocalizedString(@"Loop", "Intro screen button title")
+        : NSLocalizedString(@"Test Connection", "Intro screen button title");
+    [self.startTestButton setTitle:buttonTitle forState:UIControlStateNormal];
 }
 
 @end

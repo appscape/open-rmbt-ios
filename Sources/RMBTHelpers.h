@@ -49,6 +49,11 @@ NS_INLINE id RMBTValueOrString(id value, NSString *result) { return value ?: res
 NSString* RMBTMillisecondsStringWithNanos(uint64_t nanos);
 NSString* RMBTSecondsStringWithNanos(uint64_t nanos);
 
+// Returns mm:ss string from time interval
+NSString* RMBTMMSSStringWithInterval(NSTimeInterval interval);
+
+NSString *RMBTMegabytesString(uint64_t bytes);
+
 NSNumber* RMBTTimestampWithNSDate(NSDate* date);
 uint64_t RMBTCurrentNanos();
 
@@ -59,5 +64,8 @@ NSString* RMBTBuildDateString();
 
 // Replaces $lang in template with de if current local is german, en otherwise
 NSString* RMBTLocalizeURLString(NSString* urlString);
+
+NSNumber* RMBTMedian(NSArray<NSNumber*>* values);
+
 
 #define RMBTAssertValidPort(p) NSAssert(p > 0 && p < 65536, @"Invalid port")

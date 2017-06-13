@@ -1,0 +1,87 @@
+
+/* Class = "UILabel"; text = "MEASUREMENT"; ObjectID = "0RE-m6-faY"; */
+"0RE-m6-faY.text" = "MESSUNG";
+
+/* Class = "UILabel"; text = "Test Server:"; ObjectID = "1Ak-ta-BCd"; */
+"1Ak-ta-BCd.text" = "Test Server:";
+
+/* Class = "UILabel"; text = "Connection:"; ObjectID = "2q0-Ko-PtU"; */
+"2q0-Ko-PtU.text" = "Connection:";
+
+/* Class = "UILabel"; text = "120"; ObjectID = "3xL-he-zQO"; */
+"3xL-he-zQO.text" = "120";
+
+/* Class = "UILabel"; text = "TIME TO NEXT TEST"; ObjectID = "9wG-SE-sUW"; */
+"9wG-SE-sUW.text" = "NÄCHSTER TEST IN";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "A8E-JF-FYd"; */
+"A8E-JF-FYd.text" = "-";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "InT-XM-oQv"; */
+"InT-XM-oQv.text" = "-";
+
+/* Class = "UILabel"; text = "Ping (ms)"; ObjectID = "Ixv-pJ-tPj"; */
+"Ixv-pJ-tPj.text" = "Ping (ms)";
+
+/* Class = "UILabel"; text = "Status:"; ObjectID = "LLs-LI-72K"; */
+"LLs-LI-72K.text" = "Status:";
+
+/* Class = "UILabel"; text = "--"; ObjectID = "MHe-2y-Zcg"; */
+"MHe-2y-Zcg.text" = "--";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "OGl-TD-rf0"; */
+"OGl-TD-rf0.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "Loop Mode"; ObjectID = "RDR-b5-XWb"; */
+"RDR-b5-XWb.title" = "Wiederholungsmodus";
+
+/* Class = "UILabel"; text = "Location:"; ObjectID = "Twc-0l-qUH"; */
+"Twc-0l-qUH.text" = "Location:";
+
+/* Class = "UILabel"; text = "Mbps"; ObjectID = "aGo-FY-jn2"; */
+"aGo-FY-jn2.text" = "Mbps";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "b8v-il-p6Y"; */
+"b8v-il-p6Y.text" = "-";
+
+/* Class = "UILabel"; text = "STATUS"; ObjectID = "bes-l1-zDy"; */
+"bes-l1-zDy.text" = "STATUS";
+
+/* Class = "UILabel"; text = "68"; ObjectID = "cyE-OS-w6B"; */
+"cyE-OS-w6B.text" = "68";
+
+/* Class = "UILabel"; text = "MOVEMENT"; ObjectID = "dGC-t4-ZeW"; */
+"dGC-t4-ZeW.text" = "DISTANZ";
+
+/* Class = "UILabel"; text = "Upload:"; ObjectID = "gPk-RF-CL4"; */
+"gPk-RF-CL4.text" = "Upload:";
+
+/* Class = "UILabel"; text = "LAST TEST"; ObjectID = "izz-bl-YYK"; */
+"izz-bl-YYK.text" = "LETZTER TEST";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "mHp-mo-u1a"; */
+"mHp-mo-u1a.text" = "Status";
+
+/* Class = "UILabel"; text = "Download:"; ObjectID = "mbj-Oo-225"; */
+"mbj-Oo-225.text" = "Download:";
+
+/* Class = "UILabel"; text = "CURRENT"; ObjectID = "oIB-Qg-hgF"; */
+"oIB-Qg-hgF.text" = "AKTUELL";
+
+/* Class = "UILabel"; text = "MEDIAN"; ObjectID = "pk2-wI-k8u"; */
+"pk2-wI-k8u.text" = "MEDIAN";
+
+/* Class = "UILabel"; text = "Betreibername"; ObjectID = "pzE-Tb-sMf"; */
+"pzE-Tb-sMf.text" = "Betreibername";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "rJA-mO-D0E"; */
+"rJA-mO-D0E.text" = "-";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "vPV-sC-3Wv"; */
+"vPV-sC-3Wv.text" = "-";
+
+/* Class = "UILabel"; text = "Ping:"; ObjectID = "vl0-hL-U2z"; */
+"vl0-hL-U2z.text" = "Ping:";
+
+/* Class = "UILabel"; text = "0%"; ObjectID = "wkQ-UG-N5d"; */
+"wkQ-UG-N5d.text" = "0%";

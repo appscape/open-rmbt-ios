@@ -18,7 +18,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "RMBTTestViewController.h"
-#import "RMBTTestRunner.h"
 #import "RMBTSpeed.h"
 #import "RMBTSettings.h"
 #import "RMBTHistoryResultViewController.h"
@@ -30,16 +29,9 @@
 #define RMBT_LIGHT_TEXT_DARK ([UIColor rmbt_colorWithRGBHex:0x3d454c])
 #define RMBT_LIGHT_TEXT_LIGHT ([UIColor rmbt_colorWithRGBHex:0x9da2a6])
 
-@interface RMBTTestViewController ()<RMBTTestRunnerDelegate, UIAlertViewDelegate, RMBTTestRunnerDelegate, UIViewControllerTransitioningDelegate> {
-    RMBTTestRunner *_testRunner;
-
+@interface RMBTTestViewController ()<UIAlertViewDelegate, UIViewControllerTransitioningDelegate, RMBTBaseTestViewControllerSubclass> {
     UIAlertView *_alertView;
     
-    NSUInteger _finishedPercentage;
-    NSUInteger _loopCounter;
-    BOOL       _loopMode;
-    NSTimer   *_loopRestartTimer;
-
     // Views
     RMBTGaugeView *_progressGaugeView, *_speedGaugeView;
 
@@ -51,18 +43,21 @@
 
 @implementation RMBTTestViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    _loopMode = [RMBTSettings sharedSettings].debugUnlocked && [RMBTSettings sharedSettings].debugLoopMode;
-    _loopCounter = 1;
-
     if (self.roaming) {
         self.networkNameLabel.hidden = YES;
-    }
-
-    if (!_loopMode) {
-        [_footerLoopLabel removeFromSuperview];
     }
 
     self.speedSuffixLabel.text = RMBTSpeedMbpsSuffix();
@@ -134,39 +129,12 @@
     _speedGaugeView.frame = self.speedGaugePlaceholderView.frame;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-
-    // Allow turning off the screen again.
-    // Note that enabling the idle timer won't reset it, so if the device has alredy been idle the screen will dim
-    // immediately. To prevent this, we delay enabling by 5s.
-    [[UIApplication sharedApplication] bk_performBlock:^(id sender) {
-        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
-    } afterDelay:5.0];
-}
-
-// Can be called multiple times if run in loop mode
 - (void)startTest {
-    NSAssert(_loopMode || _loopCounter == 1, @"Called test twice w/o being in loop mode");
+    [self showQoSUI:NO]; // in case we're restarting because test was cancelled in qos phase
 
-    _finishedPercentage = 0;
-    [self displayPercentage:0];
-
-    [self displayText:@"-" forLabel:self.footerTestServerLabel];
     [self displayText:@"-" forLabel:self.pingResultLabel];
     [self displayText:@"-" forLabel:self.downResultLabel];
     [self displayText:@"-" forLabel:self.upResultLabel];
-    [self displayText:@"-" forLabel:self.footerStatusLabel];
-
-    [self displayText:[NSString stringWithFormat:@"%lu/%u", (unsigned long)_loopCounter, RMBT_TEST_LOOPMODE_LIMIT] forLabel:self.footerLoopLabel];
 
     self.arrowImageView.image = nil;
 
@@ -175,13 +143,21 @@
     self.speedSuffixLabel.hidden = YES;
     [self.speedGraphView clear];
 
-    _testRunner = [[RMBTTestRunner alloc] initWithDelegate:self];
-    [_testRunner start];
+    [super startTestWithExtraParams:nil];
 }
 
-#pragma mark - Test runner delegate
+- (void)showQoSUI:(BOOL)state {
+    self.speedGraphView.hidden = state;
+    _speedGaugeView.hidden = state;
+    self.speedLabel.hidden = state;
+    self.speedSuffixLabel.hidden = state;
+    self.arrowImageView.hidden = state;
+    self.qosProgressView.hidden = !state;
+}
 
-- (void)testRunnerDidDetectConnectivity:(RMBTConnectivity *)connectivity {
+#pragma mark - Subclass
+
+- (void)onTestUpdatedConnectivity:(RMBTConnectivity *)connectivity {
     self.networkNameLabel.text = RMBTValueOrString(connectivity.networkName, @"n/a");
     [self displayText:RMBTValueOrString(connectivity.networkTypeDescription, @"n/a") forLabel:self.networkTypeLabel];
 
@@ -195,17 +171,25 @@
     }
 }
 
-- (void)testRunnerDidDetectLocation:(CLLocation *)location {
-    // Show location in status
+- (void)onTestUpdatedLocation:(CLLocation *)location {
     [self displayText:[location rmbtFormattedString] forLabel:self.footerLocationLabel];
 }
 
-- (void)testRunnerDidStartPhase:(RMBTTestRunnerPhase)phase {
-    if (phase == RMBTTestRunnerPhaseInit || phase == RMBTTestRunnerPhaseWait) {
-        [self displayText:_testRunner.testParams.serverName forLabel:self.footerTestServerLabel];
-//        self.footerTestServerLabel.text = _testRunner.testParams.serverName;
-//        self.footerLocalIpLabel.text = _testRunner.testParams.clientRemoteIp;
-    } else if (phase == RMBTTestRunnerPhaseDown) {
+- (void)onTestUpdatedServerName:(NSString *)name {
+   [self displayText:name forLabel:self.footerTestServerLabel];
+}
+
+- (void)onTestUpdatedStatus:(NSString *)status {
+    [self displayText:status forLabel:self.footerStatusLabel];
+}
+
+- (void)onTestUpdatedTotalProgress:(NSUInteger)percentage {
+    self.progressLabel.text = [NSString stringWithFormat:@"%lu%%", (unsigned long)percentage];
+    _progressGaugeView.value = percentage/100.0f;
+}
+
+- (void)onTestStartedPhase:(RMBTTestRunnerPhase)phase {
+    if (phase == RMBTTestRunnerPhaseDown) {
         self.arrowImageView.image = [UIImage imageNamed:@"test_arrow_down"];
     } else if (phase == RMBTTestRunnerPhaseUp) {
         [self.speedGraphView clear];
@@ -214,45 +198,29 @@
         self.arrowImageView.image = [UIImage imageNamed:@"test_arrow_up"];
     } else if (phase == RMBTTestRunnerPhaseQoS) {
         NSParameterAssert(_qosProgressViewController);
-        self.speedGraphView.hidden = YES;
-        _speedGaugeView.hidden = YES;
-        self.speedLabel.hidden = YES;
-        self.speedSuffixLabel.hidden = YES;
-        self.arrowImageView.hidden = YES;
-        self.qosProgressView.hidden = NO;
     }
-    [self displayText:[self statusStringForPhase:phase] forLabel:self.footerStatusLabel];
 }
 
-- (void)testRunnerDidFinishPhase:(RMBTTestRunnerPhase)phase {
-    if (phase == RMBTTestRunnerPhaseLatency) {
-        [self displayText:RMBTMillisecondsStringWithNanos(_testRunner.testResult.medianPingNanos) forLabel:self.pingResultLabel final:YES];
-    } else if (phase == RMBTTestRunnerPhaseDown) {
-        _speedGaugeView.value = 0;
-        // Speed gauge set to 0, but leave the chart until we have measurements for the upload
-        // [self.speedGraphView clear];
-        [self updateSpeedLabelForPhase:phase
-                             withSpeed:_testRunner.testResult.totalDownloadHistory.totalThroughput.kilobitsPerSecond
-                               isFinal:YES];
-    } else if (phase == RMBTTestRunnerPhaseUp) {
-        [self updateSpeedLabelForPhase:phase
-                             withSpeed:_testRunner.testResult.totalUploadHistory.totalThroughput.kilobitsPerSecond
-                               isFinal:YES];
-    }
-    
-    _finishedPercentage = [self percentageAfterPhase:phase];
-    [self displayPercentage:_finishedPercentage];
-    
-    NSAssert(_finishedPercentage <= 100, @"Invalid percentage");
+- (void)onTestFinishedPhase:(RMBTTestRunnerPhase)phase {
 }
 
-- (void)testRunnerDidUpdateProgress:(float)progress inPhase:(RMBTTestRunnerPhase)phase {
-    NSUInteger totalPercentage = _finishedPercentage + [self percentageForPhase:phase] * progress;
-    NSAssert(totalPercentage <= 100, @"Invalid percentage");
-    [self displayPercentage:totalPercentage];
+- (void)onTestMeasuredLatency:(uint64_t)nanos {
+    [self displayText:RMBTMillisecondsStringWithNanos(nanos) forLabel:self.pingResultLabel final:YES];
 }
 
-- (void)testRunnerDidMeasureThroughputs:(NSArray *)throughputs inPhase:(RMBTTestRunnerPhase)phase {
+- (void)onTestMeasuredDownloadSpeed:(uint32_t)kbps {
+    _speedGaugeView.value = 0;
+    // Speed gauge set to 0, but leave the chart until we have measurements for the upload
+    // [self.speedGraphView clear];
+    [self updateSpeedLabelForPhase:RMBTTestRunnerPhaseDown withSpeed:kbps isFinal:YES];
+
+}
+
+- (void)onTestMeasuredUploadSpeed:(uint32_t)kbps {
+    [self updateSpeedLabelForPhase:RMBTTestRunnerPhaseUp withSpeed:kbps isFinal:YES];
+}
+
+- (void)onTestMeasuredTroughputs:(NSArray *)throughputs inPhase:(RMBTTestRunnerPhase)phase {
     uint32_t kbps = 0;
     double l;
 
@@ -269,62 +237,50 @@
     }
 }
 
-
-- (void)testRunnerDidCompleteWithResult:(RMBTHistoryResult *)result {
+- (void)onTestCompletedWithResult:(RMBTHistoryResult *)result qos:(BOOL)qos {
     [self hideAlert];
-
-    if (_loopMode) {
-        [self startNextLoop];
-    } else {
-        [self.delegate testViewController:self didFinishWithTestResult:result];
-    }
+    [self.delegate testViewController:self didFinishWithTestResult:result];
 }
 
-- (void)testRunnerDidCancelTestWithReason:(RMBTTestRunnerCancelReason)cancelReason {
-    switch(cancelReason) {
+- (void)onTestCancelledWithReason:(RMBTTestRunnerCancelReason)reason {
+    switch(reason) {
         case RMBTTestRunnerCancelReasonUserRequested: {
             [self dismissViewControllerAnimated:YES completion:^{}];
             break;
         }
         case RMBTTestRunnerCancelReasonMixedConnectivity: {
             RMBTLog(@"Test cancelled because of mixed connectivity");
-            [self startTest];
+            [self startTestWithExtraParams:nil];
             break;
         }
         case RMBTTestRunnerCancelReasonNoConnection:
-        case RMBTTestRunnerCancelReasonErrorFetchingTestingParams:
-            if (_loopMode) {
-                [self restartTestAfterCountdown:RMBT_TEST_LOOPMODE_WAIT_BETWEEN_RETRIES_S];
+        case RMBTTestRunnerCancelReasonErrorFetchingTestingParams: {
+            NSString * message;
+            if (reason == RMBTTestRunnerCancelReasonNoConnection) {
+                RMBTLog(@"Test cancelled because of connection error");
+                message = NSLocalizedString(@"The connection to the test server was lost. Test aborted.", @"Alert view message");
             } else {
-                NSString * message;
-                if (cancelReason == RMBTTestRunnerCancelReasonNoConnection) {
-                    RMBTLog(@"Test cancelled because of connection error");
-                    message = NSLocalizedString(@"The connection to the test server was lost. Test aborted.", @"Alert view message");
-                } else {
-                    RMBTLog(@"Test cancelled failing to fetch test params");
-                    message = NSLocalizedString(@"Couldn't connect to test server.", @"Alert view message");
-                }
+                RMBTLog(@"Test cancelled failing to fetch test params");
+                message = NSLocalizedString(@"Couldn't connect to test server.", @"Alert view message");
+            }
 
-                [self displayAlertWithTitle:NSLocalizedString(@"Connection Error", @"Alert view title")
-                                    message:message
-                          cancelButtonTitle:NSLocalizedString(@"Cancel", @"Alert view button")
-                           otherButtonTitle:NSLocalizedString(@"Try Again", @"Alert view button")
-                              cancelHandler:^{ [self dismissViewControllerAnimated:YES completion:^{}]; }
-                               otherHandler:^{ [self startTest]; }];
-            }
+            [self displayAlertWithTitle:NSLocalizedString(@"Connection Error", @"Alert view title")
+                                message:message
+                      cancelButtonTitle:NSLocalizedString(@"Cancel", @"Alert view button")
+                       otherButtonTitle:NSLocalizedString(@"Try Again", @"Alert view button")
+                          cancelHandler:^{ [self dismissViewControllerAnimated:YES completion:^{}]; }
+                           otherHandler:^{ [self startTest]; }];
+
             break;
+        }
         case RMBTTestRunnerCancelReasonErrorSubmittingTestResult: {
-            if (_loopMode) {
-                [self restartTestAfterCountdown:RMBT_TEST_LOOPMODE_WAIT_BETWEEN_RETRIES_S];
-            } else {
-                RMBTLog(@"Test cancelled failing to submit test results");
-                [self displayAlertWithTitle:NSLocalizedString(@"Error", @"Alert view title")
-                                    message:NSLocalizedString(@"Test was completed, but the results couldn't be submitted to the test server.", @"Alert view message")
-                          cancelButtonTitle:NSLocalizedString(@"Dismiss", @"Alert view button")
-                           otherButtonTitle:nil
-                              cancelHandler:^{ [self dismissViewControllerAnimated:YES completion:^{}]; }
-                               otherHandler:nil];
-            }
+            RMBTLog(@"Test cancelled failing to submit test results");
+            [self displayAlertWithTitle:NSLocalizedString(@"Error", @"Alert view title")
+                                message:NSLocalizedString(@"Test was completed, but the results couldn't be submitted to the test server.", @"Alert view message")
+                      cancelButtonTitle:NSLocalizedString(@"Dismiss", @"Alert view button")
+                       otherButtonTitle:nil
+                          cancelHandler:^{ [self dismissViewControllerAnimated:YES completion:^{}]; }
+                           otherHandler:nil];
             break;
         }
         case RMBTTestRunnerCancelReasonAppBackgrounded: {
@@ -340,8 +296,16 @@
             break;
         }
     }
+}
 
-    [self displayText:NSLocalizedString(@"Aborted", @"Footer status label") forLabel:self.footerStatusLabel];
+- (void)onTestStartedQoSWithGroups:(NSArray *)groups {
+    NSParameterAssert(_qosProgressViewController);
+    _qosProgressViewController.testGroups = groups;
+    [self showQoSUI:YES];
+}
+
+- (void)onTestUpdatedProgress:(float)progress inQoSGroup:(RMBTQoSTestGroup *)group {
+    [_qosProgressViewController updateProgress:progress forGroup:group];
 }
 
 #pragma mark - UI
@@ -382,68 +346,6 @@
 //    }
 }
 
-- (NSUInteger)percentageAfterPhase:(RMBTTestRunnerPhase)phase {
-    switch (phase) {
-        case RMBTTestRunnerPhaseNone:
-            return 0;
-        case RMBTTestRunnerPhaseFetchingTestParams:
-        case RMBTTestRunnerPhaseWait:
-            return 4;
-        case RMBTTestRunnerPhaseInit:
-            return 12;
-        case RMBTTestRunnerPhaseLatency:
-            return 25;
-        case RMBTTestRunnerPhaseDown:
-        case RMBTTestRunnerPhaseInitUp:  // no visualization for init up
-            return 50;
-        case RMBTTestRunnerPhaseUp:
-            return 75;
-        case RMBTTestRunnerPhaseQoS:
-            return 100;
-        case RMBTTestRunnerPhaseSubmittingTestResult:
-            return 100; // also no visualization for submission
-    }
-}
-
-- (NSUInteger)percentageForPhase:(RMBTTestRunnerPhase)phase {
-    switch (phase) {
-        case RMBTTestRunnerPhaseInit:    return 12 - 4 /* waiting phase, visualized as init */;
-        case RMBTTestRunnerPhaseLatency: return 13;
-        case RMBTTestRunnerPhaseDown:    return 25;
-        case RMBTTestRunnerPhaseUp:      return 25;
-        case RMBTTestRunnerPhaseQoS:     return 25;
-        default: return 0;
-    }
-}
-
-- (NSString*)statusStringForPhase:(RMBTTestRunnerPhase)phase {
-    switch(phase) {
-        case RMBTTestRunnerPhaseNone:
-        case RMBTTestRunnerPhaseFetchingTestParams:
-            return NSLocalizedString(@"Fetching test parameters", @"Phase status label");
-        case RMBTTestRunnerPhaseWait:
-            return NSLocalizedString(@"Waiting for test server", @"Phase status label");
-        case RMBTTestRunnerPhaseInit:
-            return NSLocalizedString(@"Initializing", @"Phase status label");
-        case RMBTTestRunnerPhaseLatency:
-            return NSLocalizedString(@"Pinging", @"Phase status label");
-        case RMBTTestRunnerPhaseDown:
-            return NSLocalizedString(@"Download", @"Phase status label");
-        case RMBTTestRunnerPhaseInitUp:
-            return NSLocalizedString(@"Initializing Upload", @"Phase status label");
-        case RMBTTestRunnerPhaseUp:
-            return NSLocalizedString(@"Upload", @"Phase status label");
-        case RMBTTestRunnerPhaseQoS:
-            return NSLocalizedString(@"QoS", @"Phase status label");
-        case RMBTTestRunnerPhaseSubmittingTestResult:
-            return NSLocalizedString(@"Finalizing", @"Phase status label");
-    }
-}
-
-- (void)displayPercentage:(NSUInteger)percentage {
-    self.progressLabel.text = [NSString stringWithFormat:@"%lu%%", (unsigned long)percentage];
-    _progressGaugeView.value = percentage/100.0f;
-}
 
 #pragma mark - Alert views
 
@@ -453,8 +355,7 @@
               cancelButtonTitle:NSLocalizedString(@"Abort Test", @"Abort test alert button")
                otherButtonTitle:NSLocalizedString(@"Continue", @"Abort test alert button")
                   cancelHandler:^{
-                      [[RMBTControlServer sharedControlServer] cancelAllRequests];
-                      [_testRunner cancel];
+                      [self cancelTest];
                   } otherHandler:^{}];
 }
 
@@ -477,33 +378,6 @@
         [_alertView dismissWithClickedButtonIndex:-1 animated:YES];
         _alertView = nil;
     }
-}
-
-#pragma mark Restart test timer
-
-- (void)startNextLoop {
-    _loopCounter++;
-    if (_loopCounter <= RMBT_TEST_LOOPMODE_LIMIT) {
-        // Restart test
-        RMBTLog(@"Loop mode active, starting new test (%d/%d)", _loopCounter, RMBT_TEST_LOOPMODE_LIMIT);
-        [self startTest];
-    } else {
-        RMBTLog(@"Loop mode limit reached, stopping");
-        [self dismissViewControllerAnimated:YES completion:^{}];
-    }
-}
-
-- (void)restartTestAfterCountdown:(NSTimeInterval)interval {
-    __block NSTimeInterval elapsed = 0;
-    _loopRestartTimer = [NSTimer bk_scheduledTimerWithTimeInterval:1.0 block:^(NSTimer *timer) {
-        elapsed += timer.timeInterval;
-        if (elapsed > interval) {
-            [timer invalidate];
-            [self startNextLoop];
-        } else {
-            [self displayText:[NSString stringWithFormat:@"Restarting test in %lu seconds", (unsigned long)(interval-elapsed)] forLabel:self.footerStatusLabel];
-        }
-    } repeats:YES];
 }
 
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
@@ -533,9 +407,6 @@
     } else if (label == self.footerStatusLabel) {
         bottom = YES;
         title = @"Status";
-    } else if (label == self.footerLoopLabel) {
-        bottom = YES;
-        title = @"Loop";
     } else if (label == self.networkTypeLabel) {
         static NSString *localizedTitle;
         static dispatch_once_t onceToken;
@@ -586,7 +457,7 @@
     label.attributedText = line;
 }
 
-#pragma mark - QoS
+#pragma mark - QoS segues
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     if ([identifier isEqualToString:@"embed_qos_progress"] && [RMBTSettings sharedSettings].skipQoS) {
@@ -599,15 +470,6 @@
     if ([segue.identifier isEqualToString: @"embed_qos_progress"]) {
         _qosProgressViewController = (RMBTQoSProgressViewController *) [segue destinationViewController];
     }
-}
-
-- (void)testRunnerQoSDidStartWithGroups:(NSArray *)groups {
-    NSParameterAssert(_qosProgressViewController);
-    _qosProgressViewController.testGroups = groups;
-}
-
-- (void)testRunnerQoSGroup:(RMBTQoSTestGroup *)group didUpdateProgress:(float)progress {
-    [_qosProgressViewController updateProgress:progress forGroup:group];
 }
 
 @end

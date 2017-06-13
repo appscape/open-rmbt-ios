@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 appscape gmbh
+ * Copyright 2017 appscape gmbh
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,20 @@
  *
  */
 
-#import "RMBTMapSubViewController.h"
+#import <Foundation/Foundation.h>
 
-@implementation RMBTMapSubViewController
+@interface RMBTLoopInfo : NSObject
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    NSParameterAssert(self.mapOptions);
-    NSParameterAssert(self.delegate);
-}
+@property(nonatomic, assign) NSUInteger waitMeters;
+@property(nonatomic, assign) NSUInteger waitMinutes;
+
+@property(nonatomic, assign) NSUInteger current; // 1-based, but initialized with 0 -> increment before first run
+@property(nonatomic, assign) NSUInteger total;
+
+- (instancetype)initWithMeters:(NSUInteger)meters minutes:(NSUInteger)minutes total:(NSUInteger)total;
+
+- (void)increment;
+- (BOOL)isFinished;
+- (NSDictionary*)params;
 
 @end

@@ -40,4 +40,20 @@
     XCTAssertEqual(RMBTPercent(3, 9), 33);
 }
 
+- (void)testMedian {
+    XCTAssertEqualObjects(RMBTMedian(@[@(1024)]), @(1024));
+    XCTAssertEqualObjects(RMBTMedian(@[@(0),@(10)]), @(5));
+    XCTAssertEqualObjects(RMBTMedian(@[@(0),@(9)]), @(4)); // works only with integral values
+    XCTAssertEqualObjects(RMBTMedian(@[@(0),@(100), @(101)]), @(100));
+    XCTAssertNil(RMBTMedian(@[]));
+}
+
+- (void)testMMSS {
+    XCTAssertEqualObjects(RMBTMMSSStringWithInterval(60), @"01:00");
+    XCTAssertEqualObjects(RMBTMMSSStringWithInterval(89), @"01:29");
+    XCTAssertEqualObjects(RMBTMMSSStringWithInterval(60.444445), @"01:00");
+    XCTAssertEqualObjects(RMBTMMSSStringWithInterval(60*100), @"100:00");
+    XCTAssertEqualObjects(RMBTMMSSStringWithInterval(12012), @"200:12");
+}
+
 @end

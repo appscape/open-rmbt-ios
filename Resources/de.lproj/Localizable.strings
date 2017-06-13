@@ -166,3 +166,58 @@
 /* QoS Details section header */
 "Tests" = "Tests";
 
+/* Map overlay summary */
+"Map shows tests as community shapes" = "Karte zeigt Tests nach Gemeinden an";
+
+/* Map overlay summary */
+"Map shows tests as heatmap" = "Karte zeigt die Tests als Heatmap an";
+
+/* Map overlay summary */
+"Map shows tests as points" = "Karte zeigt die Tests als Punkte an";
+
+/* Map overlay summary */
+"Map switches automatically between heatmap and points" = "Karte wechselt automatisch zwischen Heatmap und Punkten";
+
+/* Section title in the map options view
+   Title of the map options subview */
+"Map type" = "Kartentyp";
+
+/* Loop mode alert message */
+"You are about to start tests in loop mode. The distance is set to %@ meters. The waiting time between tests is %@ minutes." = "Sie sind dabei Tests im Wiederholungsmodus zu starten. Die Distanz beträgt %@ Meter. Die Wartezeit ist %@ Minuten.";
+
+/* Loop mode details title */
+"Access" = "Zugang";
+
+/* Loop mode details title */
+"Data usage" = "Datenverbrauch";
+
+/* Loop mode header title */
+"Previous test" = "Letzter Test";
+
+/* Screen title */
+"Loop Mode" = "Wiederholungsmodus";
+
+/* Loop mode alert title */
+"Number of tests" = "Anzahl der Tests";
+
+/* Loop mode alert button */
+"Start tests" = "Tests starten";
+
+/* Intro screen button title */
+"Test Connection" = "Verbindung testen";
+
+/* Confirmation dialog title 1/2 */
+"Activation and privacy" = "Aktivierung";
+
+/* Confirmation dialog title 1/2 */
+"Usage" = "Nutzung";
+
+/* Confirmation dialog subtitle */
+"Loop mode %@/2" = "Wiederholungsmodus %@/2";
+
+/* Loop Mode status */
+"Waiting" = "Warten";
+
+/* Loop mode details title */
+"Location" = "Standort";
+

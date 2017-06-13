@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 appscape gmbh
+ * Copyright 2017 appscape gmbh
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,6 @@
 #import <UIKit/UIKit.h>
 #import "RMBTMapOptions.h"
 
-@class RMBTMapSubViewController;
-
-@protocol RMBTMapSubViewControllerDelegate <NSObject>
-- (void)mapSubViewController:(RMBTMapSubViewController*)viewController willDisappearWithChange:(BOOL)change;
-@end
-
-@interface RMBTMapSubViewController : UITableViewController
-@property (nonatomic, weak) id<RMBTMapSubViewControllerDelegate> delegate;
-@property (nonatomic, strong) RMBTMapOptions *mapOptions;
+@interface RMBTMapOptionsOverlaysViewController : UITableViewController
+@property (nonatomic, retain) RMBTMapOptions *mapOptions;
 @end

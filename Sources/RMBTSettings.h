@@ -35,7 +35,22 @@
 @property (nonatomic, assign) BOOL       forceIPv4;
 @property (nonatomic, assign) BOOL       skipQoS;
 
-#pragma mark - Debug properties
+#pragma mark - ..expert mode
+
+@property (nonatomic, assign) BOOL       expertMode;
+
+#pragma mark - ....loop mode
+@property (nonatomic, assign) BOOL       loopMode;
+
+// Last count entered by the user
+@property (nonatomic, assign) NSUInteger loopModeLastCount;
+
+// Loop mode runs the next test when either user moves loopModeEveryMeters or after loopModeEverySeconds,
+// whichever occurs first.
+@property (nonatomic, assign) NSUInteger loopModeEveryMeters;
+@property (nonatomic, assign) NSUInteger loopModeEveryMinutes;
+
+#pragma mark - Debug
 
 @property (nonatomic, assign) BOOL       debugUnlocked;
 
@@ -45,8 +60,6 @@
 @property (nonatomic, copy)   NSString  *debugControlServerHostname;
 @property (nonatomic, assign) NSUInteger debugControlServerPort;
 @property (nonatomic, assign) BOOL       debugControlServerUseSSL;
-
-@property (nonatomic, assign) BOOL       debugLoopMode;
 
 @property (nonatomic, assign) BOOL       debugLoggingEnabled;
 @property (nonatomic, assign) NSString  *debugLoggingHostname;

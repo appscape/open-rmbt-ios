@@ -31,19 +31,32 @@
 
 - (instancetype)init {
     if (self = [super init]) {
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{
+            @keypath(self.loopModeEveryMeters): @(RMBT_TEST_LOOPMODE_DEFAULT_MOVEMENT_M),
+            @keypath(self.loopModeEveryMinutes): @(RMBT_TEST_LOOPMODE_DEFAULT_DELAY_MINS),
+            @keypath(self.loopModeLastCount): @(RMBT_TEST_LOOPMODE_DEFAULT_COUNT)
+        }];
+
         _mapOptionsSelection = [[RMBTMapOptionsSelection alloc] init];
         [self bindKeyPaths: @[
             @keypath(self.testCounter),
             @keypath(self.previousTestStatus),
             @keypath(self.forceIPv4),
             @keypath(self.skipQoS),
+            @keypath(self.expertMode),
+
+            @keypath(self.expertMode),
+            @keypath(self.loopMode),
+            @keypath(self.loopModeLastCount),
+            @keypath(self.loopModeEveryMeters),
+            @keypath(self.loopModeEveryMinutes),
+
             @keypath(self.debugUnlocked),
             @keypath(self.debugForceIPv6),
             @keypath(self.debugControlServerCustomizationEnabled),
             @keypath(self.debugControlServerHostname),
             @keypath(self.debugControlServerPort),
             @keypath(self.debugControlServerUseSSL),
-            @keypath(self.debugLoopMode),
             @keypath(self.debugLoggingEnabled),
             @keypath(self.debugLoggingHostname),
             @keypath(self.debugLoggingPort)

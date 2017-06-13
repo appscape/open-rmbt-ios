@@ -20,6 +20,11 @@
 @interface RMBTSettingsViewController : UITableViewController
 @property (weak, nonatomic) IBOutlet UISwitch *forceIPv4Switch;
 @property (weak, nonatomic) IBOutlet UISwitch *skipQoSSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *expertModeSwitch;
+
+@property (weak, nonatomic) IBOutlet UISwitch *loopModeSwitch;
+@property (weak, nonatomic) IBOutlet UITextField *loopModeWaitTextField;
+@property (weak, nonatomic) IBOutlet UITextField *loopModeDistanceTextField;
 
 @property (weak, nonatomic) IBOutlet UISwitch *debugForceIPv6Switch;
 @property (weak, nonatomic) IBOutlet UISwitch *debugControlServerCustomizationEnabledSwitch;
@@ -27,10 +32,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *debugControlServerPortTextField;
 @property (weak, nonatomic) IBOutlet UISwitch *debugControlServerUseSSLSwitch;
 
-@property (weak, nonatomic) IBOutlet UISwitch *debugLoopModeSwitch;
-
 @property (weak, nonatomic) IBOutlet UISwitch *debugLoggingEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UITextField *debugLoggingHostnameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *debugLoggingPortTextField;
+
+- (IBAction)declineLoopModeConfirmation:(UIStoryboardSegue*)segue;
+- (IBAction)acceptLoopModeConfirmation:(UIStoryboardSegue*)segue;
 
 @end

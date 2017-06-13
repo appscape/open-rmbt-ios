@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 appscape gmbh
+ * Copyright 2017 appscape gmbh
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,9 @@
  *
  */
 
-#import "RMBTMapSubViewController.h"
+#import <UIKit/UIKit.h>
+#import "RMBTMapOptions.h"
 
-@interface RMBTMapOptionsFilterViewController : RMBTMapSubViewController
+@interface RMBTMapOptionsFilterViewController : UITableViewController
+@property (nonatomic, retain) RMBTMapOptionsFilter* filter;
 @end

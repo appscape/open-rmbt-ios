@@ -16,6 +16,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "RMBTBaseTestViewController.h"
 #import "RMBTHistoryResult.h"
 #import "RMBTSpeedGraphView.h"
 
@@ -25,7 +26,7 @@
 - (void)testViewController:(RMBTTestViewController*)controller didFinishWithTestResult:(RMBTHistoryResult*)result;
 @end
 
-@interface RMBTTestViewController : UIViewController
+@interface RMBTTestViewController : RMBTBaseTestViewController
 
 @property (nonatomic, weak) id<RMBTTestViewControllerDelegate> delegate;
 
@@ -55,7 +56,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *footerTestServerLabel;
 @property (nonatomic, strong) IBOutlet UILabel *footerLocalIpLabel;
 @property (nonatomic, strong) IBOutlet UILabel *footerLocationLabel;
-@property (nonatomic, strong) IBOutlet UILabel *footerLoopLabel;
 
 // QoS
 @property (nonatomic, strong) IBOutlet UIView *qosProgressView;

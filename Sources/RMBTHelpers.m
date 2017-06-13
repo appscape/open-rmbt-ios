@@ -91,7 +91,7 @@ NSString* RMBTAppTitle() {
     static NSString* appName = @"";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        id infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        id infoDictionary = [[NSBundle mainBundle] localizedInfoDictionary];
         appName = infoDictionary[@"CFBundleDisplayName"];
     });
     return appName;
@@ -154,5 +154,32 @@ NSString* RMBTLocalizeURLString(NSString* urlString) {
         return [urlString stringByReplacingOccurrencesOfString:@"$lang" withString:lang];
     } else {
         return [NSString stringWithString:urlString];
+    }
+}
+
+NSString* RMBTMMSSStringWithInterval(NSTimeInterval interval) {
+    NSInteger ti = (NSInteger)interval;
+    NSInteger minutes = ti / 60;
+    NSInteger seconds = ti - (minutes * 60);
+    return [NSString stringWithFormat:@"%02ld:%02ld", (long)minutes, (long)seconds];
+}
+
+NSString *RMBTMegabytesString(uint64_t bytes) {
+    return [NSString stringWithFormat:@"%.2f MB", (double)bytes/(1000*1000)];
+}
+
+NSNumber* RMBTMedian(NSArray<NSNumber*>* values) {
+    NSArray *sorted = [values sortedArrayUsingSelector:@selector(compare:)];
+    NSUInteger count = [sorted count];
+    if (count == 0) {
+        return nil;
+    } else if (count % 2 == 0) {
+        // even
+        NSUInteger m = (count/2);
+        return @(([[sorted objectAtIndex:m] longLongValue] + [[sorted objectAtIndex:m-1] longLongValue])/2);
+    } else {
+        // odd, take the middle
+        NSUInteger m = ((count + 1) / 2) - 1; // 9 -> 10/2 - 1 = 5 - 1 = 4 (index); 1 -> 2/2 - 1 = 0 (index)
+        return [sorted objectAtIndex:m];
     }
 }

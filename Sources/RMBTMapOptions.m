@@ -39,14 +39,20 @@ NSString * const RMBTMapOptionsToastInfoValues = @"values";
 + (void)initialize {
     if ([self class] == [RMBTMapOptions class]) {
         RMBTMapOptionsOverlayPoints = [[RMBTMapOptionsOverlay alloc] initWithIdentifier:@"points"
-                                                                   localizedDescription:NSLocalizedString(@"Points", @"Map overlay description")];
-        RMBTMapOptionsOverlayAuto = [[RMBTMapOptionsOverlay alloc] initWithIdentifier:@"auto"
-                                                                   localizedDescription:NSLocalizedString(@"Auto", @"Map overlay description")];
-        RMBTMapOptionsOverlayHeatmap = [[RMBTMapOptionsOverlay alloc] initWithIdentifier:@"heatmap"
-                                                                   localizedDescription:NSLocalizedString(@"Heatmap", @"Map overlay description")];
-        RMBTMapOptionsOverlayShapes = [[RMBTMapOptionsOverlay alloc] initWithIdentifier:@"shapes"
-                                                                    localizedDescription:NSLocalizedString(@"Shapes", @"Map overlay description")];
+                                                                   localizedDescription:NSLocalizedString(@"Points", @"Map overlay description")
+                                                                       localizedSummary:NSLocalizedString(@"Map shows tests as points", @"Map overlay summary")];
 
+        RMBTMapOptionsOverlayAuto = [[RMBTMapOptionsOverlay alloc] initWithIdentifier:@"auto"
+                                                                   localizedDescription:NSLocalizedString(@"Auto", @"Map overlay description")
+                                                                       localizedSummary:NSLocalizedString(@"Map switches automatically between heatmap and points", @"Map overlay summary")];
+
+        RMBTMapOptionsOverlayHeatmap = [[RMBTMapOptionsOverlay alloc] initWithIdentifier:@"heatmap"
+                                                                    localizedDescription:NSLocalizedString(@"Heatmap", @"Map overlay description")
+                                                                        localizedSummary:NSLocalizedString(@"Map shows tests as heatmap", @"Map overlay summary")];
+
+        RMBTMapOptionsOverlayShapes = [[RMBTMapOptionsOverlay alloc] initWithIdentifier:@"shapes"
+                                                                   localizedDescription:NSLocalizedString(@"Shapes", @"Map overlay description")
+                                                                       localizedSummary:NSLocalizedString(@"Map shows tests as community shapes", @"Map overlay summary")];
     }
 }
 
@@ -165,10 +171,11 @@ NSString * const RMBTMapOptionsToastInfoValues = @"values";
 #pragma mark - RMBTMapOptionsOverlay
 
 @implementation RMBTMapOptionsOverlay
-- (instancetype)initWithIdentifier:(NSString*)identifier localizedDescription:(NSString*)localizedDescription {
+- (instancetype)initWithIdentifier:(NSString*)identifier localizedDescription:(NSString*)localizedDescription localizedSummary:(NSString*)localizedSummary {
     if (self = [super init]) {
         _identifier = identifier;
         _localizedDescription = localizedDescription;
+        _localizedSummary = localizedSummary;
     }
     return self;
 }

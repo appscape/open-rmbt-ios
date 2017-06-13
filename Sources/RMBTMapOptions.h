@@ -33,7 +33,8 @@ typedef NS_ENUM(NSUInteger, RMBTMapOptionsMapViewType) {
 @interface RMBTMapOptionsOverlay : NSObject
 @property (nonatomic, readonly) NSString *identifier;
 @property (nonatomic, readonly) NSString *localizedDescription;
-- (instancetype)initWithIdentifier:(NSString*)identifier localizedDescription:(NSString*)localizedDescription;
+@property (nonatomic, readonly) NSString *localizedSummary;
+- (instancetype)initWithIdentifier:(NSString*)identifier localizedDescription:(NSString*)localizedDescription localizedSummary:(NSString*)localizedSummary;
 @end
 
 extern RMBTMapOptionsOverlay* RMBTMapOptionsOverlayAuto;
@@ -58,11 +59,13 @@ extern RMBTMapOptionsOverlay* RMBTMapOptionsOverlayShapes;
 
 
 // Type = mobile|cell|browser
+@class RMBTMapOptionsSubtype;
+
 @interface RMBTMapOptionsType : NSObject
 @property (nonatomic, readonly) NSString *title; // localized
 @property (nonatomic, readonly) NSString *identifier; // mobile|cell|browser
-@property (nonatomic, readonly) NSArray  *filters;
-@property (nonatomic, readonly) NSArray  *subtypes;
+@property (nonatomic, readonly) NSArray<RMBTMapOptionsFilter *> *filters;
+@property (nonatomic, readonly) NSArray<RMBTMapOptionsSubtype *> *subtypes;
 - (instancetype)initWithResponse:(id)response;
 - (void)addFilter:(RMBTMapOptionsFilter*)filter;
 @end
@@ -83,8 +86,8 @@ extern RMBTMapOptionsOverlay* RMBTMapOptionsOverlayShapes;
 
 @property (nonatomic, assign) RMBTMapOptionsMapViewType mapViewType;
 
-@property (nonatomic, readonly) NSArray *types;
-@property (nonatomic, readonly) NSArray *overlays;
+@property (nonatomic, readonly) NSArray<RMBTMapOptionsType *> *types;
+@property (nonatomic, readonly) NSArray<RMBTMapOptionsOverlay *> *overlays;
 
 @property (nonatomic, strong) RMBTMapOptionsSubtype *activeSubtype;
 @property (nonatomic, assign) RMBTMapOptionsOverlay *activeOverlay;

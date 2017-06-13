@@ -15,12 +15,22 @@
  *
  */
 
-#import "RMBTMapSubViewController.h"
+#import <UIKit/UIKit.h>
+#import "RMBTMapOptions.h"
 
-@interface RMBTMapOptionsViewController : RMBTMapSubViewController
+@class RMBTMapOptionsViewController;
+
+@protocol RMBTMapOptionsViewControllerDelegate <NSObject>
+- (void)mapOptionsViewController:(RMBTMapOptionsViewController*)viewController willDisappearWithChange:(BOOL)change;
+@end
+
+@interface RMBTMapOptionsViewController : UITableViewController
+
+@property (nonatomic, weak) id<RMBTMapOptionsViewControllerDelegate> delegate;
+@property (nonatomic, strong) RMBTMapOptions *mapOptions;
+
 @property (nonatomic, weak) IBOutlet UISegmentedControl *mapViewTypeSegmentedControl;
 
 - (IBAction)mapViewTypeSegmentedControlIndexDidChange:(id)sender;
 
 @end
-

@@ -37,7 +37,7 @@ static NSString* const kCameraZoomKey    = @"map.camera.zoom";
 static NSString* const kCameraBearingKey = @"map.camera.bearing";
 static NSString* const kCameraAngleKey   = @"map.camera.angle";
 
-@interface RMBTMapViewController()<GMSMapViewDelegate, RMBTMapSubViewControllerDelegate, UITabBarControllerDelegate> {
+@interface RMBTMapViewController()<GMSMapViewDelegate, RMBTMapOptionsViewControllerDelegate, UITabBarControllerDelegate> {
     RMBTMapServer *_mapServer;
     RMBTMapOptions *_mapOptions;
     
@@ -52,7 +52,7 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
     NSTimer *_hideOverlayTimer;
 }
 
-@property (nonatomic, strong) UIBarButtonItem *settingsBarButtonItem, *filterBarButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *settingsBarButtonItem;
 @end
 
 @implementation RMBTMapViewController
@@ -66,18 +66,13 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
     self.toastBarButtonItem.enabled = NO;
 
     self.settingsBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_options"] style:UIBarButtonItemStylePlain target:self action:@selector(showMapOptions)];
-
     self.settingsBarButtonItem.enabled = NO;
 
-    self.filterBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_filter"] style:UIBarButtonItemStylePlain target:self action:@selector(showMapFilter)];
-
-    self.filterBarButtonItem.enabled = NO;
-
-    self.navigationItem.leftBarButtonItems = @[self.settingsBarButtonItem, self.filterBarButtonItem];
+    self.navigationItem.leftBarButtonItems = @[self.settingsBarButtonItem];
 
     if (self.initialLocation) {
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-        self.navigationItem.leftBarButtonItems = @[backItem, self.settingsBarButtonItem, self.filterBarButtonItem];
+        self.navigationItem.leftBarButtonItems = @[backItem, self.settingsBarButtonItem];
     }
 
     self.locateMeButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -143,7 +138,6 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
     [_mapServer getMapOptionsWithSuccess:^(id response) {
         _mapOptions = response;
         self.settingsBarButtonItem.enabled = YES;
-        self.filterBarButtonItem.enabled = YES;
         self.toastBarButtonItem.enabled = YES;
         [self setupMapLayers];
         [self refresh];
@@ -372,14 +366,14 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"show_map_options"] || [segue.identifier isEqualToString:@"show_map_filter"]) {
+    if ([segue.identifier isEqualToString:@"show_map_options"]) {
         RMBTMapOptionsViewController *optionsVC = segue.destinationViewController;
         optionsVC.delegate = self;
         optionsVC.mapOptions = _mapOptions;
     }
 }
 
-- (void)mapSubViewController:(RMBTMapSubViewController *)viewController willDisappearWithChange:(BOOL)change {
+- (void)mapOptionsViewController:(RMBTMapOptionsViewController *)viewController willDisappearWithChange:(BOOL)change {
     if (change) {
         RMBTLog(@"Map options changed, refreshing...");
         [_mapOptions saveSelection];
@@ -401,10 +395,6 @@ static NSString* const kCameraAngleKey   = @"map.camera.angle";
 
 - (void)showMapOptions {
     [self performSegueWithIdentifier:@"show_map_options" sender:self];
-}
-
-- (void)showMapFilter {
-    [self performSegueWithIdentifier:@"show_map_filter" sender:self];
 }
 
 - (IBAction)toggleToast:(id)sender {

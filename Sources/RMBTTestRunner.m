@@ -89,7 +89,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
         _workerQueue = dispatch_queue_create("at.rtr.rmbt.testrunner", NULL);
 
         void *nonNullValue = kWorkerQueueIdentityKey;
-		dispatch_queue_set_specific(_workerQueue, kWorkerQueueIdentityKey, nonNullValue, NULL);
+        dispatch_queue_set_specific(_workerQueue, kWorkerQueueIdentityKey, nonNullValue, NULL);
 
         _connectivityTracker = [[RMBTConnectivityTracker alloc] initWithDelegate:self stopOnMixed:YES];
         [_connectivityTracker start];
@@ -98,7 +98,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 }
 
 // Run on main queue (called from VC)
-- (void)start {
+- (void)startWithExtraParams:(NSDictionary*)extraParams {
     dispatch_async(_workerQueue, ^{
         NSAssert(_phase == RMBTTestRunnerPhaseNone, @"Invalid state");
         NSAssert(!_dead, @"Invalid state");
@@ -116,6 +116,12 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
           @"previousTestStatus": RMBTValueOrString([RMBTSettings sharedSettings].previousTestStatus, RMBTTestStatusNone),
           @"location": RMBTValueOrNull(locationJSON),
         };
+
+        if (extraParams) {
+            NSMutableDictionary *allParams = [params mutableCopy];
+            [allParams addEntriesFromDictionary:extraParams];
+            params = allParams;
+        }
 
         // Notice that we post previous counter (the test before this one) when requesting the params
         [RMBTSettings sharedSettings].testCounter += 1;
@@ -340,8 +346,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
     NSAssert(!_dead, @"Invalid state");
 
     if ([self markWorkerAsFinished]) {
-        // Stop observing now, test is finished
-        [self cleanup];
+        [self killTimer];
 
         _uplinkEndInterfaceInfo = [[_testResult lastConnectivity] getInterfaceInfo];
 
@@ -367,6 +372,8 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 }
 
 - (void)submitResult {
+    [self cleanup]; // Stop observing now, test is finished
+
     dispatch_async(_workerQueue, ^{
         self.phase = RMBTTestRunnerPhaseSubmittingTestResult;
 
@@ -483,15 +490,10 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 - (NSDictionary*)interfaceBytesResultDictionaryWithStartInfo:(RMBTConnectivityInterfaceInfo)startInfo
                                                      endInfo:(RMBTConnectivityInterfaceInfo)endInfo
                                                       prefix:(NSString*)prefix {
-    if (startInfo.bytesReceived <= endInfo.bytesReceived &&
-        startInfo.bytesSent < endInfo.bytesSent) {
-        return @{
-         [NSString stringWithFormat:@"%@_if_bytes_download", prefix]: [NSNumber numberWithUnsignedLongLong:endInfo.bytesReceived - startInfo.bytesReceived],
-         [NSString stringWithFormat:@"%@_if_bytes_upload", prefix]: [NSNumber numberWithUnsignedLongLong:endInfo.bytesSent - startInfo.bytesSent]
-        };
-    } else {
-        return @{};
-    }
+    return @{
+        [NSString stringWithFormat:@"%@_if_bytes_download", prefix]: [NSNumber numberWithUnsignedLongLong:[RMBTConnectivity countTraffic:RMBTConnectivityInterfaceInfoTrafficReceived between:startInfo and:endInfo]],
+        [NSString stringWithFormat:@"%@_if_bytes_upload", prefix]: [NSNumber numberWithUnsignedLongLong:[RMBTConnectivity countTraffic:RMBTConnectivityInterfaceInfoTrafficSent between:startInfo and:endInfo]]
+    };
 }
 
 #pragma mark - Utility methods
@@ -509,6 +511,13 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
     }
 }
 
+- (void)killTimer {
+    if (_timer) {
+        dispatch_source_cancel(_timer);
+        _timer = nil;
+    }
+}
+
 - (void)startPhase:(RMBTTestRunnerPhase)phase withAllWorkers:(BOOL)allWorkers performingSelector:(SEL)selector expectedDuration:(NSTimeInterval)duration completion:(RMBTBlock)completionHandler {
     ASSERT_ON_WORKER_QUEUE();
 
@@ -518,10 +527,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
     _progressStartedAtNanos = RMBTCurrentNanos();
     _progressDurationNanos = duration * NSEC_PER_SEC;
 
-    if (_timer) {
-        dispatch_source_cancel(_timer);
-        _timer = nil;
-    }
+    [self killTimer];
 
     NSAssert(!completionHandler || duration > 0, nil);
 
@@ -538,9 +544,8 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
                     [_delegate testRunnerDidUpdateProgress:1.0 inPhase:phase];
                 });
 
-                // ..then kill the timer
-                dispatch_source_cancel(_timer);
-                _timer = nil;
+                [self killTimer];
+
                 // ..and perform completion handler, if any.
                 if (_progressCompletionHandler) {
                     dispatch_async(_workerQueue, _progressCompletionHandler);
@@ -640,11 +645,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
     [_connectivityTracker stop];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    // Cancel timer
-    if (_timer) {
-        dispatch_source_cancel(_timer);
-        _timer = nil;
-    }
+    [self killTimer];
 }
 
 - (void)dealloc {

@@ -70,14 +70,8 @@
 
         // Add a summary "Quality tests 100% (90/90)" row
         if (_historyResult.qosResults) {
-            NSUInteger success = 0;
-            NSUInteger total = 0;
-            for (RMBTHistoryQoSGroupResult *r in _historyResult.qosResults) {
-                success += r.succeededCount;
-                total += r.tests.count;
-            }
-            NSString *value = [NSString stringWithFormat:@"%lu%% (%lu/%lu)", (unsigned long)RMBTPercent(success, total), (unsigned long)success, (unsigned long)total];
-            [items addObject:[[RMBTHistoryResultItem alloc] initWithTitle:NSLocalizedString(@"Quality tests", @"Measurement item title") value:value classification:-1 hasDetails:NO]];
+            NSString *summary = [RMBTHistoryQoSGroupResult summarize:_historyResult.qosResults withPercentage:YES];
+            [items addObject:[[RMBTHistoryResultItem alloc] initWithTitle:NSLocalizedString(@"Quality tests", @"Measurement item title") value:summary classification:-1 hasDetails:NO]];
         }
 
         _measurementItems = items;

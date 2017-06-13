@@ -233,4 +233,17 @@
     return result;
 }
 
+#define WRAPPED_DIFF(x, y) ((y >= x) ? (y - x) : (((1LL << (sizeof(x) * 8)) - x)) + y)
+
++ (uint64_t)countTraffic:(RMBTConnectivityInterfaceInfoTraffic)traffic between:(RMBTConnectivityInterfaceInfo)info1 and:(RMBTConnectivityInterfaceInfo)info2 {
+    uint64_t result = 0;
+    if (traffic == RMBTConnectivityInterfaceInfoTrafficSent || traffic == RMBTConnectivityInterfaceInfoTrafficTotal) {
+        result += WRAPPED_DIFF(info1.bytesSent, info2.bytesSent);
+    }
+    if (traffic == RMBTConnectivityInterfaceInfoTrafficReceived || traffic == RMBTConnectivityInterfaceInfoTrafficTotal) {
+        result += WRAPPED_DIFF(info1.bytesReceived, info2.bytesReceived);
+    }
+    return result;
+}
+
 @end

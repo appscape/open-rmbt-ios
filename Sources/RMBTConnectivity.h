@@ -18,6 +18,12 @@
 #import <Foundation/Foundation.h>
 #import "RMBTNetworkType.h"
 
+typedef NS_ENUM(NSUInteger, RMBTConnectivityInterfaceInfoTraffic) {
+    RMBTConnectivityInterfaceInfoTrafficSent,
+    RMBTConnectivityInterfaceInfoTrafficReceived,
+    RMBTConnectivityInterfaceInfoTrafficTotal
+};
+
 typedef struct {
     uint32_t bytesReceived;
     uint32_t bytesSent;
@@ -45,5 +51,8 @@ typedef struct {
 // Gets byte counts from the network interface used for the connectivity.
 // Note that the count refers to number of bytes since device boot.
 - (RMBTConnectivityInterfaceInfo)getInterfaceInfo;
+
+// Total (up+down) difference in bytes transferred between two readouts. If counter has wrapped returns 0.
++ (uint64_t)countTraffic:(RMBTConnectivityInterfaceInfoTraffic)traffic between:(RMBTConnectivityInterfaceInfo)info1 and:(RMBTConnectivityInterfaceInfo)info2;
 
 @end
