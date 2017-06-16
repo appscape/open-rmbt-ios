@@ -34,6 +34,10 @@
                 }
             }];
 
+    [self bindSwitch:self.skipQoSSwitch
+   toSettingsKeyPath:@keypath(settings, skipQoS)
+            onToggle:nil];
+
     [self bindSwitch:self.debugForceIPv6Switch
    toSettingsKeyPath:@keypath(settings, debugForceIPv6) onToggle:^(BOOL value) {
        if (value && self.forceIPv4Switch.on) {

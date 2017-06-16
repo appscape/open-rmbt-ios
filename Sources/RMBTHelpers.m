@@ -23,6 +23,25 @@ NSString *RMBTPreferredLanguage() {
     return [[[mostPreferredLanguage componentsSeparatedByString:@"-"] firstObject] lowercaseString];
 }
 
+NSUInteger RMBTPercent(NSInteger count, NSInteger totalCount) {
+    double percent = (totalCount == 0) ? 0 : (double)count * 100 / (double)totalCount;
+    if (percent < 0) percent = 0;
+    return (NSUInteger)round(percent);
+}
+
+NSString *RMBTChomp(NSString* string) {
+    NSInteger l = [string length];
+    while (l>0) {
+        NSString *c = [string substringWithRange:NSMakeRange(l-1, 1)];
+        if (!([c isEqualToString:@"\r"] || [c isEqualToString:@"\n"])) {
+            break;
+        }
+        l--;
+    }
+    NSString* result = [string substringToIndex:l];
+    return result;
+}
+
 NSString *RMBTFormatNumber(NSNumber *number) {
     static NSNumberFormatter *formatter;
     static dispatch_once_t predicate;

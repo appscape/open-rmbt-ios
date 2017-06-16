@@ -21,6 +21,7 @@
 #import "RMBTTestParams.h"
 #import "RMBTTestResult.h"
 #import "RMBTConnectivity.h"
+#import "RMBTQoSTestGroup.h"
 
 typedef NS_ENUM(NSInteger, RMBTTestRunnerPhase) {
     RMBTTestRunnerPhaseNone = 0,
@@ -31,6 +32,7 @@ typedef NS_ENUM(NSInteger, RMBTTestRunnerPhase) {
     RMBTTestRunnerPhaseDown,
     RMBTTestRunnerPhaseInitUp,
     RMBTTestRunnerPhaseUp,
+    RMBTTestRunnerPhaseQoS,
     RMBTTestRunnerPhaseSubmittingTestResult
 };
 
@@ -56,6 +58,10 @@ typedef NS_ENUM(NSInteger, RMBTTestRunnerCancelReason) {
 
 - (void)testRunnerDidCompleteWithResult:(RMBTHistoryResult*)result;
 - (void)testRunnerDidCancelTestWithReason:(RMBTTestRunnerCancelReason)cancelReason;
+
+// QoS-related
+- (void)testRunnerQoSDidStartWithGroups:(NSArray*)groups;
+- (void)testRunnerQoSGroup:(RMBTQoSTestGroup*)group didUpdateProgress:(float)progress;
 @end
 
 @interface RMBTTestRunner : NSObject

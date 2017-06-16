@@ -32,10 +32,11 @@
         // We use -integerValue as it's defined both on NSNumber and NSString, so we're more resilient in parsing:
 
         _serverPort = (NSUInteger)[response[@"test_server_port"] integerValue];
-        NSAssert(_serverPort > 0 && _serverPort < 65536, @"Invalid port");
+        RMBTAssertValidPort(_serverPort);
 
         _resultURLString = [response[@"result_url"] copy];
         _testDuration = (NSUInteger)[response[@"test_duration"] integerValue];
+
         NSAssert(_testDuration > 0 && _testDuration <= 100, @"Invalid test duration");
 
         _testToken = [response[@"test_token"] copy];
@@ -45,6 +46,8 @@
 
         _waitDuration = (NSUInteger)[response[@"test_wait"] integerValue];
         NSAssert(_waitDuration >= 0 && _waitDuration <= 128, @"Invalid wait duration");
+
+        _resultQoSURLString = [response[@"result_qos_url"] copy];
     }
     return self;
 }

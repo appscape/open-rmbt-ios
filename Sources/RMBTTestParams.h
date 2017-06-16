@@ -33,6 +33,7 @@
 @property (nonatomic, readonly) NSString*           testUUID;
 @property (nonatomic, readonly) NSUInteger          threadCount;
 @property (nonatomic, readonly) NSTimeInterval      waitDuration;
+@property (nonatomic, readonly) NSString*           resultQoSURLString;
 
 - (id)initWithResponse:(NSDictionary*)response;
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RMBTHistoryQoSSingleResultCell"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" id="MZb-D1-qQb" customClass="RMBTHistoryQoSSingleResultCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="85"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MZb-D1-qQb" id="dbJ-tP-tyx">
+                <rect key="frame" x="0.0" y="0.0" width="342" height="84"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="traffic_lights_green" translatesAutoresizingMaskIntoConstraints="NO" id="aYZ-lb-Lgm">
+                        <rect key="frame" x="327" y="34" width="15" height="15"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="#1" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chG-ju-Mcu">
+                        <rect key="frame" x="15" y="10" width="17" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rH4-EQ-KE7">
+                        <rect key="frame" x="45" y="10" width="272" height="64.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="rH4-EQ-KE7" secondAttribute="bottom" id="5CI-vM-Wig"/>
+                    <constraint firstAttribute="trailing" secondItem="aYZ-lb-Lgm" secondAttribute="trailing" id="7FV-vR-7fF"/>
+                    <constraint firstItem="aYZ-lb-Lgm" firstAttribute="centerY" secondItem="dbJ-tP-tyx" secondAttribute="centerY" id="8Ig-Z8-4SL"/>
+                    <constraint firstItem="rH4-EQ-KE7" firstAttribute="trailing" secondItem="aYZ-lb-Lgm" secondAttribute="leading" constant="-10" id="8KW-qk-IwP"/>
+                    <constraint firstItem="rH4-EQ-KE7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="chG-ju-Mcu" secondAttribute="trailing" id="axe-tG-nbp"/>
+                    <constraint firstItem="chG-ju-Mcu" firstAttribute="leading" secondItem="dbJ-tP-tyx" secondAttribute="leadingMargin" id="hjy-RO-DCp"/>
+                    <constraint firstItem="chG-ju-Mcu" firstAttribute="top" secondItem="dbJ-tP-tyx" secondAttribute="topMargin" id="jzx-WV-JcT"/>
+                    <constraint firstItem="rH4-EQ-KE7" firstAttribute="top" secondItem="dbJ-tP-tyx" secondAttribute="topMargin" id="sQ2-6Q-cBZ"/>
+                    <constraint firstItem="rH4-EQ-KE7" firstAttribute="leading" secondItem="dbJ-tP-tyx" secondAttribute="leadingMargin" priority="910" constant="30" id="zVC-3a-1lx"/>
+                </constraints>
+                <edgeInsets key="layoutMargins" top="10" left="15" bottom="10" right="15"/>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="sequenceNumberLabel" destination="chG-ju-Mcu" id="E5X-NY-Eem"/>
+                <outlet property="successImageView" destination="aYZ-lb-Lgm" id="op4-cm-IQF"/>
+                <outlet property="summaryLabel" destination="rH4-EQ-KE7" id="Jl9-UM-uPv"/>
+            </connections>
+            <point key="canvasLocation" x="113.5" y="31.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="traffic_lights_green" width="15" height="15"/>
+    </resources>
+</document>

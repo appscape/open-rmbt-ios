@@ -144,3 +144,6 @@
 /* Map overlay description */
 "Shapes" = "Shapes";
 
+/* Measurement item title */
+"Quality tests" = "Diagnostic réseau";
+

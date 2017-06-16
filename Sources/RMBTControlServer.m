@@ -27,6 +27,7 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
 @interface RMBTControlServer() {
     NSString *_uuidKey;
     dispatch_queue_t _uuidQueue;
+    NSMutableDictionary *_qosTestNames;
 }
 @property (nonatomic, strong) AFHTTPClient *httpClient;
 @property (nonatomic, copy) NSString *uuid;
@@ -106,7 +107,7 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
     return _uuid;
 }
 
-- (void)submitResult:(NSDictionary*)result success:(RMBTSuccessBlock)success error:(RMBTBlock)error {
+- (void)submitResult:(NSDictionary*)result endpoint:(NSString*)endpoint success:(RMBTSuccessBlock)success error:(RMBTBlock)error {
     NSMutableDictionary *mergedParams = [NSMutableDictionary dictionary];
     [mergedParams addEntriesFromDictionary:result];
 
@@ -124,7 +125,7 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
     
 //    NSLog(@"Submit %@", mergedParams);
 
-    [self requestWithMethod:@"POST" path:@"result" params:mergedParams success:^(NSDictionary *response) {
+    [self requestWithMethod:@"POST" path:(endpoint ?: @"result") params:mergedParams success:^(NSDictionary *response) {
         if (!response || (response[@"error"] && [response[@"error"] count] > 0)) {
             RMBTLog(@"Error submitting rest result: %@", response[@"error"]);
             error();
@@ -158,6 +159,15 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
         _historyFilters = response[@"settings"][0][@"history"];
         _openTestBaseURL = response[@"settings"][0][@"urls"][@"open_data_prefix"];
 
+        _qosTestNames = [NSMutableDictionary dictionary];
+        for (NSDictionary* r in response[@"settings"][0][@"qostesttype_desc"]) {
+            NSString *name = r[@"name"];
+            NSString *testType = r[@"test_type"];
+            if (name && testType) {
+                _qosTestNames[testType] = name;
+            }
+        }
+
         NSURL *statsURL = [NSURL URLWithString:response[@"settings"][0][@"urls"][@"statistics"]];
         if (statsURL) {
             RMBTLog(@"Stats URL updated: %@ -> %@", _statsURL, statsURL);
@@ -173,6 +183,16 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
         success();
     } error:^(NSError *error, NSDictionary *response) {
         RMBTLog(@"Error getting settings (error=%@, response=%@)", error, response);
+        errorCallback(error, response);
+    }];
+}
+
+- (void)getQoSParams:(RMBTSuccessBlock)success error:(RMBTErrorBlock)errorCallback {
+    RMBTLog(@"Getting QoS params...");
+
+    [self requestWithMethod:@"POST" path:@"qosTestRequest" params:@{} success:^(id response) {
+        success(response);
+    } error:^(NSError *error, NSDictionary *response) {
         errorCallback(error, response);
     }];
 }
@@ -267,7 +287,7 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
         [self requestWithMethod:@"POST" path:key params:@{@"test_uuid": uuid} success:^(id response) {
             if (fullDetails) {
                 success(response[key]);
-            } else {
+            } else {    
                 success([response[key] objectAtIndex:0]);
             }
         } error:^(NSError *error, NSDictionary *info) {
@@ -277,6 +297,23 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
     } error:^(NSError *error, NSDictionary *info) {
         errorCallback(error, info);
     }];
+}
+
+- (void)getHistoryOpenDataResultWithUUID:(NSString*)openUuid success:(RMBTSuccessBlock)success error:(RMBTErrorBlock)errorCallback {
+    NSString *path = [NSString stringWithFormat:@"v2/opentests/%@", openUuid];
+    [self requestWithMethod:@"GET" path:path params:@{} success:success error:errorCallback];
+}
+
+- (void)getHistoryQoSResultWithUUID:(NSString*)uuid success:(RMBTSuccessBlock)success error:(RMBTErrorBlock)errorCallback {
+  [self performWithUUID:^{
+    [self requestWithMethod:@"POST" path:@"qosTestResult" params:@{@"test_uuid": uuid} success:success
+    error:^(NSError *error, NSDictionary *info) {
+      RMBTLog(@"Error fetching QoS history result (uuid=%@, error=%@, info=%@)", uuid, error, info);
+      errorCallback(error, info);
+    }];
+  } error:^(NSError *error, NSDictionary *info) {
+    errorCallback(error, info);
+  }];
 }
 
 - (void)getSyncCode:(RMBTSuccessBlock)success error:(RMBTErrorBlock)errorCallback {

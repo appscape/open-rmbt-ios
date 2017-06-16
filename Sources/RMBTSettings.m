@@ -36,6 +36,7 @@
             @keypath(self.testCounter),
             @keypath(self.previousTestStatus),
             @keypath(self.forceIPv4),
+            @keypath(self.skipQoS),
             @keypath(self.debugUnlocked),
             @keypath(self.debugForceIPv6),
             @keypath(self.debugControlServerCustomizationEnabled),

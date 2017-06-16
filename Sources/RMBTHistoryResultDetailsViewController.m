@@ -26,6 +26,7 @@
     NSParameterAssert(self.historyResult);
 
     [self.historyResult ensureFullDetails:^{
+        [self.loadingIndicatorView stopAnimating];
         [self.tableView reloadData];
     }];
 }

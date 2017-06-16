@@ -19,6 +19,11 @@
 
 extern NSString *RMBTPreferredLanguage();
 
+// Removes all trailing \n or \r
+extern NSString *RMBTChomp(NSString* string);
+
+extern NSUInteger RMBTPercent(NSInteger count, NSInteger totalCount);
+
 // Format a number to two significant digits. See https://trac.rtr.at/iosrtrnetztest/ticket/17
 extern NSString* RMBTFormatNumber(NSNumber *number);
 extern BOOL RMBTIsRunningGermanLocale();
@@ -54,3 +59,5 @@ NSString* RMBTBuildDateString();
 
 // Replaces $lang in template with de if current local is german, en otherwise
 NSString* RMBTLocalizeURLString(NSString* urlString);
+
+#define RMBTAssertValidPort(p) NSAssert(p > 0 && p < 65536, @"Invalid port")

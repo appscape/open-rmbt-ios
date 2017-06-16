@@ -44,6 +44,9 @@
 // Measure and submit speed during test in these intervals
 #define RMBT_TEST_SAMPLING_RESOLUTION_MS 250
 
+// Timeout for connecting and reading responses back from QoS control server
+#define RMBT_QOS_CC_TIMEOUT_S           5.0
+
 #pragma mark - Default control server URLs
 
 #warning Please supply a valid URL for the control server. For setting up your own test server, see https://github.com/alladin-IT/open-rmbt

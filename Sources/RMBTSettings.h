@@ -33,6 +33,7 @@
 #pragma mark - User configurable properties
 
 @property (nonatomic, assign) BOOL       forceIPv4;
+@property (nonatomic, assign) BOOL       skipQoS;
 
 #pragma mark - Debug properties
 

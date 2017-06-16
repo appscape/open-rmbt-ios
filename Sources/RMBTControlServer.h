@@ -24,6 +24,8 @@
 @interface RMBTControlServer : NSObject
 
 @property (readonly, nonatomic) NSDictionary *historyFilters;
+// Mapping of QoS test keys to names, e.g. "WEBSITE" => "Web page"
+@property (readonly, nonatomic) NSDictionary *qosTestNames;
 @property (readonly, nonatomic) NSString *openTestBaseURL;
 
 @property (readonly, nonatomic) NSURL *mapServerURL;
@@ -46,16 +48,21 @@
 // If the client doesn't have an UUID yet, it first retrieves the settings to obtain the UUID
 - (void)getTestParamsWithParams:(NSDictionary*)params success:(RMBTSuccessBlock)success error:(RMBTBlock)error;
 
+- (void)getQoSParams:(RMBTSuccessBlock)success error:(RMBTErrorBlock)errorCallback;
+
 // Retrieves list of previous test results.
 // If the client doesn't have an UUID yet, it first retrieves the settings to obtain the UUID
 - (void)getHistoryWithFilters:(NSDictionary*)filters length:(NSUInteger)length offset:(NSUInteger)offset success:(RMBTSuccessBlock)success error:(RMBTErrorBlock)errorCallback;
 
 - (void)getHistoryResultWithUUID:(NSString*)uuid fullDetails:(BOOL)fullDetails success:(RMBTSuccessBlock)success error:(RMBTErrorBlock)errorCallback;
+- (void)getHistoryQoSResultWithUUID:(NSString*)uuid success:(RMBTSuccessBlock)success error:(RMBTErrorBlock)errorCallback;
+- (void)getHistoryOpenDataResultWithUUID:(NSString*)openUuid success:(RMBTSuccessBlock)success error:(RMBTErrorBlock)errorCallback;
 
 - (void)getSyncCode:(RMBTSuccessBlock)success error:(RMBTErrorBlock)errorCallback;
 - (void)syncWithCode:(NSString*)code success:(RMBTBlock)success error:(RMBTErrorBlock)errorCallback;
 
-- (void)submitResult:(NSDictionary*)result success:(RMBTSuccessBlock)success error:(RMBTBlock)error;
+// Submits test results. Same call is used to submit both regular test result (endpoint nil) and qos test result (endpoint contains the URL string)
+- (void)submitResult:(NSDictionary*)result endpoint:(NSString*)endpoint success:(RMBTSuccessBlock)success error:(RMBTBlock)error;
 
 - (NSString *)uuid;
 - (NSURL *)baseURL;

@@ -25,6 +25,7 @@
 #import "CLLocation+RMBTFormat.h"
 #import "RMBTVerticalTransitionController.h"
 #import "RMBTGaugeView.h"
+#import "RMBTQoSProgressViewController.h"
 
 #define RMBT_LIGHT_TEXT_DARK ([UIColor rmbt_colorWithRGBHex:0x3d454c])
 #define RMBT_LIGHT_TEXT_LIGHT ([UIColor rmbt_colorWithRGBHex:0x9da2a6])
@@ -43,6 +44,8 @@
     RMBTGaugeView *_progressGaugeView, *_speedGaugeView;
 
     NSDictionary *_footerLabelTitleAttributes, *_footerLabelDetailsAttributes;
+
+    RMBTQoSProgressViewController* _qosProgressViewController;
 }
 @end
 
@@ -209,6 +212,14 @@
         self.speedLabel.text = @"";
         self.speedSuffixLabel.hidden = YES;
         self.arrowImageView.image = [UIImage imageNamed:@"test_arrow_up"];
+    } else if (phase == RMBTTestRunnerPhaseQoS) {
+        NSParameterAssert(_qosProgressViewController);
+        self.speedGraphView.hidden = YES;
+        _speedGaugeView.hidden = YES;
+        self.speedLabel.hidden = YES;
+        self.speedSuffixLabel.hidden = YES;
+        self.arrowImageView.hidden = YES;
+        self.qosProgressView.hidden = NO;
     }
     [self displayText:[self statusStringForPhase:phase] forLabel:self.footerStatusLabel];
 }
@@ -238,7 +249,6 @@
 - (void)testRunnerDidUpdateProgress:(float)progress inPhase:(RMBTTestRunnerPhase)phase {
     NSUInteger totalPercentage = _finishedPercentage + [self percentageForPhase:phase] * progress;
     NSAssert(totalPercentage <= 100, @"Invalid percentage");
-
     [self displayPercentage:totalPercentage];
 }
 
@@ -248,10 +258,7 @@
 
     for (RMBTThroughput* t in throughputs) {
         kbps = t.kilobitsPerSecond;
-
         l = RMBTSpeedLogValue(kbps);
-        if (l>1.0) { l = 1.0; } // Clip to 1.0 (Gbit/s)
-
         [self.speedGraphView addValue:l atTimeInterval:(double)t.endNanos/NSEC_PER_SEC];
     }
 
@@ -383,14 +390,15 @@
         case RMBTTestRunnerPhaseWait:
             return 4;
         case RMBTTestRunnerPhaseInit:
-            return 18;
+            return 12;
         case RMBTTestRunnerPhaseLatency:
-            return 38;
+            return 25;
         case RMBTTestRunnerPhaseDown:
-            return 70;
-        case RMBTTestRunnerPhaseInitUp:
-            return 70; // no visualization for init up
+        case RMBTTestRunnerPhaseInitUp:  // no visualization for init up
+            return 50;
         case RMBTTestRunnerPhaseUp:
+            return 75;
+        case RMBTTestRunnerPhaseQoS:
             return 100;
         case RMBTTestRunnerPhaseSubmittingTestResult:
             return 100; // also no visualization for submission
@@ -399,10 +407,11 @@
 
 - (NSUInteger)percentageForPhase:(RMBTTestRunnerPhase)phase {
     switch (phase) {
-        case RMBTTestRunnerPhaseInit:    return 14;
-        case RMBTTestRunnerPhaseLatency: return 19;
-        case RMBTTestRunnerPhaseDown:    return 31;
-        case RMBTTestRunnerPhaseUp:      return 30;
+        case RMBTTestRunnerPhaseInit:    return 12 - 4 /* waiting phase, visualized as init */;
+        case RMBTTestRunnerPhaseLatency: return 13;
+        case RMBTTestRunnerPhaseDown:    return 25;
+        case RMBTTestRunnerPhaseUp:      return 25;
+        case RMBTTestRunnerPhaseQoS:     return 25;
         default: return 0;
     }
 }
@@ -424,6 +433,8 @@
             return NSLocalizedString(@"Initializing Upload", @"Phase status label");
         case RMBTTestRunnerPhaseUp:
             return NSLocalizedString(@"Upload", @"Phase status label");
+        case RMBTTestRunnerPhaseQoS:
+            return NSLocalizedString(@"QoS", @"Phase status label");
         case RMBTTestRunnerPhaseSubmittingTestResult:
             return NSLocalizedString(@"Finalizing", @"Phase status label");
     }
@@ -573,6 +584,30 @@
     [line appendAttributedString:attrText];
 
     label.attributedText = line;
+}
+
+#pragma mark - QoS
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    if ([identifier isEqualToString:@"embed_qos_progress"] && [RMBTSettings sharedSettings].skipQoS) {
+        return NO;
+    }
+    return YES;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString: @"embed_qos_progress"]) {
+        _qosProgressViewController = (RMBTQoSProgressViewController *) [segue destinationViewController];
+    }
+}
+
+- (void)testRunnerQoSDidStartWithGroups:(NSArray *)groups {
+    NSParameterAssert(_qosProgressViewController);
+    _qosProgressViewController.testGroups = groups;
+}
+
+- (void)testRunnerQoSGroup:(RMBTQoSTestGroup *)group didUpdateProgress:(float)progress {
+    [_qosProgressViewController updateProgress:progress forGroup:group];
 }
 
 @end

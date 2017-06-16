@@ -18,6 +18,8 @@
 #import <UIKit/UIKit.h>
 #import "RMBTHistoryResult.h"
 
-@interface RMBTHistoryResultDetailsViewController : UITableViewController
+@interface RMBTHistoryResultDetailsViewController : UIViewController
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *loadingIndicatorView;
 @property (nonatomic, strong) RMBTHistoryResult *historyResult;
 @end

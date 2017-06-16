@@ -88,6 +88,8 @@ static NSTimeInterval const RMBTSpeedGraphViewSeconds = 8.0;
 }
 
 - (void)addValue:(float)value atTimeInterval:(NSTimeInterval)interval {
+    if (value>1.0) { value = 1.0; } // Clip to 1.0 (Gbit/s)
+
     CGFloat maxY = RMBTSpeedGraphViewContentFrame.size.height;
     CGFloat y = maxY * (1.0 - value);
 
@@ -121,7 +123,6 @@ static NSTimeInterval const RMBTSpeedGraphViewSeconds = 8.0;
 }
 
 - (void)clear {
-    _maxTimeInterval = 0;
     _valueCount = 0;
     [_path removeAllPoints];
     _linesLayer.path = [_path CGPath];

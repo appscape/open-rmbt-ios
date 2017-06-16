@@ -19,6 +19,7 @@
 
 @interface RMBTSettingsViewController : UITableViewController
 @property (weak, nonatomic) IBOutlet UISwitch *forceIPv4Switch;
+@property (weak, nonatomic) IBOutlet UISwitch *skipQoSSwitch;
 
 @property (weak, nonatomic) IBOutlet UISwitch *debugForceIPv6Switch;
 @property (weak, nonatomic) IBOutlet UISwitch *debugControlServerCustomizationEnabledSwitch;

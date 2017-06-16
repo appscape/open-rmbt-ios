@@ -17,6 +17,7 @@
 
 #import "RMBTTestRunner.h"
 #import "RMBTTestWorker.h"
+#import "RMBTQoSTestRunner.h"
 #import "RMBTSettings.h"
 #import "RMBTPing.h"
 
@@ -38,10 +39,12 @@ static const NSTimeInterval RMBTTestRunnerProgressUpdateInterval = 0.1; //second
 static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 #define ASSERT_ON_WORKER_QUEUE() NSAssert(dispatch_get_specific(kWorkerQueueIdentityKey) != NULL, @"Running on a wrong queue")
 
-@interface RMBTTestRunner()<RMBTTestWorkerDelegate, RMBTConnectivityTrackerDelegate> {
+@interface RMBTTestRunner()<RMBTTestWorkerDelegate, RMBTConnectivityTrackerDelegate, RMBTQoSTestRunnerDelegate> {
     __weak id<RMBTTestRunnerDelegate> _delegate;
     RMBTTestParams *_testParams;
     RMBTTestResult *_testResult;
+    RMBTQoSTestRunner *_qosRunner;
+    NSArray *_qosResults;
 
     RMBTTestRunnerPhase _phase;
 
@@ -352,9 +355,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
             });
         }
 
-        self.phase = RMBTTestRunnerPhaseSubmittingTestResult;
-
-        [self submitResult];
+        [self startQoS];
     }
 }
 
@@ -366,13 +367,25 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 
 - (void)submitResult {
     dispatch_async(_workerQueue, ^{
-        if (_dead) return; // cancelled
-
-        NSDictionary *result = [self resultDictionary];
-
         self.phase = RMBTTestRunnerPhaseSubmittingTestResult;
 
-        [[RMBTControlServer sharedControlServer] submitResult:result success:^(id response) {
+        if (_dead) return; // cancelled
+
+        NSDictionary* qosResult = [self qosResultDictionary];
+        BOOL hasQos = (qosResult && _testParams.resultQoSURLString);
+        dispatch_semaphore_t qosSem = dispatch_semaphore_create(0);
+
+        if (hasQos) {
+            [[RMBTControlServer sharedControlServer] submitResult:qosResult endpoint:_testParams.resultQoSURLString success:^(id response) {
+                NSLog(@"Submit QoS = %@", response);
+                dispatch_semaphore_signal(qosSem);
+            } error:^{
+                NSLog(@"Submit QoS errored");
+                dispatch_semaphore_signal(qosSem);
+            }];
+        }
+
+        [[RMBTControlServer sharedControlServer] submitResult:[self resultDictionary] endpoint:nil success:^(id response) {
             dispatch_async(_workerQueue, ^{
                 self.phase = RMBTTestRunnerPhaseNone;
                 _dead = YES;
@@ -381,6 +394,11 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 
                 RMBTHistoryResult *historyResult = [[RMBTHistoryResult alloc] initWithResponse:@{@"test_uuid": _testParams.testUUID}];
 
+                if (hasQos) {
+                    if (dispatch_semaphore_wait(qosSem, dispatch_time(DISPATCH_TIME_NOW, RMBT_QOS_CC_TIMEOUT_S * NSEC_PER_SEC)) != 0) {
+                        RMBTLog(@"Timed out waiting for QoS result submission");
+                    }
+                }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [_delegate testRunnerDidCompleteWithResult:historyResult];
                 });
@@ -391,6 +409,17 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
             });
         }];
     });
+}
+
+- (NSDictionary*)qosResultDictionary {
+    if (_qosResults) {
+        return @{
+            @"test_token": _testParams.testToken,
+            @"qos_result": _qosResults
+        };
+    } else {
+        return nil;
+    }
 }
 
 - (NSDictionary*)resultDictionary {
@@ -623,6 +652,10 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
         }
     }
 
+    if (_qosRunner) {
+        [_qosRunner cancel];
+    }
+
     switch(reason) {
         case RMBTTestRunnerCancelReasonUserRequested:
             [RMBTSettings sharedSettings].previousTestStatus = RMBTTestStatusAborted;
@@ -654,4 +687,44 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
         [self cancelWithReason:RMBTTestRunnerCancelReasonUserRequested];
     });
 }
+
+#pragma mark - QoS
+
+- (void)startQoS {
+    if ([RMBTSettings sharedSettings].skipQoS) {
+        RMBTLog(@"Skipping QoS per user setting");
+        [self submitResult];
+    } else {
+        self.phase = RMBTTestRunnerPhaseQoS;
+        _qosRunner = [[RMBTQoSTestRunner alloc] initWithDelegate:self];
+        [_qosRunner startWithToken:_testParams.testToken];
+    }
+}
+
+- (void)qosRunnerDidStartWithTestGroups:(NSArray<RMBTQoSTestGroup *> *)groups {
+    RMBTLog(@"Started QoS with groups: %@", groups);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_delegate testRunnerQoSDidStartWithGroups: groups];
+    });
+}
+
+- (void)qosRunnerDidUpdateProgress:(float)p inGroup:(RMBTQoSTestGroup *)group totalProgress:(float)tp {
+    RMBTLog(@"Group: %@: Progress %f: Total %f", group, p, tp);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_delegate testRunnerDidUpdateProgress:tp inPhase:RMBTTestRunnerPhaseQoS];
+        [_delegate testRunnerQoSGroup:group didUpdateProgress:p];
+    });
+}
+
+- (void)qosRunnerDidCompleteWithResults:(NSArray<NSDictionary *> *)results {
+    RMBTLog(@"QoS finished.");
+    _qosResults = results;
+    [self submitResult];
+}
+
+- (void)qosRunnerDidFail {
+    RMBTLog(@"QoS failed.");
+    // self fail?
+}
+
 @end

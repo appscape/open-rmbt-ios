@@ -26,4 +26,18 @@
     XCTAssertEqualObjects(RMBTReformatHexIdentifier(@"::FF:1"), @"00:00:FF:01");
 }
 
+- (void)testChomp {
+    XCTAssertEqualObjects(RMBTChomp(@"\n\ntest\n "), @"\n\ntest\n ");
+    XCTAssertEqualObjects(RMBTChomp(@"\n\ntest\n\r\n"), @"\n\ntest");
+    XCTAssertEqualObjects(RMBTChomp(@""), @"");
+    XCTAssertEqualObjects(RMBTChomp(@"\r\n"), @"");
+    XCTAssertEqualObjects(RMBTChomp(@"\n"), @"");
+}
+
+- (void)testPercent {
+    XCTAssertEqual(RMBTPercent(-1, -100), 1);
+    XCTAssertEqual(RMBTPercent(100, 0), 0);
+    XCTAssertEqual(RMBTPercent(3, 9), 33);
+}
+
 @end

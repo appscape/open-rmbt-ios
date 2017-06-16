@@ -144,3 +144,25 @@
 /* Map overlay description */
 "Shapes" = "PLZ";
 
+/* Measurement item title */
+"Quality tests" = "Qualitätstests";
+
+/* QoS Details section header */
+"About" = "Details";
+
+/* Section header */
+"Details" = "Details";
+
+/* History result section title
+   Phase status label */
+"QoS" = "QoS";
+
+/* Section header for successful test */
+"Test Failed" = "Test fehlgeschlagen";
+
+/* Section header for successful test */
+"Test Succeeded" = "Test erfolgreich";
+
+/* QoS Details section header */
+"Tests" = "Tests";
+

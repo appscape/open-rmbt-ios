@@ -19,12 +19,16 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "RMBTNetworkType.h"
+#import "RMBTHistoryQoSGroupResult.h"
+#import "RMBTHistorySpeedGraph.h"
 
 @interface RMBTHistoryResultItem : NSObject
 @property (nonatomic, readonly) NSString *title;
 @property (nonatomic, readonly) NSString *value;
 @property (nonatomic, readonly) NSInteger classification;
+@property (nonatomic, readonly) BOOL hasDetails;
 - (instancetype)initWithResponse:(NSDictionary*)response;
+- (instancetype)initWithTitle:(NSString*)title value:(NSString*)value classification:(NSUInteger)classification hasDetails:(BOOL)hasDetails;
 @end
 
 typedef NS_ENUM(NSUInteger, RMBTHistoryResultDataState) {
@@ -40,6 +44,7 @@ typedef NS_ENUM(NSUInteger, RMBTHistoryResultDataState) {
 #pragma - Index
 
 @property (nonatomic, readonly) NSString *uuid;
+@property (nonatomic, readonly) NSString *openTestUuid;
 @property (nonatomic, readonly) NSDate   *timestamp;
 @property (nonatomic, readonly) NSString *downloadSpeedMbpsString, *uploadSpeedMbpsString;
 @property (nonatomic, readonly) NSString *shortestPingMillisString;
@@ -60,6 +65,7 @@ typedef NS_ENUM(NSUInteger, RMBTHistoryResultDataState) {
 
 @property (nonatomic, readonly) NSArray *netItems;
 @property (nonatomic, readonly) NSArray *measurementItems;
+@property (nonatomic, readonly) NSArray<RMBTHistoryQoSGroupResult *> *qosResults;
 
 - (void)ensureBasicDetails:(RMBTBlock)success;
 
@@ -68,5 +74,9 @@ typedef NS_ENUM(NSUInteger, RMBTHistoryResultDataState) {
 @property (nonatomic, readonly) NSArray *fullDetailsItems;
 - (void)ensureFullDetails:(RMBTBlock)success;
 
-@end
+#pragma mark - Speed graphs
 
+@property (nonatomic, readonly) RMBTHistorySpeedGraph *downloadGraph, *uploadGraph;
+- (void)ensureSpeedGraph:(RMBTBlock)success;
+
+@end

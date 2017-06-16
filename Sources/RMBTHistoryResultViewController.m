@@ -19,31 +19,89 @@
 
 #import "RMBTHistoryResultViewController.h"
 #import "RMBTHistoryResultDetailsViewController.h"
+#import "RMBTHistoryQoSGroupResult.h"
+#import "RMBTHistoryQoSGroupViewController.h"
 #import "RMBTMapViewController.h"
 #import "RMBTSettings.h"
 #import "RMBTHistoryResultItemCell.h"
+#import "RMBTHistorySpeedGraphCell.h"
 
 #import "UIViewController+ModalBrowser.h"
+#import <Blockskit/NSArray+BlocksKit.h>
+
+// cellatindex -> item | download graph | upload graph
+
+@interface RMBTHistoryResultViewController() {
+    NSArray *_measurementItems;
+
+    // These are added to the above _measurementItems array if we find measurement item with
+    // title "Download" or "Upload" to mimic the physical layout of the table. The value they contain
+    // is the index of the measurement item they show the graph for in the above array:
+    NSNumber  * _Nullable _downloadItemIndex, *_uploadItemIndex;
+}
+@property (nonatomic, assign) BOOL downloadSpeedGraphExpanded, uploadSpeedGraphExpanded;
+@end
 
 @implementation RMBTHistoryResultViewController
 
 - (void)viewDidLoad {
     NSParameterAssert(_historyResult);
 
+    self.footerView.hidden = YES;
+
+    
     [_historyResult ensureBasicDetails:^{
         NSAssert(_historyResult.dataState != RMBTHistoryResultDataStateIndex, @"Result not filled with basic data");
-        
+
+        NSMutableArray *items = [NSMutableArray array];
+        __block NSUInteger shift = 0;
+        [_historyResult.measurementItems enumerateObjectsUsingBlock:^(RMBTHistoryResultItem*  _Nonnull item, NSUInteger idx, BOOL * _Nonnull stop) {
+            [items addObject:item];
+            if (!_downloadItemIndex && [item.title isEqualToString:@"Download"]) {
+                _downloadItemIndex = @(idx+shift);
+                shift++;
+                [items addObject:_downloadItemIndex];
+            } else if (!_uploadItemIndex && [item.title isEqualToString:@"Upload"]) {
+                _uploadItemIndex = @(idx+shift);
+                shift++;
+                [items addObject:_uploadItemIndex];
+            }
+        }];
+
+        // Add a summary "Quality tests 100% (90/90)" row
+        if (_historyResult.qosResults) {
+            NSUInteger success = 0;
+            NSUInteger total = 0;
+            for (RMBTHistoryQoSGroupResult *r in _historyResult.qosResults) {
+                success += r.succeededCount;
+                total += r.tests.count;
+            }
+            NSString *value = [NSString stringWithFormat:@"%lu%% (%lu/%lu)", (unsigned long)RMBTPercent(success, total), (unsigned long)success, (unsigned long)total];
+            [items addObject:[[RMBTHistoryResultItem alloc] initWithTitle:NSLocalizedString(@"Quality tests", @"Measurement item title") value:value classification:-1 hasDetails:NO]];
+        }
+
+        _measurementItems = items;
+
+        [_historyResult ensureSpeedGraph:^{
+            NSMutableArray *idxs = [NSMutableArray array];
+            if (_downloadItemIndex) {
+                [idxs addObject:[NSIndexPath indexPathForRow:[_downloadItemIndex integerValue] + 1 inSection:0]];
+            }
+            if (_uploadItemIndex) {
+                [idxs addObject:[NSIndexPath indexPathForRow:[_uploadItemIndex integerValue] + 1 inSection:0]];
+            }
+            [self.tableView reloadRowsAtIndexPaths:idxs withRowAnimation:UITableViewRowAnimationNone];
+        }];
+
         if (CLLocationCoordinate2DIsValid(_historyResult.coordinate)) {
             self.mapButton.enabled = YES;
         }
+
+        [self.loadingIndicatorView stopAnimating];
+        self.shareButton.enabled = YES;
+        self.footerView.hidden = NO;
         [self.tableView reloadData];
     }];
-
-//    if (self.isModal) {
-//        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone handler:^(id sender) {
-//            [self dismissViewControllerAnimated:YES completion:^{}];
-//        }];
-//    }
 }
 
 - (void)trafficLightTapped:(NSNotification*)n {
@@ -53,8 +111,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+
+    NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
+    if (selectedIndexPath) {
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:YES];
+    }
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trafficLightTapped:) name:RMBTTrafficLightTappedNotification object:nil];
 }
+
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -62,20 +127,75 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return (_historyResult.dataState == RMBTHistoryResultDataStateIndex) ? 0 : 2;
+    if (_historyResult.dataState == RMBTHistoryResultDataStateIndex) {
+        return 0;
+    } else if (_historyResult.qosResults) {
+        return 3;
+    } else {
+        return 2;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString * const cellIdentifier = @"history_result";
-    
+    static NSString * const cellIdentifierResult = @"history_result_cell";
+    static NSString * const cellIdentifierGraph = @"speed_graph_cell";
+
     RMBTHistoryResultItem *item = [[self itemsForSection:indexPath.section] objectAtIndex:indexPath.row];
-    
-    RMBTHistoryResultItemCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[RMBTHistoryResultItemCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
+
+    if (item == (RMBTHistoryResultItem *)_uploadItemIndex || item == (RMBTHistoryResultItem *)_downloadItemIndex) { // note: this a pointer comparison
+        RMBTHistorySpeedGraphCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierGraph forIndexPath:indexPath];
+        RMBTHistorySpeedGraph *graph = (item == (RMBTHistoryResultItem *)_downloadItemIndex) ? _historyResult.downloadGraph : _historyResult.uploadGraph;
+        [cell drawSpeedGraph:graph];
+        return cell;
+    } else {
+        RMBTHistoryResultItemCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierResult];
+        if (!cell) {
+            cell = [[RMBTHistoryResultItemCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifierResult];
+        }
+        [cell setItem:item];
+        [cell setTrafficLightInteractionEnabled:NO];
+        if (indexPath.section == 0) {
+            if ((_downloadItemIndex && indexPath.row == [_downloadItemIndex integerValue]) ||
+                (_uploadItemIndex && indexPath.row == [_uploadItemIndex integerValue])) {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            } else {
+                // For measurements that we don't have a graph for, just show an empty placeholder to keep alignment:
+                cell.accessoryView = [[UIView alloc] init];
+            }
+        }
+        return cell;
     }
-    [cell setItem:item];
-    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        BOOL toggled = NO;
+        if (_downloadItemIndex && indexPath.row == [_downloadItemIndex integerValue]) {
+            self.downloadSpeedGraphExpanded = !self.downloadSpeedGraphExpanded;
+            [(RMBTHistoryResultItemCell *)[tableView cellForRowAtIndexPath:indexPath] setAccessoryRotated:self.downloadSpeedGraphExpanded];
+            toggled = YES;
+        } else if (_uploadItemIndex && indexPath.row == [_uploadItemIndex integerValue]) {
+            self.uploadSpeedGraphExpanded = !self.uploadSpeedGraphExpanded;
+            [(RMBTHistoryResultItemCell *)[tableView cellForRowAtIndexPath:indexPath] setAccessoryRotated:self.uploadSpeedGraphExpanded];
+            toggled = YES;
+        }
+        if (toggled) {
+            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]]
+                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+    } else if (indexPath.section == 2) {
+        [self performSegueWithIdentifier:@"show_qos_group" sender:[_historyResult.qosResults objectAtIndex:indexPath.row]];
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0 && _downloadItemIndex && indexPath.row == [_downloadItemIndex integerValue]+1) {
+        return self.downloadSpeedGraphExpanded ? 120.0f : 0.0;
+    } else if (indexPath.section == 0 && _uploadItemIndex && indexPath.row == [_uploadItemIndex integerValue]+1) {
+        return self.uploadSpeedGraphExpanded ? 120.0f : 0.0;
+    } else {
+        return UITableViewAutomaticDimension;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -86,6 +206,7 @@
     switch (section) {
         case 0: return NSLocalizedString(@"Measurement", @"History result section title");
         case 1: return NSLocalizedString(@"Network", @"History result section title");
+        case 2: return NSLocalizedString(@"QoS", @"History result section title");
         default:
             NSAssert(false, @"Invalid section");
             return @"";
@@ -93,14 +214,28 @@
 }
 
 - (NSArray*)itemsForSection:(NSUInteger)sectionIndex {
-    NSAssert(sectionIndex <= 1, @"Invalid section");
-    return (sectionIndex  == 0) ? _historyResult.measurementItems : _historyResult.netItems;
+    switch (sectionIndex) {
+        case 0:
+            return _measurementItems;
+        case 1:
+            return _historyResult.netItems;
+        case 2:
+            return [_historyResult.qosResults bk_map:^id(RMBTHistoryQoSGroupResult* qr) {
+                return [qr toResultItem];
+            }];
+        default:
+            NSParameterAssert(false);
+            return nil;
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"show_result_details"]) {
         RMBTHistoryResultDetailsViewController *rdvc = segue.destinationViewController;
         rdvc.historyResult = self.historyResult;
+    } else if ([segue.identifier isEqualToString:@"show_qos_group"]) {
+        RMBTHistoryQoSGroupViewController *vc = segue.destinationViewController;
+        vc.result = (RMBTHistoryQoSGroupResult*)sender;
     } else if ([segue.identifier isEqualToString:@"show_map"]) {
         NSAssert(CLLocationCoordinate2DIsValid(_historyResult.coordinate), @"Invalid coordinate but map button was enabled");
         if(CLLocationCoordinate2DIsValid(_historyResult.coordinate)) {

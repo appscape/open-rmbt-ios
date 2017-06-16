@@ -57,6 +57,9 @@
 @property (nonatomic, strong) IBOutlet UILabel *footerLocationLabel;
 @property (nonatomic, strong) IBOutlet UILabel *footerLoopLabel;
 
+// QoS
+@property (nonatomic, strong) IBOutlet UIView *qosProgressView;
+
 // Layout constraints
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *networkSymbolTopConstraint, *networkSymbolLeftConstraint;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *networkNameWidthConstraint;

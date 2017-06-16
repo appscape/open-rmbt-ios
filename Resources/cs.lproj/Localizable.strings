@@ -143,3 +143,7 @@
 
 /* Map overlay description */
 "Shapes" = "Tvary";
+
+/* Measurement item title */
+"Quality tests" = "Test kvality služeb";
+

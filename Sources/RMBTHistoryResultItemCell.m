@@ -17,22 +17,48 @@
 
 #import "RMBTHistoryResultItemCell.h"
 #import "RMBTHistoryResult.h"
+#import "UIView+RMBTSubviews.h"
 
 NSString * const RMBTTrafficLightTappedNotification = @"RMBTTrafficLightTappedNotification";
 
+@interface RMBTHistoryResultItemCell() {
+    UIButton *_trafficLightButton;
+
+    UIButton *_accessoryButton;
+    BOOL _accessoryButtonRotated;
+    dispatch_once_t _accessoryButtonLookupDone;
+}
+@end
+
 @implementation RMBTHistoryResultItemCell
 
+- (void)setup {
+    _trafficLightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _trafficLightButton.imageEdgeInsets = UIEdgeInsetsMake(1.0f, 0.0f, 0.0f, 0.0f);
+    [_trafficLightButton bk_addEventHandler:^(id sender) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RMBTTrafficLightTappedNotification object:self userInfo:nil];
+    } forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:_trafficLightButton];
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
+    if (self = [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier]) {
+        [self setup];
     }
     return self;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self setup];
 }
 
 - (void)setItem:(RMBTHistoryResultItem *)item {
     self.textLabel.text = item.title;
     self.detailTextLabel.text = item.value;
+
+    self.accessoryType = UITableViewCellAccessoryNone;
+    [_trafficLightButton setImage:nil forState:UIControlStateNormal];
 
     if (item.classification != -1) {
         UIImage *image;
@@ -47,25 +73,30 @@ NSString * const RMBTTrafficLightTappedNotification = @"RMBTTrafficLightTappedNo
         } else {
             image = [UIImage imageNamed:@"traffic_lights_none"];
         }
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-        imageView.contentMode = UIViewContentModeRight;
-        imageView.frame = CGRectMake(0,0,image.size.width+8, image.size.height);
-        self.accessoryView = imageView;
 
-        CGFloat rightEdge = self.boundsWidth - 44.0f;
+        [_trafficLightButton setImage:image forState:UIControlStateNormal];
+    }
 
-        UITapGestureRecognizer *r = [UITapGestureRecognizer bk_recognizerWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
-            if (location.x >=rightEdge) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:RMBTTrafficLightTappedNotification object:self userInfo:nil];
-            }
-        }];
-        r.numberOfTapsRequired = 1;
-        r.numberOfTouchesRequired = 1;
-        [self addGestureRecognizer:r];
-
-        [self layoutIfNeeded];
+    if (item.hasDetails) {
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        self.selectionStyle = UITableViewCellSelectionStyleGray;
     } else {
-        self.accessoryView = nil;
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    [self setNeedsLayout];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+
+    if ([_trafficLightButton imageForState:UIControlStateNormal]) {
+        [_trafficLightButton sizeToFit];
+        CGFloat widthWithPadding = _trafficLightButton.frameWidth + 20.0f;
+
+        _trafficLightButton.frame = CGRectMake(self.detailTextLabel.frameRight-widthWithPadding + 10.0f, 0.0f, widthWithPadding, self.contentView.frameHeight);
+        self.detailTextLabel.frameRight -= (widthWithPadding - 10.0f);
+    } else {
+        _trafficLightButton.frame = CGRectZero;
     }
 }
 
@@ -75,6 +106,46 @@ NSString * const RMBTTrafficLightTappedNotification = @"RMBTTrafficLightTappedNo
         self.detailTextLabel.font = [UIFont systemFontOfSize:15.0f];
         self.detailTextLabel.numberOfLines = 2;
     }
+}
+
+- (UIButton*)accessoryButton {
+    dispatch_once(&_accessoryButtonLookupDone, ^{
+        [self rmbt_enumerateSubviewsOfType:[UIButton class] usingBlock:^(UIView *view) {
+            if (!_accessoryButton && view != _trafficLightButton) {
+                _accessoryButton = (UIButton*)view;
+            }
+        }];
+    });
+
+    return _accessoryButton;
+}
+
+- (void)setAccessoryRotated:(BOOL)state {
+    if (state != _accessoryButtonRotated) {
+        UIButton *button = [self accessoryButton];
+        _accessoryButtonRotated = state;
+        if (!button) return;
+
+        [CATransaction begin];
+        CABasicAnimation* ba = [CABasicAnimation animationWithKeyPath:@"transform"];
+        ba.removedOnCompletion = NO;
+        ba.fillMode = kCAFillModeForwards;
+        ba.duration = 0.25f;
+        ba.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        ba.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeRotation(state ? M_PI_2 : 0,0,0,1)];
+        if (!state) {
+            // we're returning back to default state, just remove all forward-filling animations to get back to 0
+            [CATransaction setCompletionBlock:^{
+                [button.layer removeAllAnimations];
+            }];
+        }
+        [button.layer addAnimation:ba forKey:nil];
+        [CATransaction commit];
+    }
+}
+
+- (void)setTrafficLightInteractionEnabled:(BOOL)state {
+    _trafficLightButton.userInteractionEnabled = state;
 }
 
 @end

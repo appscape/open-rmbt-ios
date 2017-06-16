@@ -17,14 +17,9 @@
 
 #import <UIKit/UIKit.h>
 
-#define RMBT_DEBUG_SPEEDGRAPH 1
-
 @interface RMBTSpeedGraphView : UIView
 
-@property (nonatomic, assign) NSTimeInterval maxTimeInterval;
-
 - (void)addValue:(float)value atTimeInterval:(NSTimeInterval)interval;
-
 - (void)clear;
 
 @end

@@ -31,6 +31,16 @@
     }
     return self;
 }
+
+- (instancetype)initWithTitle:(NSString*)title value:(NSString*)value classification:(NSUInteger)classification hasDetails:(BOOL)hasDetails {
+    if (self = [super init]) {
+        _title = title;
+        _value = value;
+        _classification = classification;
+        _hasDetails = hasDetails;
+    }
+    return self;
+}
 @end
 
 @interface RMBTHistoryResult() {
@@ -92,18 +102,32 @@
     if (self.dataState != RMBTHistoryResultDataStateIndex) {
         success();
     } else {
-        // Fetch data
+        dispatch_group_t allDone = dispatch_group_create();
+
+        dispatch_group_enter(allDone);
+        [[RMBTControlServer sharedControlServer] getHistoryQoSResultWithUUID:self.uuid success:^(id response) {
+            NSArray *results = [RMBTHistoryQoSGroupResult resultsWithResponse:response];
+            if (results.count > 0) {
+                _qosResults = results;
+            }
+            dispatch_group_leave(allDone);
+        } error:^(NSError *error, NSDictionary *info) {
+            RMBTLog(@"Error fetching QoS test results: %@. Info: %@", error, info);
+            dispatch_group_leave(allDone);
+        }];
+
+        dispatch_group_enter(allDone);
         [[RMBTControlServer sharedControlServer] getHistoryResultWithUUID:self.uuid fullDetails:NO success:^(id response) {
             if (response[@"network_type"]) {
                 _networkType = RMBTNetworkTypeMake([response[@"network_type"] integerValue]);
             }
 
+            _openTestUuid = response[@"open_test_uuid"];
+
             _shareURL = nil;
             _shareText = response[@"share_text"];
             if (_shareText) {
-                // http://stackoverflow.com/questions/14226300/i-am-getting-an-implicit-conversion-from-enumeration-type-warning-in-xcode-for
-                // TODO: verify if fixed on iOS7
-                NSDataDetector *linkDetector = [NSDataDetector dataDetectorWithTypes:(NSTextCheckingTypes)NSTextCheckingTypeLink error:nil];
+                NSDataDetector *linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
                 NSArray *matches = [linkDetector matchesInString:_shareText options:0 range:NSMakeRange(0, [_shareText length])];
 
                 if (matches.count > 0) {
@@ -129,10 +153,17 @@
             }
 
             _dataState = RMBTHistoryResultDataStateBasic;
-            success();
+            dispatch_group_leave(allDone);
         } error:^(NSError *error, NSDictionary *info) {
-            //TODO: handle error
+            RMBTLog(@"Error fetching test results: %@. Info: %@", error, info);
+            dispatch_group_leave(allDone);
         }];
+
+        dispatch_group_notify(allDone, dispatch_get_main_queue(),^{
+            if (_dataState == RMBTHistoryResultDataStateBasic) {
+                success();
+            }
+        });
     }
 }
 
@@ -151,5 +182,16 @@
         } error:^(NSError *error, NSDictionary *info) {
         }];
     }
+}
+
+- (void)ensureSpeedGraph:(RMBTBlock)success {
+    NSParameterAssert(_openTestUuid);
+    [[RMBTControlServer sharedControlServer] getHistoryOpenDataResultWithUUID:_openTestUuid success:^(id response) {
+        _downloadGraph = [[RMBTHistorySpeedGraph alloc] initWithResponse:response[@"speed_curve"][@"download"]];
+        _uploadGraph = [[RMBTHistorySpeedGraph alloc] initWithResponse:response[@"speed_curve"][@"upload"]];
+        success();
+    } error:^(NSError *error, NSDictionary *info) {
+        // TODO
+    }];
 }
 @end

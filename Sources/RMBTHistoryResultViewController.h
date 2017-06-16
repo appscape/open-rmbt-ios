@@ -23,8 +23,9 @@
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) IBOutlet UIButton *mapButton;
-@property (nonatomic, weak) IBOutlet UIButton *repeatTestButton;
 @property (nonatomic, weak) IBOutlet UIButton *historyButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *shareButton;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *loadingIndicatorView;
 @property (nonatomic, strong) IBOutlet UIView *footerView;
 
 @property (nonatomic, strong) RMBTHistoryResult *historyResult;

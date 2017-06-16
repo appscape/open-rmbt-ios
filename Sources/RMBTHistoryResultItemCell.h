@@ -26,4 +26,11 @@ extern NSString * const RMBTTrafficLightTappedNotification;
 -(void)setItem:(RMBTHistoryResultItem*)item;
 -(void)setEmbedded:(BOOL)embedded; // Set to YES when displayed in map annotation
 
+// Toggles rotation of the system UIButton behind accessoryType. Used to make expand/collapse effect on
+// disclosure indicator
+- (void)setAccessoryRotated:(BOOL)state;
+
+// Toggles whether tapping the traffic light emits RMBTTrafficLightTappedNotification
+- (void)setTrafficLightInteractionEnabled:(BOOL)state;
+
 @end
