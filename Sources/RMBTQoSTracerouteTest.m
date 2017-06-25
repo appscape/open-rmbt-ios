@@ -23,7 +23,7 @@
 
 static const NSUInteger kDefaultMaxHops = 30;
 static const NSUInteger kStartPort = 32768 + 666;
-static const NSUInteger kTimeout = 3; // timeout for each try (-w)
+static const NSUInteger kTimeout = 2; // timeout for each try (-w)
 
 @interface RMBTQoSTracerouteTest() {
     NSUInteger _maxHops;
