@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, RMBTQoSTestStatus) {
 @property (nonatomic, readonly) NSDictionary *result;
 @property (nonatomic, readonly) NSNumber *durationNanos;
 
-@property (nonnull, readonly) RMBTProgress *progress;
+@property (nonatomic, readonly) RMBTProgress *progress;
 
 @property (nonatomic, assign) RMBTQoSTestStatus status;
 

@@ -20,7 +20,7 @@
 
 // Superclass for all tests requiring a connection to the QoS control server (UDP, VoIP etc.)
 @interface RMBTQoSCCTest : RMBTQoSTest
-@property (nullable, nonatomic, readonly) RMBTQoSControlConnectionParams *controlConnectionParams;
+@property (nonatomic, readonly) RMBTQoSControlConnectionParams *controlConnectionParams;
 - (void)setControlConnection:(RMBTQoSControlConnection*)connection;
 
 
