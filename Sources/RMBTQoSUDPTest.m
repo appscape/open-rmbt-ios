@@ -72,7 +72,7 @@ static const uint64_t kDefaultDelayNanos = 300 * NSEC_PER_MSEC;
         NSUInteger receivedClientCount = _receivedPacketSeqs ? _receivedPacketSeqs.count : 0;
         NSInteger lostPackets = packetCount - receivedClientCount;
 
-        NSString *plr = lostPackets > 0 ? [NSString stringWithFormat:@"%f", (double)lostPackets * 100 /(double)packetCount] : @"0";
+        NSString *plr = [NSString stringWithFormat:@"%lu", (unsigned long)RMBTPercent(lostPackets, packetCount)];
 
         if (outgoing) {
             [result addEntriesFromDictionary:@{
