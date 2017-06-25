@@ -66,6 +66,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 
     uint64_t _downlinkTestStartedAtNanos;
     uint64_t _uplinkTestStartedAtNanos;
+    uint64_t _qosTestStartedAtNanos, _qosTestFinishedAtNanos;
 
     RMBTConnectivityTracker *_connectivityTracker;
 
@@ -467,6 +468,15 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
          @"time_ul_ns": [NSNumber numberWithUnsignedLongLong:_uplinkTestStartedAtNanos - startNanos]
     }];
 
+    if (_qosTestStartedAtNanos > 0) {
+        result[@"time_qos_ns"] = [NSNumber numberWithUnsignedLongLong:_qosTestStartedAtNanos - startNanos];
+        if (_qosTestFinishedAtNanos > _qosTestStartedAtNanos){
+            result[@"test_nsec_qos"] = [NSNumber numberWithUnsignedLongLong:_qosTestFinishedAtNanos - _qosTestStartedAtNanos];
+        } else {
+            NSParameterAssert(false);
+        }
+    }
+
     return result;
 }
 
@@ -703,6 +713,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 
 - (void)qosRunnerDidStartWithTestGroups:(NSArray<RMBTQoSTestGroup *> *)groups {
     RMBTLog(@"Started QoS with groups: %@", groups);
+    _qosTestStartedAtNanos = RMBTCurrentNanos();
     dispatch_async(dispatch_get_main_queue(), ^{
         [_delegate testRunnerQoSDidStartWithGroups: groups];
     });
@@ -719,6 +730,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 - (void)qosRunnerDidCompleteWithResults:(NSArray<NSDictionary *> *)results {
     RMBTLog(@"QoS finished.");
     _qosResults = results;
+    _qosTestFinishedAtNanos = RMBTCurrentNanos();
     [self submitResult];
 }
 
