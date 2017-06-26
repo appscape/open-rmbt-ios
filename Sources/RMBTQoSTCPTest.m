@@ -69,7 +69,7 @@
     GCDAsyncSocket* socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:delegateQueue];
 
     if (outgoing) {
-        [socket connectToHost:self.controlConnectionParams.serverAddress onPort:port error:&error];
+        [socket connectToHost:self.controlConnectionParams.serverAddress onPort:port withTimeout:self.timeoutSeconds error:&error];
     } else {
         [socket acceptOnPort:port error:&error];
     }
