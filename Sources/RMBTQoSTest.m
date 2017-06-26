@@ -36,7 +36,7 @@ static const uint64_t kDefaultTimeoutNanos = 10 * NSEC_PER_SEC;
 }
 
 - (NSInteger)timeoutSeconds {
-    return MAX(1, _timeoutNanos / NSEC_PER_SEC);
+    return MAX(1, (NSInteger)(_timeoutNanos / NSEC_PER_SEC));
 }
 
 - (NSString*)statusName {

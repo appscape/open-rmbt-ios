@@ -265,8 +265,8 @@ withFilterContext:(id)filterContext {
             (unsigned long)self.concurrencyGroup,
             self.controlConnectionParams,
             RMBTSecondsStringWithNanos(_delayNanos),
-            self.outPort > 0 ? [NSString stringWithFormat:@"%ld/%ld", (unsigned long)self.outPort, _outPacketCount] : @"-",
-            self.inPort > 0 ? [NSString stringWithFormat:@"%ld/%ld", (unsigned long)self.inPort, _inPacketCount] : @"-"
+            self.outPort > 0 ? [NSString stringWithFormat:@"%ld/%ld", (unsigned long)self.outPort, (unsigned long)_outPacketCount] : @"-",
+            self.inPort > 0 ? [NSString stringWithFormat:@"%ld/%ld", (unsigned long)self.inPort, (unsigned long)_inPacketCount] : @"-"
     ];
 }
 
