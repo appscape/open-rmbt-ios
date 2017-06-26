@@ -37,6 +37,7 @@
         _delegate = delegate;
         _queue = [[NSOperationQueue alloc] init];
         _queue.suspended = YES;
+        _queue.maxConcurrentOperationCount = 4;
         _notificationQueue = dispatch_queue_create("at.rtr.rmbt.qostestrunner.notification", DISPATCH_QUEUE_SERIAL);
     }
     return self;
