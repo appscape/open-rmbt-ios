@@ -736,8 +736,7 @@ static void *const kWorkerQueueIdentityKey = (void *)&kWorkerQueueIdentityKey;
 }
 
 - (void)qosRunnerDidFail {
-    RMBTLog(@"QoS failed.");
-    // self fail?
+    [self qosRunnerDidCompleteWithResults:@[]];
 }
 
 @end
