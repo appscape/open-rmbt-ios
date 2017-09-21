@@ -74,6 +74,7 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
     if (RMBTIsRunningGermanLocale()) {
         self.logoImageView.image = [UIImage imageNamed:@"intro_logo_de"];
     }
+    self.logoContainerView.backgroundColor = RMBT_DARK_COLOR;
 }
 
 - (UIImage *)imageWithColor:(UIColor *)color {
@@ -92,6 +93,7 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES];
     if (!_connectivityTracker) {
         // First appearance
         _connectivityTracker = [[RMBTConnectivityTracker alloc] initWithDelegate:self stopOnMixed:NO];
@@ -104,6 +106,7 @@ static const CGFloat kRadiateAnimationStartOffsetCellular = -28.0f;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO];
     _visible = NO;
 }
 

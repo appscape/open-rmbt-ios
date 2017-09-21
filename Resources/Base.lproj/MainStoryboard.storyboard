@@ -45,6 +45,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view opaque="NO" tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="byJ-re-e3t">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="83"/>
+                                <subviews>
+                                    <imageView opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="intro_logo_en" translatesAutoresizingMaskIntoConstraints="NO" id="5aW-21-5Hj">
+                                        <rect key="frame" x="20" y="25" width="280" height="53"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="5aW-21-5Hj" firstAttribute="top" secondItem="byJ-re-e3t" secondAttribute="top" constant="25" id="9NV-ik-jg7"/>
+                                    <constraint firstAttribute="bottom" secondItem="5aW-21-5Hj" secondAttribute="bottom" constant="5" id="beP-G8-px2"/>
+                                    <constraint firstItem="5aW-21-5Hj" firstAttribute="centerX" secondItem="byJ-re-e3t" secondAttribute="centerX" id="pXp-qT-mnO"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NMh-Z8-CZY">
                                 <rect key="frame" x="60" y="284" width="200" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -97,25 +111,20 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="byJ-re-e3t" firstAttribute="top" secondItem="gxw-7I-6GS" secondAttribute="top" id="H51-Qb-w4o"/>
+                            <constraint firstAttribute="trailing" secondItem="byJ-re-e3t" secondAttribute="trailing" id="XxZ-3I-lCE"/>
+                            <constraint firstItem="byJ-re-e3t" firstAttribute="leading" secondItem="gxw-7I-6GS" secondAttribute="leading" id="gZc-cq-nOd"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hUT-bK-hQf">
                         <nil key="title"/>
-                        <view key="titleView" opaque="NO" tag="100" contentMode="scaleToFill" id="byJ-re-e3t">
-                            <rect key="frame" x="47.5" y="-4.5" width="280" height="53"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <imageView opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="intro_logo_en" translatesAutoresizingMaskIntoConstraints="NO" id="5aW-21-5Hj">
-                                    <rect key="frame" x="0.0" y="1" width="280" height="53"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </imageView>
-                            </subviews>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        </view>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="containerView" destination="fSO-r8-h3M" id="Fyq-bk-MZE"/>
+                        <outlet property="logoContainerView" destination="byJ-re-e3t" id="TTg-Mx-wEO"/>
                         <outlet property="logoImageView" destination="5aW-21-5Hj" id="NYL-yt-73E"/>
                         <outlet property="networkNameLabel" destination="iil-fJ-fPp" id="yDD-T6-w0f"/>
                         <outlet property="networkTypeImageView" destination="H6y-Os-KVH" id="pWn-Jy-4Sq"/>
