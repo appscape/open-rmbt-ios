@@ -98,6 +98,7 @@
 		C7B4A99F17E8D3E700223ABD /* RMBTPing.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B4A99E17E8D3E700223ABD /* RMBTPing.m */; };
 		C7B4E9EE1F0CE4E500FA34F8 /* RMBTLoopDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B4E9ED1F0CE4E500FA34F8 /* RMBTLoopDetailsViewController.m */; };
 		C7B5C1C41A3B2B5F002BECF3 /* UIColor+RMBTHex.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B5C1C31A3B2B5F002BECF3 /* UIColor+RMBTHex.m */; };
+		C7BC5C731F747A9E00A91F0F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7BC5C721F747A9E00A91F0F /* Launch Screen.storyboard */; };
 		C7C242EC1EE5A02500E3C6E2 /* RMBTLoopModeTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7C242EB1EE5A02500E3C6E2 /* RMBTLoopModeTestViewController.m */; };
 		C7C242EF1EE5A20900E3C6E2 /* RMBTBaseTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7C242EE1EE5A20900E3C6E2 /* RMBTBaseTestViewController.m */; };
 		C7C5424417A69E9C000180A1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C7C5424617A69E9C000180A1 /* InfoPlist.strings */; };
@@ -310,6 +311,7 @@
 		C7B4E9ED1F0CE4E500FA34F8 /* RMBTLoopDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTLoopDetailsViewController.m; sourceTree = "<group>"; };
 		C7B5C1C21A3B2B5F002BECF3 /* UIColor+RMBTHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RMBTHex.h"; sourceTree = "<group>"; };
 		C7B5C1C31A3B2B5F002BECF3 /* UIColor+RMBTHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RMBTHex.m"; sourceTree = "<group>"; };
+		C7BC5C721F747A9E00A91F0F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		C7C0EFE3176CD18F003758AA /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		C7C242EA1EE5A02500E3C6E2 /* RMBTLoopModeTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMBTLoopModeTestViewController.h; sourceTree = "<group>"; };
 		C7C242EB1EE5A02500E3C6E2 /* RMBTLoopModeTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMBTLoopModeTestViewController.m; sourceTree = "<group>"; };
@@ -786,6 +788,7 @@
 			children = (
 				C7DE1487173E8F610079477A /* main.m */,
 				C7DE1489173E8F610079477A /* RMBT-Prefix.pch */,
+				C7BC5C721F747A9E00A91F0F /* Launch Screen.storyboard */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -996,6 +999,7 @@
 				C7F3FB3C179CCCD600E336CF /* Localizable.strings in Resources */,
 				C7F599A71A2A81940020ADC4 /* RMBTHistoryIndexCell.xib in Resources */,
 				C783F6911EDC7EB4001CB2F9 /* loop_mode_info.html in Resources */,
+				C7BC5C731F747A9E00A91F0F /* Launch Screen.storyboard in Resources */,
 				C7EF30741DFEBBF80002CCD0 /* RMBTHistoryQoSSingleResultCell.xib in Resources */,
 				C7C5424417A69E9C000180A1 /* InfoPlist.strings in Resources */,
 				C70C178C17D7BFC400F55964 /* Images.xcassets in Resources */,
@@ -1371,7 +1375,6 @@
 			baseConfigurationReference = C7C0EFE3176CD18F003758AA /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
