@@ -75,8 +75,6 @@
 
     [self adaptLayout];
 
-    [self.view layoutSubviews];
-
     // Replace placeholder with speed gauges:
     NSParameterAssert(self.progressGaugePlaceholderView);
     _progressGaugeView = [[RMBTGaugeView alloc] initWithFrame:self.progressGaugePlaceholderView.frame name:@"progress" startAngle:219.0f endAngle:219.0f + 261.0f ovalRect:CGRectMake(0.0,0,175.0, 175.0)];
@@ -88,6 +86,8 @@
 
     self.progressGaugePlaceholderView.hidden = YES;
     self.speedGaugePlaceholderView.hidden = YES;
+
+    [self.view layoutSubviews];
 
     [self startTest];
 }
