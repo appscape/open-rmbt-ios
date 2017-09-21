@@ -17,5 +17,4 @@
 #import <UIKit/UIKit.h>
 
 @interface RMBTNavigationBar : UINavigationBar
-
 @end

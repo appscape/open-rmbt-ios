@@ -103,6 +103,8 @@
 
     // Tint color
     [[RMBTNavigationBar appearance] setTintColor:RMBT_TINT_COLOR];
+    [[RMBTNavigationBar appearance] setTranslucent:NO];
+
     [[UITabBar appearance] setTintColor:RMBT_TINT_COLOR];
 
     // Text color

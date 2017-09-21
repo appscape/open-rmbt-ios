@@ -114,5 +114,5 @@
 // Current TOS version. Bump to force displaying TOS to users again.
 #define RMBT_TOS_VERSION 1
 
-#define RMBT_DARK_COLOR ([UIColor rmbt_colorWithRGBHex:0x001028])
+#define RMBT_DARK_COLOR ([UIColor rmbt_colorWithRGBHex:0x0e1e34])
 #define RMBT_TINT_COLOR ([UIColor rmbt_colorWithRGBHex:0x00abe7])
