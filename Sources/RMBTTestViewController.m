@@ -250,7 +250,7 @@
         }
         case RMBTTestRunnerCancelReasonMixedConnectivity: {
             RMBTLog(@"Test cancelled because of mixed connectivity");
-            [self startTestWithExtraParams:nil];
+            [self startTest];
             break;
         }
         case RMBTTestRunnerCancelReasonNoConnection:
