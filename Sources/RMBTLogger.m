@@ -68,7 +68,7 @@ void RMBTLog(NSString* format, ...) {
             _sharedLogger = [[RMBTLogger alloc] init];
             
             
-            void (^announce)() = ^(void) {
+            void (^announce)(void) = ^(void) {
                 if (enabled) {
                     NSLog(@"Logging via UDP to %@:%lu", _sharedLogger.destinationHostname, (unsigned long)_sharedLogger.destinationPort);
                 } else {

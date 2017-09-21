@@ -29,7 +29,7 @@ double RMBTSpeedLogValue(uint32_t kbps) {
     return log;
 }
 
-NSString* RMBTSpeedMbpsSuffix() {
+NSString* RMBTSpeedMbpsSuffix(void) {
     static NSString *localizedMps = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
