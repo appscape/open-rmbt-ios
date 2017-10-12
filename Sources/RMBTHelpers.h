@@ -17,7 +17,7 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *RMBTPreferredLanguage();
+extern NSString *RMBTPreferredLanguage(void);
 
 // Removes all trailing \n or \r
 extern NSString *RMBTChomp(NSString* string);
@@ -26,7 +26,7 @@ extern NSUInteger RMBTPercent(NSInteger count, NSInteger totalCount);
 
 // Format a number to two significant digits. See https://trac.rtr.at/iosrtrnetztest/ticket/17
 extern NSString* RMBTFormatNumber(NSNumber *number);
-extern BOOL RMBTIsRunningGermanLocale();
+extern BOOL RMBTIsRunningGermanLocale(void);
 
 typedef NS_ENUM(NSInteger, RMBTFormFactor) {
     RMBTFormFactoriPhone4,
@@ -34,14 +34,14 @@ typedef NS_ENUM(NSInteger, RMBTFormFactor) {
     RMBTFormFactoriPhone6,
     RMBTFormFactoriPhone6Plus
 };
-extern RMBTFormFactor RMBTGetFormFactor();
+extern RMBTFormFactor RMBTGetFormFactor(void);
 
 
 // Normalize hexadecimal identifier, i.e. 0:1:c -> 00:01:0c
 extern NSString* RMBTReformatHexIdentifier(NSString *identifier);
 
 // Returns bundle name from Info.plist (i.e. RTR-NetTest or RTR-Netztest)
-extern NSString* RMBTAppTitle();
+extern NSString* RMBTAppTitle(void);
 
 NS_INLINE id RMBTValueOrNull(id value) { return value ?: [NSNull null]; }
 NS_INLINE id RMBTValueOrString(id value, NSString *result) { return value ?: result; }
@@ -55,12 +55,12 @@ NSString* RMBTMMSSStringWithInterval(NSTimeInterval interval);
 NSString *RMBTMegabytesString(uint64_t bytes);
 
 NSNumber* RMBTTimestampWithNSDate(NSDate* date);
-uint64_t RMBTCurrentNanos();
+uint64_t RMBTCurrentNanos(void);
 
 // Returns a string containing git commit, branch and commit count from Info.plist fields
 // written by the build script
-NSString* RMBTBuildInfoString();
-NSString* RMBTBuildDateString();
+NSString* RMBTBuildInfoString(void);
+NSString* RMBTBuildDateString(void);
 
 // Replaces $lang in template with de if current local is german, en otherwise
 NSString* RMBTLocalizeURLString(NSString* urlString);

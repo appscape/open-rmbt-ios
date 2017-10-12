@@ -15,6 +15,6 @@
  *
  */
 
-typedef void (^RMBTBlock)();
+typedef void (^RMBTBlock)(void);
 typedef void (^RMBTSuccessBlock)(id response);
 typedef void (^RMBTErrorBlock)(NSError *error, NSDictionary* info);
