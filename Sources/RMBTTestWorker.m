@@ -223,7 +223,7 @@ typedef NS_ENUM(long, RMBTTestTag) {
 
     if (_params.serverEncryption) {
         [sock startTLS:@{
-            GCDAsyncSocketSSLCipherSuites: @[[NSNumber numberWithShort:SSL_RSA_WITH_RC4_128_MD5]]
+            //GCDAsyncSocketSSLCipherSuites: @[[NSNumber numberWithShort:RMBT_TEST_CIPHER]]
         }];
     } else {
         [self readLineWithTag:RMBTTestTagRxBanner];
