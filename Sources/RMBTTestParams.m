@@ -34,6 +34,8 @@
         _serverEncryption = [response[@"test_server_encryption"] boolValue];
         _serverName = [response[@"test_server_name"] copy];
 
+        _serverIsRmbtHTTP = [response[@"test_server_type"] isEqualToString:@"RMBThttp"];
+
         // We use -integerValue as it's defined both on NSNumber and NSString, so we're more resilient in parsing:
 
         _serverPort = (NSUInteger)[response[@"test_server_port"] integerValue];

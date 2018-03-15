@@ -27,6 +27,10 @@
 @property (nonatomic, readonly) BOOL                serverEncryption;
 @property (nonatomic, readonly) NSString*           serverName;
 @property (nonatomic, readonly) NSUInteger          serverPort;
+
+// New protocol
+@property (nonatomic, readonly) BOOL                serverIsRmbtHTTP;
+
 @property (nonatomic, readonly) NSString*           resultURLString;
 @property (nonatomic, readonly) NSTimeInterval      testDuration;
 @property (nonatomic, readonly) NSString*           testToken;

@@ -52,6 +52,8 @@ typedef NS_ENUM(long, RMBTTestTag) {
 
     RMBTTestTagRxBanner = 1,
     RMBTTestTagRxBannerAccept,
+    RMBTTestTagTxUpgrade,
+    RMBTTestTagRxUpgradeResponse,
     RMBTTestTagTxToken,
     RMBTTestTagRxTokenOK,
     RMBTTestTagRxChunksize,
@@ -208,6 +210,16 @@ typedef NS_ENUM(long, RMBTTestTag) {
     if (_socket.isConnected) [_socket disconnect];
 }
 
+- (void)start {
+    if (_params.serverIsRmbtHTTP) {
+        // Send upgrade string as part of the new protcol
+        NSString *line = @"GET /rmbt HTTP/1.1\r\nConnection: Upgrade\r\nUpgrade: RMBT\r\nRMBT-Version: 1.2.0@\r\n\r\n";
+        [self writeLine:line withTag:RMBTTestTagTxUpgrade];
+    } else {
+        [self readLineWithTag:RMBTTestTagRxBanner];
+    }
+}
+
 #pragma mark - Socket delegate methods
 
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port {
@@ -226,7 +238,7 @@ typedef NS_ENUM(long, RMBTTestTag) {
             //GCDAsyncSocketSSLCipherSuites: @[[NSNumber numberWithShort:RMBT_TEST_CIPHER]]
         }];
     } else {
-        [self readLineWithTag:RMBTTestTagRxBanner];
+        [self start];
     }
 }
 
@@ -247,7 +259,7 @@ typedef NS_ENUM(long, RMBTTestTag) {
 
     RMBTLog(@"Thread %lu: connected and secured.", (long)_index);
 
-    [self readLineWithTag:RMBTTestTagRxBanner];
+    [self start];
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
@@ -289,8 +301,17 @@ typedef NS_ENUM(long, RMBTTestTag) {
 
 // We unify read and write callbacks for better state documentation
 - (void)socketDidReadOrWriteData:(NSData*)data withTag:(long)tag read:(BOOL)read {
-  // Pretest
-    if (tag == RMBTTestTagRxBanner) {
+    // Pretest
+    if (tag == RMBTTestTagTxUpgrade) {
+        // -> ...Upgrade..
+        [_socket readDataToData:[@"Upgrade: RMBT\n" dataUsingEncoding:NSASCIIStringEncoding]
+                    withTimeout:RMBT_TEST_SOCKET_TIMEOUT_S
+                            tag:RMBTTestTagRxUpgradeResponse];
+    } else if (tag == RMBTTestTagRxUpgradeResponse) {
+        // <- HTTP/1.1 101 Switching Protocols\r\nConnection: Upgrade\r\nUpgrade: RMBT\r\n\r\n
+        // Upgraded. Proceed to read banner:
+        [self readLineWithTag:RMBTTestTagRxBanner];
+    } else if (tag == RMBTTestTagRxBanner) {
         // <- RMBTv0.3
         [self readLineWithTag:RMBTTestTagRxBannerAccept];
     } else if (tag == RMBTTestTagRxBannerAccept) {

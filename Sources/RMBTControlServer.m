@@ -410,7 +410,10 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
 #pragma mark - System Info
 
 - (NSDictionary *)capabilities {
-    return @{ @"classification": @{ @"count": @(4) } };
+    return @{
+        @"classification": @{ @"count": @(4) },
+        @"RMBThttp": @YES
+    };
 }
 
 - (NSDictionary *)systemInfoParams {
