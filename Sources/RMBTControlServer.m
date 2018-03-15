@@ -247,11 +247,16 @@ static NSString * const kLastNewsUidPreferenceKey = @"last_news_uid";
     
     [self performWithUUID:^{
         [self requestWithMethod:@"POST" path:@"testRequest" params:requestParams success:^(NSDictionary *response) {
-             RMBTTestParams *tp = [[RMBTTestParams alloc] initWithResponse:response];
-             success(tp);
+            RMBTTestParams *tp = [[RMBTTestParams alloc] initWithResponse:response];
+            if (tp) {
+                success(tp);
+            } else {
+                RMBTLog(@"Invalid test parameters: %@", response);
+                errorCallback();
+            }
          } error:^(NSError *err, NSDictionary *response) {
-             RMBTLog(@"Fetching test parameters failed with err=%@, response=%@", err, response);
-             errorCallback();
+            RMBTLog(@"Fetching test parameters failed with err=%@, response=%@", err, response);
+            errorCallback();
          }];
     } error:^(NSError *error, NSDictionary *info) {
         errorCallback();

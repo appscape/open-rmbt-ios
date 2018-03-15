@@ -20,6 +20,11 @@
 @implementation RMBTTestParams
 
 - (id)initWithResponse:(NSDictionary*)response {
+    if (!response[@"test_server_address"]) {
+        // Probably invalid server response, return nil
+        return nil;
+    }
+
     if (self = [super init]) {
         _clientRemoteIp = [response[@"client_remote_ip"] copy];
         _pingCount = RMBT_TEST_PING_COUNT;
