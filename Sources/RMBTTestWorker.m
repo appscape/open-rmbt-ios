@@ -304,7 +304,7 @@ typedef NS_ENUM(long, RMBTTestTag) {
     // Pretest
     if (tag == RMBTTestTagTxUpgrade) {
         // -> ...Upgrade..
-        [_socket readDataToData:[@"Upgrade: RMBT\n" dataUsingEncoding:NSASCIIStringEncoding]
+        [_socket readDataToData:[@"Upgrade: RMBT\r\n\r\n" dataUsingEncoding:NSASCIIStringEncoding]
                     withTimeout:RMBT_TEST_SOCKET_TIMEOUT_S
                             tag:RMBTTestTagRxUpgradeResponse];
     } else if (tag == RMBTTestTagRxUpgradeResponse) {
